@@ -25,7 +25,7 @@ module Gitlab
     end
 
     def allowed?
-      return false unless can_access_git?
+      return false unless user && user.can?(:log_in)
 
       if user.requires_ldap_check? && user.try_obtain_ldap_lease
         return false unless Gitlab::LDAP::Access.allowed?(user)
