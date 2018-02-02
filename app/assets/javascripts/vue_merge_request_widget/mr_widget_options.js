@@ -247,8 +247,8 @@ export default {
         />
       <mr-widget-deployment
         v-if="shouldRenderDeployments"
-        :mr="mr"
-        :service="service" />
+        :deployments="mr.deployments"
+      />
       <div class="mr-widget-section">
         <component
           :is="componentName"
