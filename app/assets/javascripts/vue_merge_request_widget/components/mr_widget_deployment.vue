@@ -4,7 +4,7 @@
   import Flash from '~/flash';
   import { s__ } from '~/locale';
   import tooltip from '~/vue_shared/directives/tooltip';
-  import memoryUsage from './mr_widget_memory_usage';
+  import memoryUsage from './mr_widget_memory_usage.vue';
   import statusIcon from './mr_widget_status_icon.vue';
   import MRWidgetService from '../services/mr_widget_service';
 
@@ -122,7 +122,7 @@
             {{ s__("mrWidget|Stop environment") }}
           </button>
 
-          <mr-widget-memory-usage
+          <memory-usage
             v-if="deployment.metrics_url"
             :metrics-url="deployment.metrics_url"
             :metrics-monitoring-url="deployment.metrics_monitoring_url"

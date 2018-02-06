@@ -1,44 +1,44 @@
 import Vue from 'vue';
-import memoryUsageComponent from '~/vue_merge_request_widget/components/mr_widget_memory_usage';
+import memoryUsageComponent from '~/vue_merge_request_widget/components/mr_widget_memory_usage.vue';
 import MRWidgetService from '~/vue_merge_request_widget/services/mr_widget_service';
+import mountComponent from '../../helpers/vue_mount_component_helper';
 
-const url = '/root/acets-review-apps/environments/15/deployments/1/metrics';
-const monitoringUrl = '/root/acets-review-apps/environments/15/metrics';
+describe('MemoryUsage', () => {
+  const url = '/root/acets-review-apps/environments/15/deployments/1/metrics';
+  const monitoringUrl = '/root/acets-review-apps/environments/15/metrics';
 
-const metricsMockData = {
-  success: true,
-  metrics: {
-    memory_before: [
-      {
-        metric: {},
-        value: [1495785220.607, '9572875.906976745'],
-      },
-    ],
-    memory_after: [
-      {
-        metric: {},
-        value: [1495787020.607, '4485853.130206379'],
-      },
-    ],
-    memory_values: [
-      {
-        metric: {},
-        values: [
-          [1493716685, '4.30859375'],
-        ],
-      },
-    ],
-  },
-  last_update: '2017-05-02T12:34:49.628Z',
-  deployment_time: 1493718485,
-};
+  const metricsMockData = {
+    success: true,
+    metrics: {
+      memory_before: [
+        {
+          metric: {},
+          value: [1495785220.607, '9572875.906976745'],
+        },
+      ],
+      memory_after: [
+        {
+          metric: {},
+          value: [1495787020.607, '4485853.130206379'],
+        },
+      ],
+      memory_values: [
+        {
+          metric: {},
+          values: [
+            [1493716685, '4.30859375'],
+          ],
+        },
+      ],
+    },
+    last_update: '2017-05-02T12:34:49.628Z',
+    deployment_time: 1493718485,
+  };
 
-const createComponent = () => {
-  const Component = Vue.extend(memoryUsageComponent);
+  const createComponent = () => {
+    const Component = Vue.extend(memoryUsageComponent);
 
-  return new Component({
-    el: document.createElement('div'),
-    propsData: {
+    return mountComponent(Component, {
       metricsUrl: url,
       metricsMonitoringUrl: monitoringUrl,
       memoryMetrics: [],
@@ -47,18 +47,16 @@ const createComponent = () => {
       loadFailed: false,
       loadingMetrics: true,
       backOffRequestCounter: 0,
-    },
-  });
-};
+    });
+  };
 
-const messages = {
-  loadingMetrics: 'Loading deployment statistics',
-  hasMetrics: 'Memory usage unchanged from 0MB to 0MB',
-  loadFailed: 'Failed to load deployment statistics',
-  metricsUnavailable: 'Deployment statistics are not available currently',
-};
+  const messages = {
+    loadingMetrics: 'Loading deployment statistics',
+    hasMetrics: 'Memory usage unchanged from 0MB to 0MB',
+    loadFailed: 'Failed to load deployment statistics',
+    metricsUnavailable: 'Deployment statistics are not available currently',
+  };
 
-describe('MemoryUsage', () => {
   let vm;
   let el;
 
@@ -67,16 +65,8 @@ describe('MemoryUsage', () => {
     el = vm.$el;
   });
 
-  describe('props', () => {
-    it('should have props with defaults', () => {
-      const { metricsUrl } = memoryUsageComponent.props;
-      const MetricsUrlTypeClass = metricsUrl.type;
-
-      Vue.nextTick(() => {
-        expect(new MetricsUrlTypeClass() instanceof String).toBeTruthy();
-        expect(metricsUrl.required).toBeTruthy();
-      });
-    });
+  afterEach(() => {
+    vm.$destroy();
   });
 
   describe('data', () => {
