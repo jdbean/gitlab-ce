@@ -1301,7 +1301,7 @@ module Gitlab
         start_branch_name: nil, start_repository: self)
 
         gitaly_migrate(:operation_user_commit_files) do |is_enabled|
-          if is_enabled
+          if is_enabled && branch_name
             gitaly_operation_client.user_commit_files(user, branch_name,
               message, actions, author_email, author_name,
               start_branch_name, start_repository)

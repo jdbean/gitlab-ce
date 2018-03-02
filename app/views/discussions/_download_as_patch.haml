@@ -1,0 +1,6 @@
+- title = "Download unresolved discussions as code comments"
+.btn-group{ role: "group", "v-if" => "unresolvedDiscussionCount > 0" }
+  .btn.btn-default.download-discussions-as-patch-btn.has-tooltip{ title: title,
+                                                           "aria-label" => title,
+                                                           "data-container" => "body" }
+    = link_to icon('download'), '#modal_download_as_patch', title: title, class: 'download-discussions-as-patch', "data-toggle" => "modal"

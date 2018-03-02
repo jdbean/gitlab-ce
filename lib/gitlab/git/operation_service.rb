@@ -117,13 +117,15 @@ module Gitlab
           raise Gitlab::Git::CommitError.new('Failed to create commit')
         end
 
-        branch = repository.find_branch(branch_name)
-        oldrev = find_oldrev_from_branch(newrev, branch)
+        if branch_name
+          branch = repository.find_branch(branch_name)
+          oldrev = find_oldrev_from_branch(newrev, branch)
 
-        ref = Gitlab::Git::BRANCH_REF_PREFIX + branch_name
-        update_ref_in_hooks(ref, newrev, oldrev)
+          ref = Gitlab::Git::BRANCH_REF_PREFIX + branch_name
+          update_ref_in_hooks(ref, newrev, oldrev)
+        end
 
-        BranchUpdate.new(newrev, was_empty, was_empty || Gitlab::Git.blank_ref?(oldrev))
+        BranchUpdate.new(newrev, was_empty, was_empty || (oldrev && Gitlab::Git.blank_ref?(oldrev)))
       end
 
       def find_oldrev_from_branch(newrev, branch)

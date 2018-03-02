@@ -411,7 +411,7 @@ class Commit
     # no-op but needs to be defined since #persisted? is defined
   end
 
-  WIP_REGEX = /\A\s*(((?i)(\[WIP\]|WIP:|WIP)\s|WIP$))|(fixup!|squash!)\s/.freeze
+  WIP_REGEX = /\A\s*((?i)((\[WIP\]|WIP:?)\s|WIP$))|(fixup!|squash!|FIXME:)\s/.freeze
 
   def work_in_progress?
     !!(title =~ WIP_REGEX)
