@@ -23,11 +23,8 @@ describe('MRWidgetUnresolvedDiscussions', () => {
 
   describe('without discussions path', () => {
     it('should not show create issue link if user cannot create issue', () => {
-      vm = mountComponent(Component, { mr: {
-        createIssueToResolveDiscussionsPath: '',
-      } });
+      vm = mountComponent(Component, { mr: {} });
       expect(vm.$el.innerText).toContain('There are unresolved discussions. Please resolve these discussions');
-      expect(vm.$el.innerText).toContain('Create an issue to resolve them later');
       expect(vm.$el.querySelector('.js-create-issue')).toEqual(null);
     });
   });
