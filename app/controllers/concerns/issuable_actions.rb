@@ -77,8 +77,12 @@ module IssuableActions
   end
 
   def discussions
+    discussion_filter_param = params.fetch(:discussion_filter, current_user&.discussion_filter(issuable))
+    discussion_filter = current_user&.set_discussion_filter(discussion_filter_param, issuable)
+
     notes = issuable.notes
       .inc_relations_for_view
+      .with_discussion_filter(discussion_filter)
       .includes(:noteable)
       .fresh
 

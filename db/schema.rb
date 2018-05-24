@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180521171529) do
+ActiveRecord::Schema.define(version: 20180524202234) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2007,6 +2007,16 @@ ActiveRecord::Schema.define(version: 20180521171529) do
   add_index "user_interacted_projects", ["project_id", "user_id"], name: "index_user_interacted_projects_on_project_id_and_user_id", unique: true, using: :btree
   add_index "user_interacted_projects", ["user_id"], name: "index_user_interacted_projects_on_user_id", using: :btree
 
+  create_table "user_preferences", force: :cascade do |t|
+    t.datetime_with_timezone "created_at", null: false
+    t.datetime_with_timezone "updated_at", null: false
+    t.integer "issue_discussion_filter", default: 0, null: false
+    t.integer "merge_request_discussion_filter", default: 0, null: false
+  end
+
+  add_index "user_preferences", ["issue_discussion_filter"], name: "index_user_preferences_on_issue_discussion_filter", using: :btree
+  add_index "user_preferences", ["merge_request_discussion_filter"], name: "index_user_preferences_on_merge_request_discussion_filter", using: :btree
+
   create_table "user_synced_attributes_metadata", force: :cascade do |t|
     t.boolean "name_synced", default: false
     t.boolean "email_synced", default: false
@@ -2083,6 +2093,7 @@ ActiveRecord::Schema.define(version: 20180521171529) do
     t.string "rss_token"
     t.integer "theme_id", limit: 2
     t.integer "accepted_term_id"
+    t.integer "user_preference_id"
   end
 
   add_index "users", ["admin"], name: "index_users_on_admin", using: :btree
@@ -2097,6 +2108,7 @@ ActiveRecord::Schema.define(version: 20180521171529) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["rss_token"], name: "index_users_on_rss_token", using: :btree
   add_index "users", ["state"], name: "index_users_on_state", using: :btree
+  add_index "users", ["user_preference_id"], name: "index_users_on_user_preference_id", using: :btree
   add_index "users", ["username"], name: "index_users_on_username", using: :btree
   add_index "users", ["username"], name: "index_users_on_username_trigram", using: :gin, opclasses: {"username"=>"gin_trgm_ops"}
 
@@ -2304,6 +2316,7 @@ ActiveRecord::Schema.define(version: 20180521171529) do
   add_foreign_key "user_interacted_projects", "users", name: "fk_0894651f08", on_delete: :cascade
   add_foreign_key "user_synced_attributes_metadata", "users", on_delete: :cascade
   add_foreign_key "users", "application_setting_terms", column: "accepted_term_id", name: "fk_789cd90b35", on_delete: :cascade
+  add_foreign_key "users", "user_preferences", name: "fk_7b59ddea61", on_delete: :nullify
   add_foreign_key "users_star_projects", "projects", name: "fk_22cd27ddfc", on_delete: :cascade
   add_foreign_key "web_hook_logs", "web_hooks", on_delete: :cascade
   add_foreign_key "web_hooks", "projects", name: "fk_0c8ca6d9d1", on_delete: :cascade
