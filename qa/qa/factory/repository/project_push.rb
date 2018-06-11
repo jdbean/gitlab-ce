@@ -21,14 +21,12 @@ module QA
           @new_branch = true
         end
 
-        def repository_uri
-          @repository_uri ||= begin
-            project.visit!
-            Page::Project::Show.act do
-              choose_repository_clone_http
-              repository_location.uri
-            end
-          end
+        def repository_http_uri
+          @repository_http_uri ||= project.repository_http_location.uri
+        end
+
+        def repository_ssh_uri
+          @repository_ssh_uri ||= project.repository_ssh_location.uri
         end
       end
     end
