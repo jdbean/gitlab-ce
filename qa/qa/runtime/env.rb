@@ -16,7 +16,11 @@ module QA
 
       # specifies token that can be used for the api
       def personal_access_token
-        ENV['PERSONAL_ACCESS_TOKEN']
+        @personal_access_token ||= ENV['PERSONAL_ACCESS_TOKEN']
+      end
+
+      def personal_access_token=(new_personal_access_token)
+        @personal_access_token = new_personal_access_token
       end
 
       # By default, "standard" denotes a standard GitLab user login.
