@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import tableRegistry from '~/registry/components/table_registry.vue';
-import store from '~/registry/stores';
+import store from '~/registry/store';
 import { repoPropsData } from '../mock_data';
 
 describe('table registry', () => {

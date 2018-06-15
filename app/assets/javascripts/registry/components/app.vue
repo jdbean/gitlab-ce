@@ -1,16 +1,14 @@
 <script>
   import { mapGetters, mapActions } from 'vuex';
-  import Flash from '../../flash';
-  import loadingIcon from '../../vue_shared/components/loading_icon.vue';
-  import store from '../stores';
-  import collapsibleContainer from './collapsible_container.vue';
-  import { errorMessages, errorMessagesTypes } from '../constants';
+  import store from '../store';
+  import LoadingIcon from '../../vue_shared/components/loading_icon.vue';
+  import CollapsibleContainer from './collapsible_container.vue';
 
   export default {
     name: 'RegistryListApp',
     components: {
-      collapsibleContainer,
-      loadingIcon,
+      CollapsibleContainer,
+      LoadingIcon,
     },
     props: {
       endpoint: {
@@ -20,23 +18,16 @@
     },
     store,
     computed: {
-      ...mapGetters([
-        'isLoading',
-        'repos',
-      ]),
+      ...mapGetters(['isLoading', 'repos']),
     },
     created() {
       this.setMainEndpoint(this.endpoint);
     },
     mounted() {
-      this.fetchRepos()
-        .catch(() => Flash(errorMessages[errorMessagesTypes.FETCH_REPOS]));
+      this.fetchRepos();
     },
     methods: {
-      ...mapActions([
-        'setMainEndpoint',
-        'fetchRepos',
-      ]),
+      ...mapActions(['setMainEndpoint', 'fetchRepos']),
     },
   };
 </script>

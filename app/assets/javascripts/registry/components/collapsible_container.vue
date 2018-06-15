@@ -1,18 +1,16 @@
 <script>
   import { mapActions } from 'vuex';
-  import Flash from '../../flash';
-  import clipboardButton from '../../vue_shared/components/clipboard_button.vue';
-  import loadingIcon from '../../vue_shared/components/loading_icon.vue';
+  import ClipboardButton from '../../vue_shared/components/clipboard_button.vue';
+  import LoadingIcon from '../../vue_shared/components/loading_icon.vue';
+  import TableRegistry from './table_registry.vue';
   import tooltip from '../../vue_shared/directives/tooltip';
-  import tableRegistry from './table_registry.vue';
-  import { errorMessages, errorMessagesTypes } from '../constants';
 
   export default {
     name: 'CollapsibeContainerRegisty',
     components: {
-      clipboardButton,
-      loadingIcon,
-      tableRegistry,
+      ClipboardButton,
+      LoadingIcon,
+      TableRegistry,
     },
     directives: {
       tooltip,
@@ -29,29 +27,18 @@
       };
     },
     methods: {
-      ...mapActions([
-        'fetchRepos',
-        'fetchList',
-        'deleteRepo',
-      ]),
+      ...mapActions(['fetchRepos', 'fetchList', 'deleteRepo']),
 
       toggleRepo() {
         this.isOpen = !this.isOpen;
 
         if (this.isOpen) {
-          this.fetchList({ repo: this.repo })
-          .catch(() => this.showError(errorMessagesTypes.FETCH_REGISTRY));
+          this.fetchList({ repo: this.repo });
         }
       },
 
       handleDeleteRepository() {
-        this.deleteRepo(this.repo)
-          .then(() => this.fetchRepos())
-          .catch(() => this.showError(errorMessagesTypes.DELETE_REPO));
-      },
-
-      showError(message) {
-        Flash(errorMessages[message]);
+        this.deleteRepo(this.repo);
       },
     },
   };

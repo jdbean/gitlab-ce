@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import collapsibleComponent from '~/registry/components/collapsible_container.vue';
-import store from '~/registry/stores';
+import store from '~/registry/store';
 import { repoPropsData } from '../mock_data';
 
 describe('collapsible registry container', () => {

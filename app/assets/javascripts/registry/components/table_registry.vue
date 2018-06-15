@@ -1,25 +1,21 @@
 <script>
   import { mapActions } from 'vuex';
   import { n__ } from '../../locale';
-  import Flash from '../../flash';
-  import clipboardButton from '../../vue_shared/components/clipboard_button.vue';
-  import tablePagination from '../../vue_shared/components/table_pagination.vue';
+  import ClipboardButton from '../../vue_shared/components/clipboard_button.vue';
+  import TablePagination from '../../vue_shared/components/table_pagination.vue';
   import tooltip from '../../vue_shared/directives/tooltip';
   import timeagoMixin from '../../vue_shared/mixins/timeago';
-  import { errorMessages, errorMessagesTypes } from '../constants';
   import { numberToHumanSize } from '../../lib/utils/number_utils';
 
   export default {
     components: {
-      clipboardButton,
-      tablePagination,
+      ClipboardButton,
+      TablePagination,
     },
     directives: {
       tooltip,
     },
-    mixins: [
-      timeagoMixin,
-    ],
+    mixins: [timeagoMixin],
     props: {
       repo: {
         type: Object,
@@ -32,10 +28,7 @@
       },
     },
     methods: {
-      ...mapActions([
-        'fetchList',
-        'deleteRegistry',
-      ]),
+      ...mapActions(['fetchList', 'deleteRegistry']),
 
       layers(item) {
         return item.layers ? n__('%d layer', '%d layers', item.layers) : '';
@@ -46,18 +39,11 @@
       },
 
       handleDeleteRegistry(registry) {
-        this.deleteRegistry(registry)
-          .then(() => this.fetchList({ repo: this.repo }))
-          .catch(() => this.showError(errorMessagesTypes.DELETE_REGISTRY));
+        this.deleteRegistry(registry, this.repo);
       },
 
       onPageChange(pageNumber) {
-        this.fetchList({ repo: this.repo, page: pageNumber })
-          .catch(() => this.showError(errorMessagesTypes.FETCH_REGISTRY));
-      },
-
-      showError(message) {
-        Flash(errorMessages[message]);
+        this.fetchList({ repo: this.repo, page: pageNumber });
       },
     },
   };

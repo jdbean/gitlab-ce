@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import VueResource from 'vue-resource';
 import _ from 'underscore';
-import * as actions from '~/registry/stores/actions';
-import * as types from '~/registry/stores/mutation_types';
+import * as actions from '~/registry/store/actions';
+import * as types from '~/registry/store/mutation_types';
 import testAction from '../../helpers/vuex_action_helper';
 import {
   defaultState,

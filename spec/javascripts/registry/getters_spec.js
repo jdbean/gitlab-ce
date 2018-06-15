@@ -1,4 +1,4 @@
-import * as getters from '~/registry/stores/getters';
+import * as getters from '~/registry/store/getters';
 
 describe('Getters Registry Store', () => {
   let state;
