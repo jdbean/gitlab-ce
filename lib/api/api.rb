@@ -141,6 +141,7 @@ module API
     mount ::API::Templates
     mount ::API::Todos
     mount ::API::Triggers
+    mount ::API::Unleash
     mount ::API::Users
     mount ::API::Variables
     mount ::API::GroupVariables
