@@ -269,7 +269,7 @@ module ProjectsHelper
       nav_tabs << :pipelines
     end
 
-    if can?(current_user, :read_environment, project) || can?(current_user, :read_cluster, project)
+    if can?(current_user, :read_environment, project) || can?(current_user, :read_cluster, project) || can?(current_user, :read_feature_flags, project)
       nav_tabs << :operations
     end
 
@@ -289,6 +289,7 @@ module ProjectsHelper
   def tab_ability_map
     {
       environments:     :read_environment,
+      feature_flags:    :read_feature_flags,
       milestones:       :read_milestone,
       snippets:         :read_project_snippet,
       settings:         :admin_project,
