@@ -246,13 +246,23 @@ label {
 
 .input-icon-wrapper {
   position: relative;
+}
 
-  .input-icon-right {
-    position: absolute;
-    right: 0.8em;
-    top: 50%;
-    transform: translateY(-50%);
-    color: $theme-gray-600;
+.input-icon-right {
+  position: absolute;
+  right: 0.8em;
+  top: 50%;
+  transform: translateY(-50%);
+  color: $theme-gray-600;
+
+  .select2-container & {
+    top: auto;
+    bottom: 0;
+    transform: translateY(-75%);
+  }
+
+  .hide-input-icon & {
+    display: none;
   }
 }
 

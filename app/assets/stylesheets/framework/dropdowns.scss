@@ -907,6 +907,10 @@ header.header-content .dropdown-menu.frequent-items-dropdown-menu {
   }
 }
 
+.project-inline-container {
+  display: flex;
+}
+
 .frequent-items-list-item-container {
   .frequent-items-item-avatar-container,
   .frequent-items-item-metadata-container {
@@ -924,6 +928,10 @@ header.header-content .dropdown-menu.frequent-items-dropdown-menu {
     max-width: 250px;
     text-overflow: ellipsis;
     white-space: nowrap;
+
+    .project-multi-select-dropdown & {
+      max-width: 100%;
+    }
   }
 
   &:hover {
@@ -974,5 +982,20 @@ header.header-content .dropdown-menu.frequent-items-dropdown-menu {
 
   &.fade-out::after {
     opacity: 0;
+  }
+}
+
+.project-multi-select {
+  .select2-choices {
+    // This is needed to override select2's custom theme when position is up
+    background: none !important;
+  }
+
+  .select2-search-choice {
+    white-space: nowrap;
+  }
+
+  .select2-default {
+    color: inherit !important;
   }
 }

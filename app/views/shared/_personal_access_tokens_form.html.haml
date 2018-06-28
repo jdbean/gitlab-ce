@@ -25,5 +25,11 @@
     = f.label :scopes, class: 'label-bold'
     = render 'shared/tokens/scopes_form', prefix: 'personal_access_token', token: token, scopes: scopes
 
+  .form-group
+    = f.label :project_ids, class: 'label-light'
+    %p
+      Limit this token's access to specific projects.
+    = hidden_field_tag :project_ids, '', { class: 'js-project-multi-select project-multi-select', data: { order_by: 'last_activity_at', input_name: 'personal_access_token[project_ids]' } }
+
   .prepend-top-default
     = f.submit "Create #{type} token", class: "btn btn-create"
