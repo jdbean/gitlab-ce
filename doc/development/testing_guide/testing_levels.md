@@ -30,6 +30,14 @@ records should use stubs/doubles as much as possible.
 | `app/workers/` | `spec/workers/` | RSpec | |
 | `app/assets/javascripts/` | `spec/javascripts/` | Karma | More details in the [Frontend Testing guide](frontend_testing.md) section. |
 
+## Smoke tests
+
+Smoke tests are quick tests that may be run at any time (especially after the pre-deployment migrations).
+
+Much like feature tests - these tests run against the UI and ensure that basic functionality is working.
+
+> See [Smoke Tests](smoke.md) for more information.
+
 ## Integration tests
 
 Formal definition: https://en.wikipedia.org/wiki/Integration_testing

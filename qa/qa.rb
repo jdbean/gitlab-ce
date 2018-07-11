@@ -85,6 +85,7 @@ module QA
     #
     module Test
       autoload :Instance, 'qa/scenario/test/instance'
+      autoload :Smoke, 'qa/scenario/test/smoke'
 
       module Integration
         autoload :Github, 'qa/scenario/test/integration/github'
