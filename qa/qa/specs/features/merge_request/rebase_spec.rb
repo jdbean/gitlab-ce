@@ -1,5 +1,5 @@
 module QA
-  describe 'merge request rebase', :core do
+  describe 'merge request rebase', :feature do
     it 'rebases source branch of merge request'  do
       Runtime::Browser.visit(:gitlab, Page::Main::Login)
       Page::Main::Login.act { sign_in_using_credentials }

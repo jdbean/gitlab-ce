@@ -1,5 +1,5 @@
 module QA
-  describe 'deploy keys support', :core do
+  describe 'deploy keys support', :feature do
     it 'user adds a deploy key' do
       Runtime::Browser.visit(:gitlab, Page::Main::Login)
       Page::Main::Login.act { sign_in_using_credentials }

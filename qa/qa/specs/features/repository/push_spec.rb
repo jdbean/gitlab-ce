@@ -1,5 +1,5 @@
 module QA
-  describe 'push code to repository', :core, :smoke do
+  describe 'push code to repository', :feature, :smoke do
     context 'with regular account over http' do
       it 'user pushes code to the repository'  do
         Runtime::Browser.visit(:gitlab, Page::Main::Login)

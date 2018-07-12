@@ -1,5 +1,5 @@
 module QA
-  describe 'creates a merge request', :core do
+  describe 'creates a merge request', :feature do
     it 'user creates a new merge request'  do
       Runtime::Browser.visit(:gitlab, Page::Main::Login)
       Page::Main::Login.act { sign_in_using_credentials }

@@ -9,7 +9,7 @@ module QA
         include Bootable
         extend Taggable
 
-        tags :core
+        tags :feature
 
         def perform(address, *rspec_options)
           Runtime::Scenario.define(:gitlab_address, address)
