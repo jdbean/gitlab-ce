@@ -11,6 +11,7 @@ RSpec.configure do |config|
     mocks.verify_partial_doubles = true
   end
 
+  config.run_all_when_everything_filtered = true
   config.shared_context_metadata_behavior = :apply_to_host_groups
   config.disable_monkey_patching!
   config.expose_dsl_globally = true

@@ -15,6 +15,7 @@ module QA
         args = []
         args.push('--tty') if tty
         tags.to_a.each { |tag| args.push(['-t', tag.to_s]) }
+        args.push('-t ~skip')
         args.push(options)
 
         Runtime::Browser.configure!

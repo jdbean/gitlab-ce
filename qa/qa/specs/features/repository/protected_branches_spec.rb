@@ -1,5 +1,5 @@
 module QA
-  describe 'branch protection support', :feature do
+  describe 'branch protection support' do
     let(:branch_name) { 'protected-branch' }
     let(:commit_message) { 'Protected push commit message' }
     let(:project) do

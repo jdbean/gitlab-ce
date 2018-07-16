@@ -1,5 +1,5 @@
 module QA
-  describe 'LDAP user login', :ldap do
+  describe 'LDAP user login', :skip, :ldap do
     before do
       Runtime::Env.user_type = 'ldap'
     end

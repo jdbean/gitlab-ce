@@ -1,5 +1,5 @@
 module QA
-  describe 'user imports a GitHub repo', :feature, :github do
+  describe 'user imports a GitHub repo', :skip, :github do
     let(:imported_project) do
       Factory::Resource::ProjectImportedFromGithub.fabricate! do |project|
         project.name = 'imported-project'
