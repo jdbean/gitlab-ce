@@ -254,6 +254,7 @@ label {
   top: 50%;
   transform: translateY(-50%);
   color: $theme-gray-600;
+  pointer-events: none;
 
   .select2-container & {
     top: auto;
