@@ -5,28 +5,26 @@
 %p.profile-settings-content
   Pick a name for the application, and we'll give you a unique #{type} token.
 
-= form_for token, url: path, method: :post, html: { class: 'js-requires-input' } do |f|
+= form_for token, url: path, method: :post do |f|
 
   = form_errors(token)
 
-  .row
-    .form-group.col-md-6
-      = f.label :name, class: 'label-bold'
-      = f.text_field :name, class: "form-control", required: true
+  .form-group.input-lg
+    = f.label :name, 'Name (Required)', class: 'label-bold'
+    = f.text_field :name, class: 'form-control'
 
-  .row
-    .form-group.col-md-6
-      = f.label :expires_at, class: 'label-bold'
-      .input-icon-wrapper
-        = f.text_field :expires_at, class: "datepicker form-control", placeholder: 'YYYY-MM-DD'
-        = icon('calendar', { class: 'input-icon-right' })
+  .form-group.input-lg
+    = f.label :expires_at, class: 'label-bold'
+    .input-icon-wrapper
+      = f.text_field :expires_at, class: 'datepicker form-control', placeholder: 'YYYY-MM-DD'
+      = icon('calendar', { class: 'input-icon-right' })
 
   .form-group
-    = f.label :scopes, class: 'label-bold'
+    = f.label :scopes, 'Scopes (Required)', class: 'label-bold'
     = render 'shared/tokens/scopes_form', prefix: 'personal_access_token', token: token, scopes: scopes
 
   .form-group
-    = f.label :project_ids, 'Projects', class: 'label-light'
+    = f.label :project_ids, 'Projects', class: 'label-bold'
     %p
       Limit this token's access to specific projects.
     = hidden_field_tag :project_ids, '', { class: 'js-project-multi-select project-multi-select', data: { order_by: 'last_activity_at', input_name: 'personal_access_token[project_ids]' } }
