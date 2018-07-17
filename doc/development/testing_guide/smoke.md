@@ -11,3 +11,7 @@ Currently, our suite consists of this basic functionality coverage:
 - Project Creation
 - Issue Creation
 - Merge Request Creation
+
+---
+
+[Return to Testing documentation](index.md)

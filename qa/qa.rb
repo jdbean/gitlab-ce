@@ -84,8 +84,10 @@ module QA
     # Test scenario entrypoints.
     #
     module Test
-      autoload :Instance, 'qa/scenario/test/instance'
-      autoload :Smoke, 'qa/scenario/test/smoke'
+      module Instance
+        autoload :All, 'qa/scenario/test/instance/all'
+        autoload :Smoke, 'qa/scenario/test/instance/smoke'
+      end
 
       module Integration
         autoload :Github, 'qa/scenario/test/integration/github'
