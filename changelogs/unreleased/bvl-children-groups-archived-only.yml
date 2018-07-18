@@ -1,0 +1,6 @@
+---
+title: Only show subgroups that have archived projects when selecting to show archived
+  projects
+merge_request: 20693
+author:
+type: changed

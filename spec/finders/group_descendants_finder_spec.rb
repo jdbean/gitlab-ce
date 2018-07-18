@@ -55,6 +55,25 @@ describe GroupDescendantsFinder do
 
         expect(finder.execute).to contain_exactly(archived_project)
       end
+
+      it 'only includes subgroups that have archived projects', :nested_groups do
+        other_subgroup = create(:group, :public, parent: create(:group))
+        _archived_project_in_other_group = create(:project, :archived, namespace: other_subgroup)
+        subgroup = create(:group, parent: group)
+        _archived_project = create(:project, :archived, namespace: subgroup)
+        _other_subgroup = create(:group, parent: group)
+
+        expect(finder.execute).to contain_exactly(subgroup)
+      end
+
+      it 'only includes subgroups that have nested archived projects', :nested_groups do
+        subgroup_with_nested_arcived_project = create(:group, parent: group)
+        sub_sub_group_with_archived_project = create(:group, parent: subgroup_with_nested_arcived_project)
+        _other_subgroup = create(:group, parent: group)
+        _archived_project = create(:project, :archived, namespace: sub_sub_group_with_archived_project)
+
+        expect(finder.execute).to contain_exactly(subgroup_with_nested_arcived_project)
+      end
     end
 
     it 'does not include archived projects' do

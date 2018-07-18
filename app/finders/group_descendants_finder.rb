@@ -61,9 +61,19 @@ class GroupDescendantsFinder
   end
 
   def direct_child_groups
-    GroupsFinder.new(current_user,
-                     parent: parent_group,
-                     all_available: true).execute
+    groups = GroupsFinder.new(current_user,
+                              parent: parent_group,
+                              all_available: true).execute
+
+    if params[:archived] == 'only'
+      groups_with_archived_projects = Group.where("EXISTS (?)", Project.where(archived: true).where('projects.namespace_id = namespaces.id').select(1))
+      groups_with_nested_archived_projects = Gitlab::GroupHierarchy.new(groups_with_archived_projects)
+        .base_and_ancestors(upto: parent_group)
+
+      groups = groups_with_nested_archived_projects.merge(groups)
+    end
+
+    groups
   end
 
   def all_visible_descendant_groups
