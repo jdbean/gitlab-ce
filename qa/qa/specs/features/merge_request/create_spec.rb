@@ -45,8 +45,8 @@ module QA
         merge_request.project = current_project
       end
 
-      expect(page).to have_content('This is a merge request with a milestone')
-      expect(page).to have_content('Great feature with milestone')
+      expect(page).to have_content('This is a merge request')
+      expect(page).to have_content('Great feature')
       expect(page).to have_content(/Opened [\w\s]+ ago/)
     end
   end

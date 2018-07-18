@@ -1,4 +1,4 @@
-describe QA::Scenario::Test::Instance do
+describe QA::Scenario::Test::Instance::Smoke do
   subject do
     Class.new(described_class) do
       tags :rspec
@@ -30,7 +30,7 @@ describe QA::Scenario::Test::Instance do
         subject.perform("test")
 
         expect(runner).to have_received(:options=)
-          .with(::File.expand_path('../../../qa/specs/features', __dir__))
+          .with(File.expand_path('../../../../qa/specs/features', __dir__))
       end
     end
 
