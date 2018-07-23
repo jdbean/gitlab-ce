@@ -23,7 +23,7 @@ describe QA::Scenario::Test::Instance::Smoke do
     end
 
     it 'has a smoke tag' do
-      expect(smoke_test.focus).to eq([:smoke])
+      expect(smoke_test.tags).to eq([:smoke])
     end
 
     context 'no paths' do
@@ -31,7 +31,7 @@ describe QA::Scenario::Test::Instance::Smoke do
         subject.perform("test")
 
         expect(runner).to have_received(:options=)
-          .with(File.expand_path('../../../../qa/scenario/specs/features', __dir__))
+          .with(File.expand_path('../../../qa/specs/features', __dir__))
       end
     end
 
