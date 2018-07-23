@@ -1,6 +1,5 @@
 describe QA::Scenario::Test::Instance::Smoke do
-  let(:smoke_test) { Class.new(described_class) { tags :smoke } }
-  let(:core_test) { Class.new(described_class) }
+  subject { Class.new(described_class) { tags :smoke } }
 
   context '#perform' do
     let(:arguments) { spy('Runtime::Scenario') }
@@ -23,7 +22,7 @@ describe QA::Scenario::Test::Instance::Smoke do
     end
 
     it 'has a smoke tag' do
-      expect(smoke_test.tags).to eq([:smoke])
+      expect(subject.tags).to eq([:smoke])
     end
 
     context 'no paths' do
@@ -31,7 +30,7 @@ describe QA::Scenario::Test::Instance::Smoke do
         subject.perform("test")
 
         expect(runner).to have_received(:options=)
-          .with(File.expand_path('../../../qa/specs/features', __dir__))
+          .with(File.expand_path('../../../../qa/specs/features', __dir__))
       end
     end
 
