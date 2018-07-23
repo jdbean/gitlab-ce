@@ -1,9 +1,6 @@
 describe QA::Scenario::Test::Instance::Smoke do
-  subject do
-    Class.new(described_class) do
-      tags :rspec
-    end
-  end
+  let(:smoke_test) { Class.new(described_class) { tags :smoke } }
+  let(:core_test) { Class.new(described_class) }
 
   context '#perform' do
     let(:arguments) { spy('Runtime::Scenario') }
@@ -25,12 +22,16 @@ describe QA::Scenario::Test::Instance::Smoke do
         .with(:gitlab_address, "hello")
     end
 
+    it 'has a smoke tag' do
+      expect(smoke_test.focus).to eq([:smoke])
+    end
+
     context 'no paths' do
       it 'should call runner with default arguments' do
         subject.perform("test")
 
         expect(runner).to have_received(:options=)
-          .with(File.expand_path('../../../../qa/specs/features', __dir__))
+          .with(File.expand_path('../../../../qa/scenario/specs/features', __dir__))
       end
     end
 

@@ -8,8 +8,19 @@ module QA
         end
       end
 
-      def perform(*_args)
-        raise NotImplementedError
+      def perform(address, *rspec_options)
+        Runtime::Scenario.define(:gitlab_address, address)
+
+        Specs::Runner.perform do |specs|
+          specs.tty = true
+          specs.tags = self.class.focus
+          specs.options =
+            if rspec_options.any?
+              rspec_options
+            else
+              File.expand_path('../../specs/features', __dir__)
+            end
+        end
       end
     end
   end
