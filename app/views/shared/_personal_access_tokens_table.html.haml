@@ -20,7 +20,7 @@
             %th Token
           %th
       %tbody
-        - active_tokens.includes(:projects).each do |token|
+        - active_tokens.each do |token|
           %tr
             %td= token.name
             %td.text-nowrap= token.created_at.to_date.to_s(:medium)

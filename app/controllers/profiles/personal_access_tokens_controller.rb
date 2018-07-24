@@ -44,7 +44,7 @@ class Profiles::PersonalAccessTokensController < Profiles::ApplicationController
     @scopes = Gitlab::Auth.available_scopes(current_user)
 
     @inactive_personal_access_tokens = finder(state: 'inactive').execute
-    @active_personal_access_tokens = finder(state: 'active').execute.order(:expires_at)
+    @active_personal_access_tokens = finder(state: 'active').execute.includes(:projects).order(:expires_at)
 
     @new_personal_access_token = PersonalAccessToken.redis_getdel(current_user.id)
   end
