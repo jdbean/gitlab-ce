@@ -56,20 +56,12 @@ describe('project_multi_select', () => {
       $select2Container = $input.select2('container');
     });
 
-    it('adds hidden inputs on value change', () => {
+    it('comma separates values', () => {
       const vals = ['1', '2', '7'];
-      const $form = $('form');
 
       $input.val(vals);
-      $form.on('submit', e => e.preventDefault());
-      $form.submit();
 
-      const inputVals = $input.parent()
-        .find('input[name="fixture[project_ids][]"]')
-        .toArray()
-        .map(x => $(x).attr('value'));
-
-      expect(inputVals).toEqual(vals);
+      expect($input.val().split(',')).toEqual(vals);
     });
 
     it('adds icon', () => {
@@ -84,7 +76,6 @@ describe('project_multi_select', () => {
 
     it('shows icon on close', () => {
       $input.select2('open');
-
       $input.select2('close');
 
       expect($select2Container).not.toHaveClass('hide-input-icon');

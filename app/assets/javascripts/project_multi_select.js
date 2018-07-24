@@ -47,23 +47,6 @@ function createQuerier(queryOptions) {
     .then(callback);
 }
 
-function removeHiddenInputs(parent) {
-  $(parent).children('.js-hidden-input').remove();
-}
-
-function addHiddenInputs(parent, val, inputItemName) {
-  const inputs = val.map(x =>
-    $(`<input type="hidden" class="js-hidden-input" name="${_.escape(inputItemName)}[]" value="${_.escape(x)}" />`),
-  );
-
-  inputs.forEach(x => $(parent).append(x));
-}
-
-function resetHiddenInputs(parent, val, inputItemName) {
-  removeHiddenInputs(parent);
-  addHiddenInputs(parent, val, inputItemName);
-}
-
 function mapIdsToProjects(val) {
   if (!val) {
     return Promise.resolve([]);
@@ -98,17 +81,6 @@ function setupSelect2Icon($select) {
   });
 }
 
-function setupSelect2Form($select) {
-  const $form = $select.parents('form').first();
-  const inputName = $select.data('inputName');
-
-  $form.on('submit', e => {
-    const val = e.val || $select.select2('val');
-
-    resetHiddenInputs($select.parent(), val, inputName);
-  });
-}
-
 function setupProjectMultiSelect(select) {
   const $select = $(select);
 
@@ -127,13 +99,12 @@ function setupProjectMultiSelect(select) {
     placeholder: 'All Projects',
     formatResult: renderProjectItem,
     formatSelection: renderProjectSelection,
-    initSelection: (element, callback) => mapIdsToProjects($(element).val()).then(callback),
+    initSelection: (element, callback) => mapIdsToProjects($select.select2('val')).then(callback),
     id: x => x.id,
   });
 
   $select.val([]);
 
-  setupSelect2Form($select);
   setupSelect2Icon($select);
 
   return select;

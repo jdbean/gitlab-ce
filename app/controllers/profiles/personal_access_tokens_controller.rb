@@ -35,7 +35,9 @@ class Profiles::PersonalAccessTokensController < Profiles::ApplicationController
   end
 
   def personal_access_token_params
-    params.require(:personal_access_token).permit(:name, :expires_at, scopes: [], project_ids: [])
+    params.require(:personal_access_token)
+      .tap { |x| x[:project_ids] = ::Gitlab::Utils.ensure_array_from_string(x[:project_ids] || []) }
+      .permit(:name, :expires_at, scopes: [], project_ids: [])
   end
 
   def set_index_vars
