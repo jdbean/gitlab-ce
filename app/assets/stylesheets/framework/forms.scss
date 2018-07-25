@@ -256,10 +256,10 @@ label {
   color: $theme-gray-600;
   pointer-events: none;
 
-  .select2-container & {
+  &.caret-down {
     top: auto;
     bottom: 0;
-    transform: translateY(-75%);
+    transform: translateY(-100%);
   }
 
   .hide-input-icon & {

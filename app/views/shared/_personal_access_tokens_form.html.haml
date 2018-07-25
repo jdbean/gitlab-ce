@@ -17,7 +17,7 @@
     = f.label :expires_at, class: 'label-bold'
     .input-icon-wrapper
       = f.text_field :expires_at, class: 'datepicker form-control', placeholder: 'YYYY-MM-DD'
-      = icon('calendar', { class: 'input-icon-right' })
+      = sprite_icon('calendar', { css_class: 'input-icon-right s12' })
 
   .form-group
     = f.label :scopes, 'Scopes (Required)', class: 'label-bold'
@@ -27,7 +27,9 @@
     = f.label 'personal_access_token[project_ids]', 'Projects', class: 'label-bold'
     %p
       Limit this token's access to specific projects.
+  .input-icon-wrapper
     = hidden_field_tag 'personal_access_token[project_ids]', '', { class: 'js-project-multi-select project-multi-select', data: { order_by: 'last_activity_at' } }
+    = sprite_icon('angle-down', css_class: 'input-icon-right caret-down')
 
   .prepend-top-default
     = f.submit "Create #{type} token", class: "btn btn-create"

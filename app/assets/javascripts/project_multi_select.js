@@ -5,10 +5,6 @@ import { renderAvatar } from './helpers/avatar_helper';
 
 const PER_PAGE = 20;
 
-function renderInputIcon() {
-  return '<i class="fa fa-angle-down input-icon-right" aria-hidden="true" data-hidden="true"></i>';
-}
-
 function renderProjectItem(project) {
   const projectTitle = project.name_with_namespace || project.name;
 
@@ -67,17 +63,17 @@ function mapIdsToProjects(val) {
  *
  * @param {JQuery} $select
  */
-function setupSelect2Icon($select) {
-  const $select2Container = $select.select2('container');
-
-  $select2Container.append(renderInputIcon());
+function setupSelect2IconEvents($select) {
+  const $iconContainer = $select.select2('container')
+    .parents('.input-icon-wrapper')
+    .first();
 
   $select.on('select2-opening', () => {
-    $select2Container.addClass('hide-input-icon');
+    $iconContainer.addClass('hide-input-icon');
   });
 
   $select.on('select2-close', () => {
-    $select2Container.removeClass('hide-input-icon');
+    $iconContainer.removeClass('hide-input-icon');
   });
 }
 
@@ -105,7 +101,7 @@ function setupProjectMultiSelect(select) {
 
   $select.val([]);
 
-  setupSelect2Icon($select);
+  setupSelect2IconEvents($select);
 
   return select;
 }

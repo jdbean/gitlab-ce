@@ -48,12 +48,12 @@ describe('project_multi_select', () => {
   });
 
   describe('projectMultiSelect', () => {
-    let $select2Container;
+    let $iconContainer;
 
     beforeEach(() => {
       projectMultiSelect();
 
-      $select2Container = $input.select2('container');
+      $iconContainer = $input.parents('.input-icon-wrapper').first();
     });
 
     it('comma separates values', () => {
@@ -64,21 +64,17 @@ describe('project_multi_select', () => {
       expect($input.val().split(',')).toEqual(vals);
     });
 
-    it('adds icon', () => {
-      expect($select2Container.children('.input-icon-right')).toHaveLength(1);
-    });
-
     it('hides icon on open', () => {
       $input.select2('open');
 
-      expect($select2Container).toHaveClass('hide-input-icon');
+      expect($iconContainer).toHaveClass('hide-input-icon');
     });
 
     it('shows icon on close', () => {
       $input.select2('open');
       $input.select2('close');
 
-      expect($select2Container).not.toHaveClass('hide-input-icon');
+      expect($iconContainer).not.toHaveClass('hide-input-icon');
     });
 
     it('queries and displays projects', (done) => {
