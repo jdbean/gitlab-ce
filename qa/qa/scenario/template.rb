@@ -1,10 +1,20 @@
 module QA
   module Scenario
     class Template
-      def self.perform(*args)
-        new.tap do |scenario|
-          yield scenario if block_given?
-          break scenario.perform(*args)
+      class << self
+        def perform(*args)
+          new.tap do |scenario|
+            yield scenario if block_given?
+            break scenario.perform(*args)
+          end
+        end
+
+        def tags(*tags)
+          @tags = tags
+        end
+
+        def focus
+          @tags.to_a
         end
       end
 

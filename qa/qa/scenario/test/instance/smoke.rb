@@ -7,7 +7,6 @@ module QA
         # including staging and on-premises installation.
         #
         class Smoke < Template
-          extend Taggable
           include Bootable
 
           tags :smoke

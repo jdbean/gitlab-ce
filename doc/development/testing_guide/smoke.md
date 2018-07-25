@@ -1,5 +1,4 @@
-Smoke Tests
-===
+# Smoke Tests
 
 It is imperative in any testing suite that we have Smoke Tests.  In short, smoke tests are will run quick sanity
 end-to-end functional tests from GitLab QA and are designed to run against the specified environment to ensure that 

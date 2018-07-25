@@ -8,7 +8,6 @@ module QA
       module Instance
         class All < Template
           include Bootable
-          extend Taggable
         end
       end
     end
