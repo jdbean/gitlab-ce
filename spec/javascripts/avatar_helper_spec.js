@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import { renderAvatar } from '~/helpers/avatar_helper';
+import { renderAvatar, renderIdenticon, IDENTICON_BG_COUNT } from '~/helpers/avatar_helper';
 
 describe('avatar_helper', () => {
   describe('renderAvatar', () => {
@@ -17,7 +17,7 @@ describe('avatar_helper', () => {
 
     it('renders an identicon if no avatarUrl', () => {
       const entity = {
-        id: 5,
+        id: 1,
         name: 'walrus',
       };
       const options = {
@@ -26,9 +26,25 @@ describe('avatar_helper', () => {
 
       const result = $(renderAvatar(entity, options));
 
-      expect(result).toHaveClass('identicon');
-      expect(result).toHaveClass(options.sizeClass);
+      expect(result).toHaveClass(`identicon ${options.sizeClass} bg2`);
       expect(result.text().trim()).toEqual('W');
+    });
+  });
+
+  describe('renderIdenticon', () => {
+    it('renders with the first letter as title and bg based on id', () => {
+      const entity = {
+        id: IDENTICON_BG_COUNT + 3,
+        name: 'Xavior',
+      };
+      const options = {
+        sizeClass: 's32',
+      };
+
+      const result = $(renderIdenticon(entity, options));
+
+      expect(result).toHaveClass(`identicon ${options.sizeClass} bg4`);
+      expect(result.text().trim()).toEqual('X');
     });
   });
 });

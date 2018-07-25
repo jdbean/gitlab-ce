@@ -11,7 +11,7 @@ function renderProjectItem(project) {
   return (
 `<div class="projects-list-item-container clearfix">
   <div class="project-item-avatar-container">
-    ${renderAvatar(project)}
+    ${renderAvatar(project, { sizeClass: 's32' })}
   </div>
   <div class="project-item-metadata-container">
     <div title="${_.escape(projectTitle)}" class="project-title">${_.escape(projectTitle)}</div>

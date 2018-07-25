@@ -1,27 +1,14 @@
 import _ from 'underscore';
 
-const DEFAULT_SIZE_CLASS = 's32';
+const DEFAULT_SIZE_CLASS = 's40';
+export const IDENTICON_BG_COUNT = 7;
 
-/**
- * This method is based on app/helpers/avatars_helper.rb#project_identicon
- */
-function getIdenticonStyles(entityId) {
-  const allowedColors = [
-    '#FFEBEE',
-    '#F3E5F5',
-    '#E8EAF6',
-    '#E3F2FD',
-    '#E0F2F1',
-    '#FBE9E7',
-    '#EEEEEE',
-  ];
-
-  const backgroundColor = allowedColors[entityId % allowedColors.length];
-
-  return `background-color: ${backgroundColor}; color: #555;`;
+export function getIdenticonBackgroundClass(entityId) {
+  const type = (entityId % IDENTICON_BG_COUNT) + 1;
+  return `bg${type}`;
 }
 
-function getIdenticonTitle(entityName) {
+export function getIdenticonTitle(entityName) {
   if (!entityName) {
     return ' ';
   }
@@ -32,10 +19,10 @@ function getIdenticonTitle(entityName) {
 export function renderIdenticon(entity, options = {}) {
   const { sizeClass = DEFAULT_SIZE_CLASS } = options;
 
-  const styles = getIdenticonStyles(entity.id);
+  const bgClass = getIdenticonBackgroundClass(entity.id);
   const title = getIdenticonTitle(entity.name);
 
-  return `<div style="${_.escape(styles)}" class="avatar identicon ${_.escape(sizeClass)}">${_.escape(title)}</div>`;
+  return `<div class="avatar identicon ${_.escape(sizeClass)} ${_.escape(bgClass)}">${_.escape(title)}</div>`;
 }
 
 export function renderAvatar(entity, options = {}) {
