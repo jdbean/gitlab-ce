@@ -22,20 +22,20 @@ describe QA::Scenario::Test::Instance::Smoke do
     end
 
     it 'has a smoke tag' do
-      expect(subject.tags).to eq([:smoke])
+      expect(subject.focus).to eq([:smoke])
     end
 
     context 'no paths' do
-      it 'should call runner with default arguments' do
+      it 'calls runner with default arguments' do
         subject.perform("test")
 
         expect(runner).to have_received(:options=)
-          .with(File.expand_path('../../../../qa/specs/features', __dir__))
+          .with(File.expand_path('../../../../../qa/specs/features', __dir__))
       end
     end
 
     context 'specifying paths' do
-      it 'should call runner with paths' do
+      it 'calls runner with paths' do
         subject.perform('test', 'path1', 'path2')
 
         expect(runner).to have_received(:options=).with(%w[path1 path2])

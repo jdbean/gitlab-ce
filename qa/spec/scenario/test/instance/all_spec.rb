@@ -12,8 +12,6 @@ describe QA::Scenario::Test::Instance::All do
       allow(runner).to receive(:perform).and_yield(runner)
     end
 
-    it 'runs smoke tests'
-
     it 'sets an address of the subject' do
       subject.perform("hello")
 
@@ -22,16 +20,16 @@ describe QA::Scenario::Test::Instance::All do
     end
 
     context 'no paths' do
-      it 'should call runner with default arguments' do
+      it 'calls runner with default arguments' do
         subject.perform("test")
 
         expect(runner).to have_received(:options=)
-          .with(::File.expand_path('../../../../qa/specs/features', __dir__))
+          .with(::File.expand_path('../../../../../qa/specs/features', __dir__))
       end
     end
 
     context 'specifying paths' do
-      it 'should call runner with paths' do
+      it 'calls runner with paths' do
         subject.perform('test', 'path1', 'path2')
 
         expect(runner).to have_received(:options=).with(%w[path1 path2])
