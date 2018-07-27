@@ -6,6 +6,7 @@ const argumentsParser = require('commander');
 const webpackConfig = require('./webpack.config.js');
 
 const ROOT_PATH = path.resolve(__dirname, '..');
+const SPECS_PATH = /^(?:\.[\\\/])?spec[\\\/]javascripts[\\\/]/;
 
 function fatalError(message) {
   console.error(chalk.red(`\nError: ${message}\n`));
@@ -34,9 +35,23 @@ const specFilters = argumentsParser
   )
   .parse(process.argv).filterSpec;
 
-if (specFilters.length) {
-  const specsPath = /^(?:\.[\\\/])?spec[\\\/]javascripts[\\\/]/;
+const createContext = (specFiles, regex, suffix) => {
+  if (specFiles.length < 1) {
+    return;
+  }
 
+  const newContext = specFiles.reduce((context, file) => {
+    const relativePath = file.replace(SPECS_PATH, '');
+    context[file] = `./${relativePath}`;
+    return context;
+  }, {});
+
+  webpackConfig.plugins.push(
+    new webpack.ContextReplacementPlugin(regex, path.join(ROOT_PATH, suffix), newContext)
+  );
+};
+
+if (specFilters.length) {
   // resolve filters
   let filteredSpecFiles = specFilters.map(filter =>
     glob
@@ -57,23 +72,12 @@ if (specFilters.length) {
     fatalError('Your filter did not match any test files.');
   }
 
-  if (!filteredSpecFiles.every(file => specsPath.test(file))) {
+  if (!filteredSpecFiles.every(file => SPECS_PATH.test(file))) {
     fatalError('Test files must be located within /spec/javascripts.');
   }
 
-  const newContext = filteredSpecFiles.reduce((context, file) => {
-    const relativePath = file.replace(specsPath, '');
-    context[file] = `./${relativePath}`;
-    return context;
-  }, {});
-
-  webpackConfig.plugins.push(
-    new webpack.ContextReplacementPlugin(
-      /spec[\\\/]javascripts$/,
-      path.join(ROOT_PATH, 'spec/javascripts'),
-      newContext
-    )
-  );
+  const CE_FILES = filteredSpecFiles.filter(file => !file.startsWith('ee'));
+  createContext(CE_FILES, /spec[\\\/]javascripts$/, 'spec/javascripts');
 }
 
 // Karma configuration
