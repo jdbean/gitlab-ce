@@ -996,7 +996,7 @@ header.header-content .dropdown-menu.frequent-items-dropdown-menu {
 
 .project-multi-select {
   .select2-choices {
-    // This is needed to override select2's custom theme when position is up
+    // !important is needed to override select2's custom theme when position is up
     background: none !important;
   }
 
@@ -1005,6 +1005,7 @@ header.header-content .dropdown-menu.frequent-items-dropdown-menu {
   }
 
   .select2-default {
+    // !important is needed to override select2's default color (which uses !important)
     color: inherit !important;
   }
 }
