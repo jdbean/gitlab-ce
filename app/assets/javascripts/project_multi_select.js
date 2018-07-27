@@ -3,19 +3,19 @@ import _ from 'underscore';
 import Api from './api';
 import { renderAvatar } from './helpers/avatar_helper';
 
-const PER_PAGE = 20;
+const PER_PAGE = 10;
 
 function renderProjectItem(project) {
   const projectTitle = project.name_with_namespace || project.name;
 
   return (
-`<div class="projects-list-item-container clearfix">
-  <div class="project-item-avatar-container">
+`<div class="frequent-items-list-item-container d-flex">
+  <div class="frequent-items-item-avatar-container">
     ${renderAvatar(project, { sizeClass: 's32' })}
   </div>
-  <div class="project-item-metadata-container">
-    <div title="${_.escape(projectTitle)}" class="project-title">${_.escape(projectTitle)}</div>
-    <div title="${_.escape(project.description)}" class="project-namespace">${_.escape(project.description)}</div>
+  <div class="frequent-items-item-metadata-container">
+    <div title="${_.escape(projectTitle)}" class="frequent-items-item-title">${_.escape(projectTitle)}</div>
+    <div title="${_.escape(project.description)}" class="frequent-items-item-namespace">${_.escape(project.description)}</div>
   </div>
 </div>`
   );
@@ -25,11 +25,11 @@ function renderProjectSelection(project) {
   const projectTitle = project.name_with_namespace || project.name;
 
   return (
-`<div class="project-inline-container">
-  <div class="project-item-avatar-container">
+`<div class="frequent-items-list-item-container d-flex">
+  <div class="frequent-items-item-avatar-container">
     ${renderAvatar(project, { sizeClass: 's16' })}
   </div>
-  <div title="${_.escape(projectTitle)}" class="project-title">${_.escape(projectTitle)}</div>
+  <div title="${_.escape(projectTitle)}" class="frequent-items-item-title">${_.escape(projectTitle)}</div>
 </div>`
   );
 }
@@ -91,7 +91,6 @@ function setupProjectMultiSelect(select) {
     multiple: true,
     closeOnSelect: false,
     dropdownCssClass: 'project-multi-select-dropdown',
-    containerCssClass: 'project-multi-select-dropdown',
     placeholder: 'All Projects',
     formatResult: renderProjectItem,
     formatSelection: renderProjectSelection,
