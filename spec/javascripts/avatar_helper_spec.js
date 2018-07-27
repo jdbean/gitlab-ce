@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import { renderAvatar, renderIdenticon, IDENTICON_BG_COUNT } from '~/helpers/avatar_helper';
 
 describe('avatar_helper', () => {
@@ -9,9 +8,9 @@ describe('avatar_helper', () => {
         avatar_url: avatarUrl,
       };
 
-      const result = $(renderAvatar(entity));
+      const result = renderAvatar(entity);
 
-      expect(result).toEqual('img');
+      expect(result).toBeMatchedBy('img');
       expect(result).toHaveAttr('src', avatarUrl);
     });
 
@@ -24,10 +23,10 @@ describe('avatar_helper', () => {
         sizeClass: 's16',
       };
 
-      const result = $(renderAvatar(entity, options));
+      const result = renderAvatar(entity, options);
 
       expect(result).toHaveClass(`identicon ${options.sizeClass} bg2`);
-      expect(result.text().trim()).toEqual('W');
+      expect(result).toHaveText(/^W$/);
     });
   });
 
@@ -41,10 +40,10 @@ describe('avatar_helper', () => {
         sizeClass: 's32',
       };
 
-      const result = $(renderIdenticon(entity, options));
+      const result = renderIdenticon(entity, options);
 
       expect(result).toHaveClass(`identicon ${options.sizeClass} bg4`);
-      expect(result.text().trim()).toEqual('X');
+      expect(result).toHaveText(/^X$/);
     });
   });
 });
