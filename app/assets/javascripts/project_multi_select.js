@@ -34,7 +34,7 @@ function renderProjectSelection(project) {
   );
 }
 
-function createQuerier(queryOptions) {
+function createQuery(queryOptions) {
   return ({ term, callback, page }) => Api.projects(term, { ...queryOptions, page })
     .then(results => ({
       results,
@@ -86,7 +86,7 @@ function setupProjectMultiSelect(select) {
   };
 
   $select.select2({
-    query: createQuerier(queryOptions),
+    query: createQuery(queryOptions),
     minimumInputLength: 0,
     multiple: true,
     closeOnSelect: false,
