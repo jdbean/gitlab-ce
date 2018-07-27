@@ -80,18 +80,18 @@ describe('project_multi_select', () => {
     it('queries and displays projects', (done) => {
       projectsResponse = Promise.resolve([200, TEST_PROJECTS]);
 
-      $input.select2('open');
-
-      setTimeout(() => {
+      $input.one('select2-loaded', () => {
         const projectTitles = $('#select2-drop')
-          .find('.project-title')
+          .find('.frequent-items-item-title')
           .toArray()
           .map(x => x.textContent);
 
         expect(projectTitles).toEqual(TEST_PROJECTS.map(x => x.name));
 
         done();
-      }, 50);
+      });
+
+      $input.select2('open');
     });
   });
 });
