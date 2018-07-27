@@ -928,10 +928,7 @@ header.header-content .dropdown-menu.frequent-items-dropdown-menu {
     max-width: 250px;
     text-overflow: ellipsis;
     white-space: nowrap;
-
-    .project-multi-select-dropdown & {
-      max-width: 100%;
-    }
+    overflow: hidden;
   }
 
   &:hover {
@@ -982,6 +979,18 @@ header.header-content .dropdown-menu.frequent-items-dropdown-menu {
 
   &.fade-out::after {
     opacity: 0;
+  }
+}
+
+.project-multi-select-dropdown {
+  .frequent-items-item-metadata-container {
+    flex: 1;
+    overflow: hidden;
+  }
+
+  .frequent-items-item-title,
+  .frequent-items-item-namespace {
+    max-width: 100%;
   }
 }
 
