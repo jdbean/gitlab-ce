@@ -383,6 +383,26 @@ class Project < ActiveRecord::Base
                                             only_integer: true,
                                             message: 'needs to be beetween 10 minutes and 1 month' }
 
+  # Paginates a collection using a `WHERE id < ?` condition.
+  #
+  # before - A project ID to use for filtering out projects with an equal or
+  #      greater ID. If no ID is given, all projects are included.
+  #
+  # limit - The maximum number of rows to include.
+  def self.paginate_in_descending_order_using_id(
+    before: nil,
+    limit: Kaminari.config.default_per_page
+  )
+    relation = order_id_desc.limit(limit)
+    relation = relation.where('projects.id < ?', before) if before
+
+    relation
+  end
+
+  def self.eager_load_namespace_and_owner
+    includes(namespace: :owner)
+  end
+
   # Returns a collection of projects that is either public or visible to the
   # logged in user.
   def self.public_or_visible_to_user(user = nil)
@@ -438,6 +458,11 @@ class Project < ActiveRecord::Base
     # query - The search query as a String.
     def search(query)
       fuzzy_search(query, [:path, :name, :description])
+    end
+
+    # Optionally limits a result set to those matching the given search query.
+    def optionally_search(query = nil)
+      query ? search(query) : all
     end
 
     def search_by_title(query)
