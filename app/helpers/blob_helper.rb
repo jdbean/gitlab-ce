@@ -1,4 +1,6 @@
 module BlobHelper
+  include SendFileUpload
+
   def highlight(blob_name, blob_content, repository: nil, plain: false)
     plain ||= blob_content.length > Blob::MAXIMUM_TEXT_HIGHLIGHT_SIZE
     highlighted = Gitlab::Highlight.highlight(blob_name, blob_content, plain: plain, repository: repository)
@@ -338,6 +340,39 @@ module BlobHelper
       edit_link_tag(text, edit_path, common_classes)
     elsif can?(current_user, :fork_project, project) && can?(current_user, :create_merge_request_in, project)
       edit_fork_button_tag(common_classes, project, text, edit_blob_fork_params(edit_path))
+    end
+  end
+
+  def send_blob(params = {})
+    headers['X-Content-Type-Options'] = 'nosniff'
+
+    return if cached_blob?
+
+    if @blob.stored_externally?
+      send_lfs_object
+    else
+      send_git_blob @repository, @blob, params
+    end
+  end
+
+  private
+
+  def send_lfs_object
+    lfs_object = find_lfs_object
+
+    if lfs_object && lfs_object.project_allowed_access?(@project)
+      send_upload(lfs_object.file, attachment: @blob.name)
+    else
+      render_404
+    end
+  end
+
+  def find_lfs_object
+    lfs_object = LfsObject.find_by_oid(@blob.lfs_oid)
+    if lfs_object && lfs_object.file.exists?
+      lfs_object
+    else
+      nil
     end
   end
 end

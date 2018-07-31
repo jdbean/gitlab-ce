@@ -5,12 +5,9 @@ class Projects::AvatarsController < Projects::ApplicationController
 
   def show
     @blob = @repository.blob_at_branch(@repository.root_ref, @project.avatar_in_git)
+
     if @blob
-      headers['X-Content-Type-Options'] = 'nosniff'
-
-      return if cached_blob?
-
-      send_git_blob @repository, @blob
+      send_blob
     else
       render_404
     end
