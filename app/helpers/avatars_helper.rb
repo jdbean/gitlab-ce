@@ -1,6 +1,5 @@
 module AvatarsHelper
   def project_icon(project_id, options = {})
-    binding.pry
     project =
       if project_id.respond_to?(:avatar_url)
         project_id

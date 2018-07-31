@@ -9,7 +9,6 @@ class Projects::RawController < Projects::ApplicationController
   before_action :authorize_download_code!
 
   def show
-    binding.pry
     @blob = @repository.blob_at(@commit.id, @path)
     if @blob
       headers['X-Content-Type-Options'] = 'nosniff'
