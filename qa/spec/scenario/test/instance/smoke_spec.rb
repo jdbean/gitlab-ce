@@ -22,9 +22,7 @@ describe QA::Scenario::Test::Instance::Smoke do
     end
 
     it 'has a smoke tag' do
-      # rubocop:disable Focus
-      expect(subject.focus).to eq([:smoke])
-      # rubocop:enable Focus
+      expect(subject.focus).to eq([:smoke]) # rubocop:disable Focus
     end
 
     context 'no paths' do
