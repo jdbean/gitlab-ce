@@ -1,6 +1,6 @@
 - empty_repo = @project.empty_repo?
 - fork_network = @project.fork_network
-.project-home-panel.text-center{ class: ("empty-project" if empty_repo) }
+.project-home-panel{ class: ("empty-project" if empty_repo) }
   .limit-container-width{ class: container_class }
     .avatar-container.s70.project-avatar
       = project_icon(@project, alt: @project.name, class: 'avatar s70 avatar-tile', width: 70, height: 70)

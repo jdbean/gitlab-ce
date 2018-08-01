@@ -149,7 +149,6 @@
     border-bottom: 1px solid $border-color;
   }
 
-  .project-avatar,
   .group-avatar {
     float: none;
     margin: 0 auto;
@@ -175,7 +174,6 @@
     }
   }
 
-  .project-home-desc,
   .group-home-desc {
     margin-left: auto;
     margin-right: auto;
@@ -699,7 +697,6 @@
 .project-stats {
   font-size: 0;
   text-align: center;
-  max-width: 100%;
   border-bottom: 1px solid $border-color;
 
   .nav {
