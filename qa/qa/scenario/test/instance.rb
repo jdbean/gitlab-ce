@@ -21,12 +21,11 @@ module QA
 
           Specs::Runner.perform do |specs|
             specs.tty = true
-            specs.tags = self.class.focus
             specs.options =
               if rspec_options.any?
                 rspec_options
               else
-                ::File.expand_path('../../specs/features', __dir__)
+                ['--tag', self.class.focus.join(','), '--', ::File.expand_path('../../specs/features', __dir__)]
               end
           end
         end
