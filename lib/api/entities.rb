@@ -43,12 +43,17 @@ module API
     class Identity < Grape::Entity
       expose :provider, :extern_uid
     end
+    
+    class Email < Grape::Entity
+      expose :id, :email
+    end
 
     class UserPublic < User
       expose :last_sign_in_at
       expose :confirmed_at
       expose :last_activity_on
       expose :email
+      expose :emails, as: :secondary_emails, using: Entities::Email
       expose :theme_id, :color_scheme_id, :projects_limit, :current_sign_in_at
       expose :identities, using: Entities::Identity
       expose :can_create_group?, as: :can_create_group
@@ -68,10 +73,6 @@ module API
       expose :message_html do |entity|
         MarkupHelper.markdown_field(entity, :message)
       end
-    end
-
-    class Email < Grape::Entity
-      expose :id, :email
     end
 
     class Hook < Grape::Entity
