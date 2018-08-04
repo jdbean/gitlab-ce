@@ -9,6 +9,19 @@ module Gitlab
     ProjectCreationError = Class.new(StandardError)
     ProjectMovedError = Class.new(NotFoundError)
 
+    class CustomActionError < StandardError
+      attr_reader :payload
+
+      def initialize(msg, payload)
+        @payload = payload
+        super(msg)
+      end
+
+      def inspect
+        "#<#{self.class.name}: '#{message}', #{payload}>"
+      end
+    end
+
     ERROR_MESSAGES = {
       upload: 'You are not allowed to upload code for this project.',
       download: 'You are not allowed to download code from this project.',
