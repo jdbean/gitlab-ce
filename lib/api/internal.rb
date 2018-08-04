@@ -7,7 +7,7 @@ module API
     helpers ::Gitlab::Identifier
 
     namespace 'internal' do
-      # Check if git command is allowed to project
+      # Check if git command is allowed for project
       #
       # Params:
       #   key_id - ssh key id for Git over SSH
@@ -52,7 +52,11 @@ module API
         begin
           access_checker.check(params[:action], params[:changes])
           @project ||= access_checker.project
-        rescue Gitlab::GitAccess::UnauthorizedError, Gitlab::GitAccess::NotFoundError => e
+        rescue Gitlab::GitAccess::UnauthorizedError => e
+          status 401
+          break { status: false, message: e.message }
+        rescue Gitlab::GitAccess::NotFoundError => e
+          status 404
           break { status: false, message: e.message }
         end
 
