@@ -52,6 +52,9 @@ module API
         begin
           access_checker.check(params[:action], params[:changes])
           @project ||= access_checker.project
+        rescue Gitlab::GitAccess::CustomActionError => e
+          status 300
+          break { status: true, message: e.message, payload: e.payload }
         rescue Gitlab::GitAccess::UnauthorizedError => e
           status 401
           break { status: false, message: e.message }

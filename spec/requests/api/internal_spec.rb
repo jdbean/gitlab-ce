@@ -398,6 +398,52 @@ describe API::Internal do
       end
     end
 
+    context "custom action" do
+      let(:access_checker) { double(Gitlab::GitAccess) }
+      let(:message) { 'CustomActionError message' }
+      let(:payload) do
+        {
+          'api_endpoints' => %w{geo/proxy_git_push_ssh/info_refs geo/proxy_git_push_ssh/push},
+          'data' => {
+            'gl_username' => 'testuser',
+            'primary_repo' => 'http://localhost:3001/testuser/repo.git'
+          }
+        }
+      end
+      let(:custom_action_error) { Gitlab::GitAccess::CustomActionError.new(message, payload) }
+
+      before do
+        project.add_guest(user)
+        expect(Gitlab::GitAccess).to receive(:new).with(
+          key,
+          project,
+          'ssh',
+          {
+            authentication_abilities: [:read_project, :download_code, :push_code],
+            namespace_path: project.namespace.name,
+            project_path: project.path,
+            redirected_path: nil
+          }
+        ).and_return(access_checker)
+        expect(access_checker).to receive(:check).with(
+          'git-receive-pack',
+          'd14d6c0abdd253381df51a723d58691b2ee1ab08 570e7b2abdd848b95f2f578043fc23bd6f6fd24d refs/heads/master'
+        ).and_raise(custom_action_error)
+      end
+
+      context "git push" do
+        it do
+          push(key, project)
+
+          expect(response).to have_gitlab_http_status(300)
+          expect(json_response['status']).to be_truthy
+          expect(json_response['message']).to eql(message)
+          expect(json_response['payload']).to eql(payload)
+          expect(user.reload.last_activity_on).to be_nil
+        end
+      end
+    end
+
     context "blocked user" do
       let(:personal_project) { create(:project, namespace: user.namespace) }
 
