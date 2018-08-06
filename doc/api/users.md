@@ -77,7 +77,7 @@ GET /users
     "id": 1,
     "username": "john_smith",
     "email": "john@example.com",
-    "secondary_emails": [
+    "secondary_email": [
 		{
 			"id": 1,
 			"email": "john+1@example.com"
@@ -118,7 +118,7 @@ GET /users
     "id": 2,
     "username": "jack_smith",
     "email": "jack@example.com",
-    "secondary_emails": [],
+    "secondary_email": [],
     "name": "Jack Smith",
     "state": "blocked",
     "avatar_url": "http://localhost:3000/uploads/user/avatar/2/index.jpg",
@@ -229,7 +229,7 @@ Parameters:
   "id": 1,
   "username": "john_smith",
   "email": "john@example.com",
-  "secondary_emails": [
+  "secondary_email": [
 		{
 			"id": 1,
 			"email": "john+1@example.com"
@@ -373,7 +373,7 @@ GET /user
   "id": 1,
   "username": "john_smith",
   "email": "john@example.com",
-  "secondary_emails": [
+  "secondary_email": [
 		{
 			"id": 1,
 			"email": "john+1@example.com"
@@ -426,7 +426,7 @@ GET /user
   "id": 1,
   "username": "john_smith",
   "email": "john@example.com",
-  "secondary_emails": [
+  "secondary_email": [
 		{
 			"id": 1,
 			"email": "john+1@example.com"
