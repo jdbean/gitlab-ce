@@ -716,6 +716,7 @@ gitlab:assets:compile:
     expire_in: 31d
     paths:
       - webpack-report/
+      - public/assets/
 
 karma:
   <<: *dedicated-no-docs-and-no-qa-pull-cache-job
