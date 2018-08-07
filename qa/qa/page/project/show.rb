@@ -32,7 +32,7 @@ module QA
         end
 
         view 'app/presenters/project_presenter.rb' do
-          element :new_file_button, "label: _('New file'),"
+          element :new_file_button, "_('New file'),"
         end
 
         def project_name
