@@ -1,13 +1,5 @@
 /* global $ */
 
-if (navigator.serviceWorker) {
-  navigator.serviceWorker.register(
-    '/serviceWorker.js', {
-      scope: '/'
-    }
-  );
-}
-
 import jQuery from 'jquery';
 import Cookies from 'js-cookie';
 import svg4everybody from 'svg4everybody';
@@ -37,6 +29,17 @@ import './milestone_select';
 import './frequent_items';
 import initBreadcrumbs from './breadcrumb';
 import initDispatcher from './dispatcher';
+
+// Register a service worker if we're on prod and our browser allows it
+if (process.env.NODE_ENV === 'production') {
+  if (navigator.serviceWorker) {
+    navigator.serviceWorker.register(
+      '/serviceWorker.js', {
+        scope: '/',
+      },
+    );
+  }
+}
 
 // expose jQuery as global (TODO: remove these)
 window.jQuery = jQuery;
