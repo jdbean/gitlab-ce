@@ -3,8 +3,6 @@
   = form_errors(@group)
 
   %fieldset
-    = render 'shared/visibility_level', f: f, visibility_level: @group.visibility_level, can_change_visibility_level: can_change_group_visibility_level?(@group), form_model: @group
-
     .form-group.row
       .offset-sm-2.col-sm-10
         = render 'shared/allow_request_access', form: f
