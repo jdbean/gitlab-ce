@@ -310,10 +310,10 @@ msgstr ""
 msgid "Add Kubernetes cluster"
 msgstr ""
 
-msgid "Add License"
+msgid "Add Readme"
 msgstr ""
 
-msgid "Add Readme"
+msgid "Add license"
 msgstr ""
 
 msgid "Add new application"
@@ -3636,6 +3636,9 @@ msgid "No files found."
 msgstr ""
 
 msgid "No labels with such name or description"
+msgstr ""
+
+msgid "No license. All rights reserved"
 msgstr ""
 
 msgid "No merge requests found"
