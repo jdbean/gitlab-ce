@@ -2,15 +2,38 @@
 /* global Flash */
 
 import $ from 'jquery';
-import { s__ } from '~/locale';
+import { s__, sprintf } from '~/locale';
 import loadingIcon from '~/vue_shared/components/loading_icon.vue';
 import DeprecatedModal from '~/vue_shared/components/deprecated_modal.vue';
+import { HIDDEN_CLASS } from '~/lib/utils/constants';
 import { getParameterByName } from '~/lib/utils/common_utils';
 import { mergeUrlParams } from '~/lib/utils/url_utility';
 
 import eventHub from '../event_hub';
-import { COMMON_STR } from '../constants';
+import {
+  COMMON_STR,
+  MAX_OVERVIEW_COUNT,
+  ACTIVE_TAB_OVERVIEW,
+  CONTENT_LIST_CLASS,
+  CARD_CLASS,
+} from '../constants';
 import groupsComponent from './groups.vue';
+
+const safelyRemoveElement = (selector, scope = document) => {
+  const targetEl = scope.querySelector(selector);
+
+  if (targetEl) {
+    targetEl.remove();
+  }
+};
+
+const safelyDisplayElement = (selector, scope = document) => {
+  const targetEl = scope.querySelector(selector);
+
+  if (targetEl) {
+    targetEl.classList.remove(HIDDEN_CLASS);
+  }
+};
 
 export default {
   components: {
@@ -19,6 +42,16 @@ export default {
     groupsComponent,
   },
   props: {
+    action: {
+      type: String,
+      required: false,
+      default: '',
+    },
+    containerId: {
+      type: String,
+      required: false,
+      default: '',
+    },
     store: {
       type: Object,
       required: true,
@@ -31,10 +64,16 @@ export default {
       type: Boolean,
       required: true,
     },
+    showPagination: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
   },
   data() {
     return {
       isLoading: true,
+      isOverview: this.action === ACTIVE_TAB_OVERVIEW,
       isSearchEmpty: false,
       searchEmptyMessage: '',
       showModal: false,
@@ -56,31 +95,28 @@ export default {
       ? COMMON_STR.GROUP_SEARCH_EMPTY
       : COMMON_STR.GROUP_PROJECT_SEARCH_EMPTY;
 
-    eventHub.$on('fetchPage', this.fetchPage);
-    eventHub.$on('toggleChildren', this.toggleChildren);
-    eventHub.$on('showLeaveGroupModal', this.showLeaveGroupModal);
-    eventHub.$on('updatePagination', this.updatePagination);
-    eventHub.$on('updateGroups', this.updateGroups);
+    eventHub.$on(`${this.action}fetchPage`, this.fetchPage);
+    eventHub.$on(`${this.action}toggleChildren`, this.toggleChildren);
+    eventHub.$on(`${this.action}showLeaveGroupModal`, this.showLeaveGroupModal);
+    eventHub.$on(`${this.action}updatePagination`, this.updatePagination);
+    eventHub.$on(`${this.action}updateGroups`, this.updateGroups);
   },
   mounted() {
     this.fetchAllGroups();
+
+    if (this.containerId) {
+      this.containerEl = document.getElementById(this.containerId);
+    }
   },
   beforeDestroy() {
-    eventHub.$off('fetchPage', this.fetchPage);
-    eventHub.$off('toggleChildren', this.toggleChildren);
-    eventHub.$off('showLeaveGroupModal', this.showLeaveGroupModal);
-    eventHub.$off('updatePagination', this.updatePagination);
-    eventHub.$off('updateGroups', this.updateGroups);
+    eventHub.$off(`${this.action}fetchPage`, this.fetchPage);
+    eventHub.$off(`${this.action}toggleChildren`, this.toggleChildren);
+    eventHub.$off(`${this.action}showLeaveGroupModal`, this.showLeaveGroupModal);
+    eventHub.$off(`${this.action}updatePagination`, this.updatePagination);
+    eventHub.$off(`${this.action}updateGroups`, this.updateGroups);
   },
   methods: {
-    fetchGroups({
-      parentId,
-      page,
-      filterGroupsBy,
-      sortBy,
-      archived,
-      updatePagination,
-    }) {
+    fetchGroups({ parentId, page, filterGroupsBy, sortBy, archived, updatePagination }) {
       return this.service
         .getGroups(parentId, page, filterGroupsBy, sortBy, archived)
         .then(res => {
@@ -99,10 +135,11 @@ export default {
         });
     },
     fetchAllGroups() {
-      const page = getParameterByName('page') || null;
-      const sortBy = getParameterByName('sort') || null;
-      const archived = getParameterByName('archived') || null;
-      const filterGroupsBy = getParameterByName('filter') || null;
+      const { isOverview } = this;
+      const page = (!isOverview && getParameterByName('page')) || null;
+      const sortBy = (!isOverview && getParameterByName('sort')) || null;
+      const archived = (!isOverview && getParameterByName('archived')) || null;
+      const filterGroupsBy = (!isOverview && getParameterByName('filter')) || null;
 
       this.isLoading = true;
       // eslint-disable-next-line promise/catch-or-return
@@ -164,14 +201,20 @@ export default {
         parentGroup.isOpen = false;
       }
     },
+    showCard() {
+      safelyDisplayElement(CARD_CLASS, this.containerEl);
+    },
+    showCardFooter() {
+      safelyDisplayElement('.card-footer', this.containerEl);
+    },
     showLeaveGroupModal(group, parentGroup) {
+      const { fullName } = group;
       this.targetGroup = group;
       this.targetParentGroup = parentGroup;
       this.showModal = true;
-      this.groupLeaveConfirmationMessage = s__(
-        `GroupsTree|Are you sure you want to leave the "${
-          group.fullName
-        }" group?`,
+      this.groupLeaveConfirmationMessage = sprintf(
+        s__('GroupsTree|Are you sure you want to leave the "%{fullName}" group?'),
+        { fullName },
       );
     },
     hideLeaveGroupModal() {
@@ -197,15 +240,41 @@ export default {
           this.targetGroup.isBeingRemoved = false;
         });
     },
+    showEmptyState() {
+      if (this.isOverview) {
+        safelyRemoveElement(CARD_CLASS, this.containerEl);
+      } else {
+        safelyRemoveElement(CONTENT_LIST_CLASS, this.containerEl);
+        safelyDisplayElement('.empty-state', this.containerEl);
+      }
+    },
     updatePagination(headers) {
       this.store.setPaginationInfo(headers);
     },
     updateGroups(groups, fromSearch) {
-      this.isSearchEmpty = groups ? groups.length === 0 : false;
+      const hasGroups = groups && groups.length > 0;
+      this.isSearchEmpty = !hasGroups;
+
       if (fromSearch) {
         this.store.setSearchedGroups(groups);
       } else {
         this.store.setGroups(groups);
+      }
+
+      if (this.action) {
+        if (this.isOverview) {
+          safelyRemoveElement('.loading-container', this.containerEl);
+
+          if (this.pageInfo.total > MAX_OVERVIEW_COUNT) {
+            this.showCardFooter();
+          }
+        }
+
+        if (!hasGroups && !fromSearch) {
+          this.showEmptyState();
+        } else {
+          this.showCard();
+        }
       }
     },
   },
@@ -226,6 +295,8 @@ export default {
       :search-empty="isSearchEmpty"
       :search-empty-message="searchEmptyMessage"
       :page-info="pageInfo"
+      :action="action"
+      :show-pagination="showPagination"
     />
     <deprecated-modal
       v-show="showModal"

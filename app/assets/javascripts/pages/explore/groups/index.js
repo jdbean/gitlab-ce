@@ -1,10 +1,10 @@
 import GroupsList from '~/groups_list';
 import Landing from '~/landing';
-import initGroupsList from '../../../groups';
+import createGroupTree from '~/groups';
 
 document.addEventListener('DOMContentLoaded', () => {
   new GroupsList(); // eslint-disable-line no-new
-  initGroupsList();
+  createGroupTree();
   const landingElement = document.querySelector('.js-explore-groups-landing');
   if (!landingElement) return;
   const exploreGroupsLanding = new Landing(
