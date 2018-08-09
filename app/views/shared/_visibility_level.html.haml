@@ -5,7 +5,7 @@
     = f.label :visibility_level, _('Visibility level'), class: 'label-bold mb-0'
     %p
       =_('Who can see this group?')
-      = link_to _('Check the documentation'), help_page_path("public_access/public_access")
+      = link_to _('Check the documentation'), help_page_path("public_access/public_access"), target: '_blank'
   %div{ :class => (with_label ? "col-sm-10" : "col-sm-12") }
     - if can_change_visibility_level
       = render('shared/visibility_radios', model_method: :visibility_level, form: f, selected_level: visibility_level, form_model: form_model)
