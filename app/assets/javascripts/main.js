@@ -30,15 +30,13 @@ import './frequent_items';
 import initBreadcrumbs from './breadcrumb';
 import initDispatcher from './dispatcher';
 
-// Register a service worker if we're on prod and our browser allows it
-if (process.env.NODE_ENV === 'production') {
-  if (navigator.serviceWorker) {
-    navigator.serviceWorker.register(
-      '/serviceWorker.js', {
-        scope: '/',
-      },
-    );
-  }
+// Register a service worker if our browser allows it
+if (navigator.serviceWorker) {
+  navigator.serviceWorker.register(
+    '/serviceWorker.js', {
+      scope: '/',
+    },
+  );
 }
 
 // expose jQuery as global (TODO: remove these)
