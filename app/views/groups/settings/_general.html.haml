@@ -5,18 +5,15 @@
   %fieldset
     .row
       .form-group.col-md-9
-        = f.label :name, class: 'label-bold' do
-          Group name
+        = f.label :name, _('Group name'), class: 'label-bold'
         = f.text_field :name, class: 'form-control'
 
       .form-group.col-md-3
-        = f.label :id, class: 'label-bold' do
-          Group ID
+        = f.label :id, _('Group ID'), class: 'label-bold'
         = f.text_field :id, class: 'form-control', readonly: true
 
     .form-group
-      = f.label :description, class: 'label-bold' do
-        Group description (optional)
+      = f.label :description, _('Group description (optional)'), class: 'label-bold'
       = f.text_area :description, class: 'form-control', rows: 3, maxlength: 250
 
     = render_if_exists 'shared/repository_size_limit_setting', form: f, type: :group
@@ -25,7 +22,7 @@
       .col-sm-12
         .avatar-container.s90
           = group_icon(@group, alt: '', class: 'avatar group-avatar s90')
-        .div= f.label :avatar, 'Group avatar', class: 'label-bold'
+        .div= f.label :avatar, _('Group avatar'), class: 'label-bold'
         = render 'shared/choose_group_avatar_button', f: f
         - if @group.avatar?
           %hr
@@ -33,4 +30,4 @@
 
     = render 'shared/visibility_level', f: f, visibility_level: @group.visibility_level, can_change_visibility_level: can_change_group_visibility_level?(@group), form_model: @group
 
-  = f.submit 'Save changes', class: 'btn btn-success'
+  = f.submit _('Save changes'), class: 'btn btn-success'
