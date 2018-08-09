@@ -9,6 +9,7 @@ describe 'projects/_home_panel' do
 
       allow(view).to receive(:current_user).and_return(user)
       allow(view).to receive(:can?).with(user, :read_project, project).and_return(false)
+      allow(project).to receive(:license_anchor_data).and_return(false)
     end
 
     context 'when user is signed in' do
@@ -63,6 +64,7 @@ describe 'projects/_home_panel' do
 
       allow(view).to receive(:current_user).and_return(user)
       allow(view).to receive(:can?).with(user, :read_project, project).and_return(false)
+      allow(project).to receive(:license_anchor_data).and_return(false)
     end
 
     context 'has no badges' do
@@ -118,6 +120,7 @@ describe 'projects/_home_panel' do
       assign(:project, project)
 
       allow(view).to receive(:current_user).and_return(user)
+      allow(project).to receive(:license_anchor_data).and_return(false)
     end
 
     context 'user can read project' do

@@ -197,6 +197,61 @@
   }
 }
 
+.project-home-panel {
+  padding-top: $gl-padding-8;
+  padding-bottom: $gl-padding-24;
+
+  .project-title-row {
+    margin-right: $gl-padding-8;
+  }
+
+  .project-avatar {
+    width: $project-title-row-height;
+    flex-shrink: 0;
+    flex-basis: $project-title-row-height;
+    margin: 0 $gl-padding-8 0 0;
+  }
+
+  .project-title {
+    font-size: 20px;
+    line-height: $project-title-row-height;
+    font-weight: bold;
+  }
+
+  .project-metadata {
+    font-weight: normal;
+    font-size: 14px;
+    line-height: $gl-btn-line-height;
+    color: $gl-text-color-secondary;
+
+    .icon {
+      margin-right: $gl-padding-4;
+      font-size: 16px;
+    }
+
+    .project-visibility,
+    .project-license,
+    .project-tag-list {
+      margin-right: $gl-padding-8;
+    }
+
+    .project-license {
+      .btn {
+        line-height: 0;
+        border-width: 0;
+      }
+    }
+
+    .project-tag-list,
+    .project-license {
+      .icon {
+        position: relative;
+        top: 2px;
+      }
+    }
+  }
+}
+
 .nav > .project-repo-buttons {
   margin-top: 0;
 }

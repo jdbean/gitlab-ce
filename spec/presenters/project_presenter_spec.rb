@@ -311,7 +311,7 @@ describe ProjectPresenter do
           allow(project.repository).to receive(:license_blob).and_return(nil)
 
           expect(presenter.license_anchor_data).to have_attributes(enabled: false,
-                                                                   label: 'Add License',
+                                                                   label: 'Add license',
                                                                    link: presenter.add_license_path)
         end
       end

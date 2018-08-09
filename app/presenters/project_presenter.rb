@@ -12,6 +12,7 @@ class ProjectPresenter < Gitlab::View::Presenter::Delegated
   presents :project
 
   AnchorData = Struct.new(:enabled, :label, :link, :class_modifier)
+  MAX_TAGS_TO_SHOW = 3
 
   def statistics_anchors(show_auto_devops_callout:)
     [
@@ -22,7 +23,6 @@ class ProjectPresenter < Gitlab::View::Presenter::Delegated
       commits_anchor_data,
       branches_anchor_data,
       tags_anchor_data,
-      license_anchor_data,
       gitlab_ci_anchor_data,
       autodevops_anchor_data(show_auto_devops_callout: show_auto_devops_callout),
       kubernetes_cluster_anchor_data
@@ -33,7 +33,6 @@ class ProjectPresenter < Gitlab::View::Presenter::Delegated
     [
       readme_anchor_data,
       changelog_anchor_data,
-      license_anchor_data,
       contribution_guide_anchor_data,
       autodevops_anchor_data(show_auto_devops_callout: show_auto_devops_callout),
       kubernetes_cluster_anchor_data,
@@ -57,7 +56,6 @@ class ProjectPresenter < Gitlab::View::Presenter::Delegated
     [
       new_file_anchor_data,
       readme_anchor_data,
-      license_anchor_data,
       autodevops_anchor_data,
       kubernetes_cluster_anchor_data
     ].compact.reject { |item| item.enabled }
@@ -245,14 +243,20 @@ class ProjectPresenter < Gitlab::View::Presenter::Delegated
   end
 
   def license_anchor_data
-    if current_user && can_current_user_push_to_default_branch? && repository.license_blob.blank?
-      AnchorData.new(false,
-                     _('Add License'),
-                     add_license_path)
-    elsif repository.license_blob.present?
+    if repository.license_blob.present?
       AnchorData.new(true,
                      license_short_name,
                      license_path)
+    else
+      if current_user && can_current_user_push_to_default_branch?
+        AnchorData.new(false,
+                       _('Add license'),
+                       add_license_path)
+      else
+        AnchorData.new(false,
+                       _('No license. All rights reserved'),
+                       nil)
+      end
     end
   end
 
@@ -312,6 +316,22 @@ class ProjectPresenter < Gitlab::View::Presenter::Delegated
                      _('Set up Koding'),
                      add_koding_stack_path)
     end
+  end
+
+  def tags_to_show
+    project.tag_list.take(MAX_TAGS_TO_SHOW)
+  end
+
+  def count_of_extra_tags_not_shown
+    if project.tag_list.count > MAX_TAGS_TO_SHOW
+      project.tag_list.count - MAX_TAGS_TO_SHOW
+    else
+      0
+    end
+  end
+
+  def has_extra_tags?
+    count_of_extra_tags_not_shown > 0
   end
 
   private
