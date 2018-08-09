@@ -16,8 +16,7 @@
 
     .form-group
       = f.label :description, class: 'label-bold' do
-        Group description
-        %span.light (optional)
+        Group description (optional)
       = f.text_area :description, class: 'form-control', rows: 3, maxlength: 250
 
     = render_if_exists 'shared/repository_size_limit_setting', form: f, type: :group
