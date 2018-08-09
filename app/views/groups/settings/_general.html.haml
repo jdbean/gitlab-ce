@@ -22,7 +22,7 @@
       .col-sm-12
         .avatar-container.s90
           = group_icon(@group, alt: '', class: 'avatar group-avatar s90')
-        .div= f.label :avatar, _('Group avatar'), class: 'label-bold'
+        = f.label :avatar, _('Group avatar'), class: 'label-bold d-block'
         = render 'shared/choose_group_avatar_button', f: f
         - if @group.avatar?
           %hr
