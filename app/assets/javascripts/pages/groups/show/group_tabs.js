@@ -61,6 +61,8 @@ export default class GroupTabs extends UserTabs {
     const action = $target.data('action') || $target.data('targetSection');
     const source = $target.attr('href') || $target.data('targetPath');
 
+    document.querySelector('.js-nav-group-filter-form').action = source;
+
     this.setTab(action);
     return this.setCurrentAction(source);
   }
