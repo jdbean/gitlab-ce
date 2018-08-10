@@ -25,12 +25,6 @@ export default class GroupTabs extends UserTabs {
       .off('shown.bs.tab', '.nav-links a[data-toggle="tab"]')
       .on('shown.bs.tab', '.nav-links a[data-toggle="tab"]', event => this.tabShown(event))
       .on('click', '.card-footer a[data-action]', event => this.onCardFooterLinkClick(event));
-
-    this.debounceOverviewFilterInput = _.debounce(
-      this.onOverviewFilterInput.bind(this),
-      WAIT_INTERVAL,
-    );
-    this.$parentEl.on('input', '#overview input[name=filter]', this.debounceOverviewFilterInput);
   }
 
   onCardFooterLinkClick(e) {
@@ -40,20 +34,6 @@ export default class GroupTabs extends UserTabs {
 
     this.tabShown(e);
     this.activateTab(action);
-  }
-
-  onOverviewFilterInput(e) {
-    const { targetSection } = e.target.dataset;
-    const searchQuery = e.target.value;
-    const targetInputEl = document.querySelector('.nav-controls input[name=filter]');
-
-    targetInputEl.value = searchQuery;
-    this.tabShown(e);
-    this.activateTab(targetSection);
-    setTimeout(() => {
-      targetInputEl.dispatchEvent(new Event('input'));
-      targetInputEl.focus();
-    }, 250);
   }
 
   tabShown(event) {
