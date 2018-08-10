@@ -5,6 +5,6 @@
       %span
         Require all users in this group to setup Two-factor authentication
 .form-group
-  .form-check
-    = f.text_field :two_factor_grace_period, class: 'form-control'
-    .form-text.text-muted Amount of time (in hours) that users are allowed to skip forced configuration of two-factor authentication
+  = f.label :two_factor_grace_period, _('Time before enforced'), class: 'label-bold'
+  = f.text_field :two_factor_grace_period, class: 'form-control w-25'
+  .form-text.text-muted Amount of time (in hours) that users are allowed to skip forced configuration of two-factor authentication
