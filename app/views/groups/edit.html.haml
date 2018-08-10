@@ -3,12 +3,12 @@
 - expanded = Rails.env.test?
 
 
-%section.settings.gs-general.no-animate#js-general-settings{ class: ('expanded' if expanded) }
+%section.settings.gs-general.no-animate#js-general-settings{ class: ('expanded') }
   .settings-header
     %h4.js-settings-toggle.js-settings-toggle-trigger-only
       = _('Naming, visibility')
     %button.btn.js-settings-toggle{ type: 'button' }
-      = expanded ? _('Collapse') : _('Expand')
+      = _('Collapse')
     %p
       = _('Update your group name, description, avatar, and visibility.')
   .settings-content
