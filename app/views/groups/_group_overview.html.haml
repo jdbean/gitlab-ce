@@ -1,4 +1,4 @@
-- if params[:filter].blank? && !@has_children
+- if !@has_children
   = render "shared/groups/empty_state"
 - else
   #js-groups-overview-children-tree
