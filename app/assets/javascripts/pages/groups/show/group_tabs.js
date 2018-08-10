@@ -164,7 +164,19 @@ export default class GroupTabs extends UserTabs {
 
     this.hideSearchBar(isOverview);
 
-    if (isOverview) return;
+    if (isOverview) {
+      const overviewInputEls = document.querySelectorAll(
+        '.js-overview-group-filter-form .js-groups-list-filter',
+      );
+
+      overviewInputEls.forEach(inputEl => {
+        const el = inputEl;
+
+        el.value = '';
+      });
+
+      return;
+    }
 
     const containerEl = document.getElementById(action);
     const form = document.querySelector('form#group-filter-form');

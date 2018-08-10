@@ -8,7 +8,7 @@
       .card-header
         %h4.card-title.inline
           = _('Subgroups and projects')
-        = render "shared/groups/search_form", search_id: 'overview-children', target_section: 'subgroups_and_projects', target_path: group_subgroups_and_projects_path, css_classes: 'append-right-10 pull-right'
+        = render "shared/groups/search_form", search_id: 'overview-children', target_section: 'subgroups_and_projects', target_path: group_subgroups_and_projects_path, css_classes: 'js-overview-group-filter-form pull-right'
       %ul.content-list.subgroups-and-projects
         .js-groups-list-holder{ data: { hide_projects: 'false', group_id: group.id, path: group_path(group) } }
       .card-footer.text-center.hidden
@@ -22,7 +22,7 @@
       .card-header
         %h4.card-title.inline
           = _('Shared projects')
-        = render "shared/groups/search_form", search_id: 'overview-shared', target_section: 'shared', target_path: group_shared_path, css_classes: 'append-right-10 pull-right'
+        = render "shared/groups/search_form", search_id: 'overview-shared', target_section: 'shared', target_path: group_shared_path, css_classes: 'js-overview-group-filter-form pull-right'
       %ul.content-list.shared-projects
         .js-groups-list-holder{ data: { hide_projects: 'false', group_id: group.id, path: group_path(group) } }
       .card-footer.text-center.hidden
