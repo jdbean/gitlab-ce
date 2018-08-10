@@ -165,6 +165,7 @@ export default {
       v-if="group.isOpen && hasChildren"
       :parent-group="group"
       :groups="group.children"
+      :action="action"
     />
   </li>
 </template>
