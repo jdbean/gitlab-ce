@@ -94,10 +94,12 @@ export default class GroupTabs extends UserTabs {
           {
             elId: 'js-groups-overview-children-tree',
             endpoint: this.getEndpoint(`${ACTIVE_TAB_OVERVIEW}-children`),
+            subAction: 'overview-children',
           },
           {
             elId: 'js-groups-overview-shared-tree',
             endpoint: this.getEndpoint(`${ACTIVE_TAB_OVERVIEW}-shared`),
+            subAction: 'overview-shared',
           },
         );
         break;
@@ -112,8 +114,9 @@ export default class GroupTabs extends UserTabs {
     this.toggleLoading(true);
 
     treesToLoad.forEach(tree => {
-      const { elId, endpoint } = tree;
-      createGroupTree(elId, endpoint, action, isSubTree);
+      const { elId, endpoint, subAction } = tree;
+      const treeAction = subAction || action;
+      createGroupTree(elId, endpoint, treeAction, isSubTree);
     });
     this.loaded[action] = true;
 

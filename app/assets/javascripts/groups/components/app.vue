@@ -13,7 +13,8 @@ import eventHub from '../event_hub';
 import {
   COMMON_STR,
   MAX_OVERVIEW_COUNT,
-  ACTIVE_TAB_OVERVIEW,
+  ACTIVE_TAB_OVERVIEW_CHILDREN,
+  ACTIVE_TAB_OVERVIEW_SHARED,
   CONTENT_LIST_CLASS,
   CARD_CLASS,
 } from '../constants';
@@ -73,7 +74,7 @@ export default {
   data() {
     return {
       isLoading: true,
-      isOverview: this.action === ACTIVE_TAB_OVERVIEW,
+      isOverview: [ACTIVE_TAB_OVERVIEW_CHILDREN, ACTIVE_TAB_OVERVIEW_SHARED].includes(this.action),
       isSearchEmpty: false,
       searchEmptyMessage: '',
       showModal: false,
