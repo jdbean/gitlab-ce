@@ -4,12 +4,13 @@ module Gitlab
       class InstallCommand
         include BaseCommand
 
-        attr_reader :name, :files, :chart, :version, :repository
+        attr_reader :name, :files, :chart, :rbac_create, :version, :repository
 
-        def initialize(name:, chart:, files:, version: nil, repository: nil)
+        def initialize(name:, chart:, files:, rbac_create: false, version: nil, repository: nil)
           @name = name
           @chart = chart
           @version = version
+          @rbac_create = rbac_create
           @files = files
           @repository = repository
         end
@@ -33,11 +34,17 @@ module Gitlab
         end
 
         def script_command
-          init_flags = "--name #{name}#{optional_tls_flags}#{optional_version_flag}" \
+          init_flags = "--name #{name}#{optional_tls_flags}#{optional_version_flag}#{optional_rbac_create_flag}" \
             " --namespace #{Gitlab::Kubernetes::Helm::NAMESPACE}" \
             " -f /data/helm/#{name}/config/values.yaml"
 
           "helm install #{chart} #{init_flags} >/dev/null\n"
+        end
+
+        def optional_rbac_create_flag
+          # jupyterhub helm chart is using rbac.enabled
+          #   https://github.com/jupyterhub/zero-to-jupyterhub-k8s/tree/master/jupyterhub
+          ' --set rbac.create=true,rbac.enabled=true' if rbac_create
         end
 
         def optional_version_flag

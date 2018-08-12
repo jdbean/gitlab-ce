@@ -3,14 +3,17 @@ require 'rails_helper'
 describe Gitlab::Kubernetes::Helm::InstallCommand do
   let(:files) { { 'ca.pem': 'some file content' } }
   let(:repository) { 'https://repository.example.com' }
+  let(:rbac_create) { false }
   let(:version) { '1.2.3' }
 
   let(:install_command) do
     described_class.new(
       name: 'app-name',
       chart: 'chart-name',
+      rbac_create: rbac_create,
       files: files,
-      version: version, repository: repository
+      version: version,
+      repository: repository
     )
   end
 
@@ -23,6 +26,20 @@ describe Gitlab::Kubernetes::Helm::InstallCommand do
       helm repo add app-name https://repository.example.com
       helm install chart-name --name app-name --tls --tls-ca-cert /data/helm/app-name/config/ca.pem --tls-cert /data/helm/app-name/config/cert.pem --tls-key /data/helm/app-name/config/key.pem --version 1.2.3 --namespace gitlab-managed-apps -f /data/helm/app-name/config/values.yaml >/dev/null
       EOS
+    end
+  end
+
+  context 'when rbac_create is true' do
+    let(:rbac_create) { true }
+
+    it_behaves_like 'helm commands' do
+      let(:commands) do
+        <<~EOS
+        helm init --client-only >/dev/null
+        helm repo add app-name https://repository.example.com
+        helm install chart-name --name app-name --tls --tls-ca-cert /data/helm/app-name/config/ca.pem --tls-cert /data/helm/app-name/config/cert.pem --tls-key /data/helm/app-name/config/key.pem --version 1.2.3 --set rbac.create=true,rbac.enabled=true --namespace gitlab-managed-apps -f /data/helm/app-name/config/values.yaml >/dev/null
+        EOS
+      end
     end
   end
 
