@@ -12,6 +12,14 @@ describe IssuableCollections do
       def finder_type
         IssuesFinder
       end
+
+      def controller_name
+        'issues'
+      end
+
+      def action_name
+        'index'
+      end
     end
 
     controller = klass.new
