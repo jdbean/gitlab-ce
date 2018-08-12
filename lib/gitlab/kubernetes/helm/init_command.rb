@@ -4,11 +4,12 @@ module Gitlab
       class InitCommand
         include BaseCommand
 
-        attr_reader :name, :files
+        attr_reader :name, :files, :service_account_name
 
-        def initialize(name:, files:)
+        def initialize(name:, files:, service_account_name: nil)
           @name = name
           @files = files
+          @service_account_name = service_account_name
         end
 
         def generate_script
@@ -25,7 +26,11 @@ module Gitlab
             " --tiller-tls-cert #{files_dir}/cert.pem" \
             " --tiller-tls-key #{files_dir}/key.pem"
 
-          "helm init #{tls_flags} >/dev/null"
+          "helm init #{tls_flags}#{optional_service_account_flag} >/dev/null"
+        end
+
+        def optional_service_account_flag
+          " --service-account #{service_account_name}" if service_account_name
         end
       end
     end
