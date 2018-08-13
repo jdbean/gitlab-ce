@@ -166,19 +166,21 @@ describe SubmoduleHelper do
       let(:project) { create(:project, group: group) }
       let(:commit_id) { sample_commit[:id] }
 
+      def expect_relative_link_to_resolve_to(relative_path, expected_path)
+        result = relative_self_links(relative_path, commit_id, project)
+        expect(result).to eq([expected_path, "#{expected_path}/tree/#{commit_id}"])
+      end
+
       it 'one level down' do
-        result = relative_self_links('../test.git', commit_id, project)
-        expect(result).to eq(["/#{group.path}/test", "/#{group.path}/test/tree/#{commit_id}"])
+        expect_relative_link_to_resolve_to('../test.git', "/#{group.path}/test")
       end
 
       it 'with trailing whitespace' do
-        result = relative_self_links('../test.git ', commit_id, project)
-        expect(result).to eq(["/#{group.path}/test", "/#{group.path}/test/tree/#{commit_id}"])
+        expect_relative_link_to_resolve_to('../test.git ', "/#{group.path}/test")
       end
 
       it 'two levels down with namespace and repo' do
-        result = relative_self_links('../../baz/test.git', commit_id, project)
-        expect(result).to eq(["/baz/test", "/baz/test/tree/#{commit_id}"])
+        expect_relative_link_to_resolve_to('../../baz/test.git ', "/baz/test")
       end
 
       context 'subgroup' do
@@ -188,19 +190,20 @@ describe SubmoduleHelper do
         let(:frontend_group) { create(:group, name: "fronetend group", path: "frontend") }
         let(:css) { create(:group, parent: frontend_group, name: "css", path: "css") }
 
-        it "handles referencing ancestor group's project" do
-          result = relative_self_links('../../../top-group/test.git', commit_id, sub_project)
-          expect(result).to eq(["/#{group.path}/test", "/#{group.path}/test/tree/#{commit_id}"])
+        context 'project in sub group' do
+          let(:project) { sub_project }
+
+          it "handles referencing ancestor group's project" do
+            expect_relative_link_to_resolve_to('../../../top-group/test.git', "/#{group.path}/test")
+          end
         end
 
         it "handles referencing descendent group's project" do
-          result = relative_self_links('../sub-group/test.git', commit_id, project)
-          expect(result).to eq(["/#{sub_group.full_path}/test", "/#{sub_group.full_path}/test/tree/#{commit_id}"])
+          expect_relative_link_to_resolve_to('../sub-group/test.git', "/#{sub_group.full_path}/test")
         end
 
         it "handles referencing another top group's project" do
-          result = relative_self_links('../../frontend/css/test.git', commit_id, project)
-          expect(result).to eq(["/#{css.full_path}/test", "/#{css.full_path}/test/tree/#{commit_id}"])
+          expect_relative_link_to_resolve_to('../../frontend/css/test.git', "/#{css.full_path}/test")
         end
       end
 
@@ -209,18 +212,19 @@ describe SubmoduleHelper do
         let(:project) { create(:project, namespace: user.namespace) }
 
         it 'one level down with personal project' do
-          result = relative_self_links('../test.git', commit_id, project)
-          expect(result).to eq(["/#{user.username}/test", "/#{user.username}/test/tree/#{commit_id}"])
+          expect_relative_link_to_resolve_to('../test.git', "/#{user.username}/test")
         end
       end
 
-      context 'invalid relative paths' do
-        it 'results in no namespace' do
+      context 'repo path resolves to be located at root (no namespace)' do
+        it 'returns nil' do
           result = relative_self_links('../../test.git', commit_id, project)
           expect(result).to eq([nil, nil])
         end
+      end
 
-        it 'tries to go one level deeper' do
+      context 'repo path resolves to be located underneath current project path' do
+        it 'returns nil because it is not possible to have repo nested under another repo' do
           result = relative_self_links('./test.git', commit_id, project)
           expect(result).to eq([nil, nil])
         end
