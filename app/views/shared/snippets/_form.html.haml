@@ -14,7 +14,12 @@
 
     = render 'shared/form_elements/description', model: @snippet, project: @project, form: f
 
-    = render 'shared/visibility_level', f: f, visibility_level: @snippet.visibility_level, can_change_visibility_level: true, form_model: @snippet
+    .form-group.row
+      .col-sm-2.col-form-label
+        Visibility level
+        = link_to icon('question-circle'), help_page_path("public_access/public_access")
+      .col-sm-10
+        = render 'shared/visibility_level', f: f, visibility_level: @snippet.visibility_level, can_change_visibility_level: true, form_model: @snippet, with_label: false
 
     .file-editor
       .form-group.row
