@@ -4,6 +4,8 @@ module Gitlab
   module GithubImport
     module Importer
       class IssueImporter
+        include Gitlab::Import::DatabaseHelpers
+
         attr_reader :project, :issue, :client, :user_finder, :milestone_finder,
                     :issuable_finder
 
@@ -55,7 +57,7 @@ module Gitlab
             updated_at: issue.updated_at
           }
 
-          GithubImport.insert_and_return_id(attributes, project.issues)
+          insert_and_return_id(attributes, project.issues)
         rescue ActiveRecord::InvalidForeignKey
           # It's possible the project has been deleted since scheduling this
           # job. In this case we'll just skip creating the issue.

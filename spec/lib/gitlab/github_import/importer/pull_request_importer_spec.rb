@@ -80,7 +80,7 @@ describe Gitlab::GithubImport::Importer::PullRequestImporter, :clean_gitlab_redi
       end
 
       it 'imports the pull request with the pull request author as the merge request author' do
-        expect(Gitlab::GithubImport)
+        expect(importer)
           .to receive(:insert_and_return_id)
           .with(
             {
@@ -125,7 +125,7 @@ describe Gitlab::GithubImport::Importer::PullRequestImporter, :clean_gitlab_redi
           .with(pull_request)
           .and_return(user.id)
 
-        expect(Gitlab::GithubImport)
+        expect(importer)
           .to receive(:insert_and_return_id)
           .with(
             {
@@ -171,7 +171,7 @@ describe Gitlab::GithubImport::Importer::PullRequestImporter, :clean_gitlab_redi
           .to receive(:source_branch)
           .and_return('master')
 
-        expect(Gitlab::GithubImport)
+        expect(importer)
           .to receive(:insert_and_return_id)
           .with(
             {
@@ -209,7 +209,7 @@ describe Gitlab::GithubImport::Importer::PullRequestImporter, :clean_gitlab_redi
           .with(pull_request)
           .and_return(user.id)
 
-        expect(Gitlab::GithubImport)
+        expect(importer)
           .to receive(:insert_and_return_id)
           .and_raise(ActiveRecord::InvalidForeignKey, 'invalid foreign key')
 
