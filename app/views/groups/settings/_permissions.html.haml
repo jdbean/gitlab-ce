@@ -17,12 +17,8 @@
           %br
           %span.text-muted= share_with_group_lock_help_text(@group)
 
-    %h5 Large File Storage
     = render 'groups/settings/lfs', f: f
-
-    %h5 Two-factor authentication
     = render 'groups/settings/two_factor_auth', f: f
-
     = render_if_exists 'groups/member_lock_setting', f: f, group: @group
 
   = f.submit _('Save changes'), class: 'btn btn-success mt-4 js-dirty-submit'
