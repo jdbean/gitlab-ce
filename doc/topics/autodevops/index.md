@@ -231,7 +231,8 @@ NOTE: **Note:**
 If you are a GitLab Administrator, you can enable Auto DevOps instance wide
 in **Admin Area > Settings > Continuous Integration and Deployment**. Doing that,
 all the projects that haven't explicitly set an option will have Auto DevOps
-enabled by default.
+enabled by default. From version 10.3 onwards this setting will already be
+enabled by default and you can disable it if you choose.
 
 NOTE: **Note:**
 There is also a feature flag to enable Auto DevOps to a percentage of projects
