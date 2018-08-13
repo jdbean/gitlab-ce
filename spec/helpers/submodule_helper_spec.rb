@@ -164,11 +164,14 @@ describe SubmoduleHelper do
     context 'submodules with relative links' do
       let(:group) { create(:group, name: "top group", path: "top-group") }
       let(:project) { create(:project, group: group) }
-      let(:commit_id) { sample_commit[:id] }
+      let(:repo) { double(:repo, project: project) }
 
       def expect_relative_link_to_resolve_to(relative_path, expected_path)
-        result = relative_self_links(relative_path, commit_id, project)
-        expect(result).to eq([expected_path, "#{expected_path}/tree/#{commit_id}"])
+        allow(repo).to receive(:submodule_url_for).and_return(relative_path)
+
+        result = submodule_links(submodule_item)
+
+        expect(result).to eq([expected_path, "#{expected_path}/tree/#{submodule_item.id}"])
       end
 
       it 'one level down' do
@@ -218,14 +221,20 @@ describe SubmoduleHelper do
 
       context 'repo path resolves to be located at root (no namespace)' do
         it 'returns nil' do
-          result = relative_self_links('../../test.git', commit_id, project)
+          allow(repo).to receive(:submodule_url_for).and_return('../../test.git')
+
+          result = submodule_links(submodule_item)
+
           expect(result).to eq([nil, nil])
         end
       end
 
       context 'repo path resolves to be located underneath current project path' do
         it 'returns nil because it is not possible to have repo nested under another repo' do
-          result = relative_self_links('./test.git', commit_id, project)
+          allow(repo).to receive(:submodule_url_for).and_return('./test.git')
+
+          result = submodule_links(submodule_item)
+
           expect(result).to eq([nil, nil])
         end
       end
