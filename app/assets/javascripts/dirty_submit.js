@@ -1,12 +1,5 @@
 import _ from 'underscore';
 
-function disableSubmitIfDirty(inputs, submit) {
-  const dirtySubmit = submit;
-  dirtySubmit.disabled = !Array.prototype.slice
-    .call(inputs)
-    .some(input => input.dataset.isDirty === 'true');
-}
-
 function isCheckable(input) {
   return input.type === 'checkbox' || input.type === 'radio';
 }
@@ -17,20 +10,29 @@ function currentValue(input) {
 
 function setIsDirty(input) {
   const dirtySubmitInput = input;
-  dirtySubmitInput.dataset.isDirty = input.dataset.dirtySubmitOriginalValue !== currentValue(input);
+  const isDirty = input.dataset.dirtySubmitOriginalValue !== currentValue(input);
+
+  dirtySubmitInput.dataset.isDirty = isDirty;
+
+  return isDirty;
 }
 
 function handleDirtyInput(event, form, inputs, submit) {
+  let isDirty = false;
   const input = event.target;
+  const dirtySubmit = submit;
+
   if (!input.dataset.dirtySubmitOriginalValue) return;
 
   if (input.type === 'radio') {
-    form.querySelectorAll(`input[type=radio][name="${input.name}"`).forEach(setIsDirty);
+    form.querySelectorAll(`input[type=radio][name="${input.name}"`).forEach(radio => {
+      if (!isDirty) isDirty = setIsDirty(radio);
+    });
   } else {
-    setIsDirty(input);
+    isDirty = setIsDirty(input);
   }
 
-  disableSubmitIfDirty(inputs, submit);
+  dirtySubmit.disabled = !isDirty;
 }
 
 const throttledHandleDirtyInput = _.throttle(handleDirtyInput, 400);
