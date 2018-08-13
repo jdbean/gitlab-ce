@@ -394,7 +394,7 @@ msgstr ""
 msgid "AdminUsers|To confirm, type %{username}"
 msgstr ""
 
-msgid "Advanced"
+msgid "Advanced permissions, Large File Storage and Two-Factor authentication settings."
 msgstr ""
 
 msgid "Advanced settings"
@@ -1081,6 +1081,12 @@ msgid "Chat"
 msgstr ""
 
 msgid "Check interval"
+msgstr ""
+
+msgid "Check the %{docs_link_start}documentation%{docs_link_end}."
+msgstr ""
+
+msgid "Check the documentation"
 msgstr ""
 
 msgid "Checking %{text} availability…"
@@ -2301,9 +2307,6 @@ msgstr ""
 msgid "Enable group Runners"
 msgstr ""
 
-msgid "Enable or disable certain group features and choose access levels."
-msgstr ""
-
 msgid "Enable or disable version check and usage ping."
 msgstr ""
 
@@ -2759,6 +2762,9 @@ msgstr ""
 msgid "Group avatar"
 msgstr ""
 
+msgid "Group description (optional)"
+msgstr ""
+
 msgid "Group details"
 msgstr ""
 
@@ -2768,13 +2774,13 @@ msgstr ""
 msgid "Group maintainers can register group runners in the %{link}"
 msgstr ""
 
+msgid "Group name"
+msgstr ""
+
 msgid "Group: %{group_name}"
 msgstr ""
 
 msgid "GroupSettings|Prevent sharing a project within %{group} with other groups"
-msgstr ""
-
-msgid "GroupSettings|Share with group lock"
 msgstr ""
 
 msgid "GroupSettings|This setting is applied on %{ancestor_group} and has been overridden on this subgroup."
@@ -3513,6 +3519,9 @@ msgstr ""
 msgid "Name:"
 msgstr ""
 
+msgid "Naming, visibility"
+msgstr ""
+
 msgid "Nav|Help"
 msgstr ""
 
@@ -3866,6 +3875,9 @@ msgstr ""
 msgid "Paste your public SSH key, which is usually contained in the file '~/.ssh/id_rsa.pub' and begins with 'ssh-rsa'. Don't use your private SSH key."
 msgstr ""
 
+msgid "Path, transfer, remove"
+msgstr ""
+
 msgid "Path:"
 msgstr ""
 
@@ -3884,7 +3896,7 @@ msgstr ""
 msgid "Performance optimization"
 msgstr ""
 
-msgid "Permissions"
+msgid "Permissions, LFS, 2FA"
 msgstr ""
 
 msgid "Personal Access Token"
@@ -5414,6 +5426,9 @@ msgstr ""
 msgid "Time before an issue starts implementation"
 msgstr ""
 
+msgid "Time before enforced"
+msgstr ""
+
 msgid "Time between merge request creation and merge/close"
 msgstr ""
 
@@ -5721,7 +5736,7 @@ msgstr ""
 msgid "Update"
 msgstr ""
 
-msgid "Update your group name, description, avatar, and other general settings."
+msgid "Update your group name, description, avatar, and visibility."
 msgstr ""
 
 msgid "Upload <code>GoogleCodeProjectHosting.json</code> here:"
@@ -5826,6 +5841,9 @@ msgstr ""
 msgid "Visibility and access controls"
 msgstr ""
 
+msgid "Visibility level"
+msgstr ""
+
 msgid "Visibility level:"
 msgstr ""
 
@@ -5866,6 +5884,9 @@ msgid "When a runner is locked, it cannot be assigned to other projects"
 msgstr ""
 
 msgid "When enabled, users cannot use GitLab until the terms have been accepted."
+msgstr ""
+
+msgid "Who can see this group?"
 msgstr ""
 
 msgid "Wiki"
