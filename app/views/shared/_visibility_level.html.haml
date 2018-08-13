@@ -6,13 +6,12 @@
     %p
       =_('Who can see this group?')
       = link_to _('Check the documentation'), help_page_path("public_access/public_access"), target: '_blank'
-  %div{ :class => (with_label ? "col-sm-10" : "col-sm-12") }
-    - if can_change_visibility_level
-      = render('shared/visibility_radios', model_method: :visibility_level, form: f, selected_level: visibility_level, form_model: form_model)
-    - else
-      %div
-        %span.info
-          = visibility_level_icon(visibility_level)
-          %strong
-            = visibility_level_label(visibility_level)
-          .light= visibility_level_description(visibility_level, form_model)
+  - if can_change_visibility_level
+    = render('shared/visibility_radios', model_method: :visibility_level, form: f, selected_level: visibility_level, form_model: form_model)
+  - else
+    %div
+      %span.info
+        = visibility_level_icon(visibility_level)
+        %strong
+          = visibility_level_label(visibility_level)
+        .light= visibility_level_description(visibility_level, form_model)
