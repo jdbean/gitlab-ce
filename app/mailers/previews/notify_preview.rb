@@ -123,6 +123,10 @@ class NotifyPreview < ActionMailer::Preview
     Notify.pipeline_failed_email(pipeline, pipeline.user.try(:email))
   end
 
+  def autodevops_disabled_email
+    Notify.autodevops_disabled_email(pipeline, user.id).message
+  end
+
   private
 
   def project
