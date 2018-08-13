@@ -27,7 +27,12 @@
         .col-sm-10
           = render 'shared/choose_group_avatar_button', f: f
 
-      = render 'shared/visibility_level', f: f, visibility_level: default_group_visibility, can_change_visibility_level: true, form_model: @group
+      .form-group.row
+        .col-sm-2.col-form-label
+          Visibility level
+          = link_to icon('question-circle'), help_page_path("public_access/public_access")
+        .col-sm-10
+          = render 'shared/visibility_level', f: f, visibility_level: @group.visibility_level, can_change_visibility_level: can_change_group_visibility_level?(@group), form_model: @group, with_label: false
 
       = render 'create_chat_team', f: f if Gitlab.config.mattermost.enabled
 
