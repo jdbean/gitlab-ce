@@ -1,7 +1,10 @@
 - docs_link_url = help_page_path('security/two_factor_authentication', anchor: 'enforcing-2fa-for-all-users-in-a-group')
 - docs_link_start = '<a href="%{url}" target="_blank" rel="noopener noreferrer">'.html_safe % { url: docs_link_url }
 
+%h5 Two-factor authentication
+
 %p= s_('Check the %{docs_link_start}documentation%{docs_link_end}.').html_safe % { docs_link_start: docs_link_start, docs_link_end: '</a>'.html_safe }
+
 .form-group
   .form-check
     = f.check_box :require_two_factor_authentication, class: 'form-check-input'

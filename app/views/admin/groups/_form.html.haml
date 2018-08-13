@@ -16,8 +16,8 @@
     .offset-sm-2.col-sm-10
       = render 'shared/allow_request_access', form: f
 
-  = render 'groups/group_admin_settings', f: f
-
+  = render 'groups/settings/lfs', f: f
+  = render 'groups/settings/two_factor_auth', f: f
   = render_if_exists 'namespaces/shared_runners_minutes_settings', group: @group, form: f
 
   - if @group.new_record?
