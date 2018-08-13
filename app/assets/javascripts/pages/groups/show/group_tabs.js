@@ -55,6 +55,7 @@ export default class GroupTabs extends UserTabs {
       ACTIVE_TAB_ARCHIVED,
     ];
     this.enableSearchBar(action);
+    this.action = action;
 
     if (this.loaded[action]) {
       return;
@@ -141,6 +142,7 @@ export default class GroupTabs extends UserTabs {
   }
 
   enableSearchBar(action) {
+    const previousAction = this.action;
     const isOverview = action === ACTIVE_TAB_OVERVIEW;
 
     this.hideSearchBar(isOverview);
@@ -153,7 +155,15 @@ export default class GroupTabs extends UserTabs {
       overviewInputEls.forEach(inputEl => {
         const el = inputEl;
 
-        el.value = '';
+        if (el.dataset.targetSection === previousAction) {
+          const previousSearchQuery = document.querySelector(
+            '.js-nav-group-filter-form .js-groups-list-filter',
+          ).value;
+
+          el.value = previousSearchQuery;
+        } else {
+          el.value = '';
+        }
       });
 
       return;
