@@ -25,7 +25,12 @@
 
     .project-home-desc
       - if @project.description.present?
-        = markdown_field(@project, :description)
+        .project-description
+          .project-description-markdown.read-more-container
+            = markdown_field(@project, :description)
+          %button.btn.btn-blank.btn-link.text-secondary.js-read-more-trigger.text-secondary.d-lg-none{ type: "button" }
+            = _("Read more")
+
       - if can?(current_user, :read_project, @project)
         .text-secondary.prepend-top-8
           = s_('ProjectPage|Project ID: %{project_id}') % { project_id: @project.id }
