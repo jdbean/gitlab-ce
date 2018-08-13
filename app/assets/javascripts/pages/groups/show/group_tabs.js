@@ -18,6 +18,8 @@ import GroupFilterableList from '~/groups/groups_filterable_list';
 export default class GroupTabs extends UserTabs {
   constructor({ defaultAction = 'overview', action, parentEl }) {
     super({ defaultAction, action, parentEl });
+
+    this.isOverview = true;
   }
 
   bindEvents() {
@@ -143,11 +145,11 @@ export default class GroupTabs extends UserTabs {
 
   enableSearchBar(action) {
     const previousAction = this.action;
-    const isOverview = action === ACTIVE_TAB_OVERVIEW;
+    this.isOverview = action === ACTIVE_TAB_OVERVIEW;
 
-    this.hideSearchBar(isOverview);
+    this.hideSearchBar();
 
-    if (isOverview) {
+    if (this.isOverview) {
       const overviewInputEls = document.querySelectorAll(
         '.js-overview-group-filter-form .js-groups-list-filter',
       );
@@ -196,17 +198,17 @@ export default class GroupTabs extends UserTabs {
     this.groupFilterList.initSearch();
   }
 
-  hideSearchBar(isOverview) {
+  hideSearchBar() {
     return this.$parentEl
       .find('.nav-controls .group-filter-form')
-      .toggleClass(HIDDEN_CLASS, isOverview);
+      .toggleClass(HIDDEN_CLASS, this.isOverview);
   }
 
   checkFilterState() {
     const values = Object.values(this.loaded);
     const loadedTabs = values.filter(e => e === true);
 
-    if (loadedTabs.length > 0) {
+    if (loadedTabs.length > 0 || this.isOverview) {
       const newState = removeParams(['filter', 'page'], window.location.search);
 
       window.history.replaceState(
