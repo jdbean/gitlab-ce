@@ -73,20 +73,24 @@ module SubmoduleHelper
     [base, [base, '/tree/', commit].join('')]
   end
 
-  def relative_self_links(url, commit, project)
-    url.rstrip!
-    # Map relative links to a namespace and project
-    # For example:
-    # ../bar.git -> same namespace, repo bar
-    # ../foo/bar.git -> namespace foo, repo bar
-    # ../../foo/bar/baz.git -> namespace bar, repo baz
-    components = url.split('/')
-    base = components.pop.gsub(/.git$/, '')
-    namespace = components.pop.gsub(/^\.\.$/, '')
+  def relative_self_links(relative_path, commit, project)
+    relative_path.rstrip!
+    current_absolute_path = "/" + project.full_path
 
-    if namespace.empty?
-      namespace = project.namespace.full_path
+    # Resolve `relative_path` to target path
+    # Assuming `current_absolute_path` is `/g1/p1`:
+    # ../p2.git -> /g1/p2
+    # ../g2/p3.git -> /g1/g2/p3
+    # ../../g3/g4/p4.git -> /g3/g4/p4
+    target_path = File.absolute_path(relative_path, current_absolute_path)
+    dirname = File.dirname(target_path)
+
+    if dirname == '/' || dirname.start_with?(current_absolute_path)
+      return [nil, nil]
     end
+
+    namespace = dirname.sub!(%r{^/}, '')
+    base = File.basename(target_path, '.git')
 
     begin
       [
