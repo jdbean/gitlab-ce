@@ -36,7 +36,7 @@ function handleDirtyInput(event, form, inputs, submit) {
 const throttledHandleDirtyInput = _.throttle(handleDirtyInput, 400);
 
 function initDirtySubmitForm(form) {
-  const inputs = form.querySelectorAll('input, textarea');
+  const inputs = form.querySelectorAll('input, textarea, select');
   const submit = form.querySelector('.js-dirty-submit');
 
   submit.disabled = true;
