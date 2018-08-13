@@ -62,7 +62,7 @@ module ObjectStorage
 
     # Implements https://docs.aws.amazon.com/AmazonS3/latest/API/RESTObjectGET.html
     def get_url
-      connection.get_object_url(bucket_name, object_name, expire_at)
+      connection.get_object_https_url(bucket_name, object_name, expire_at)
     end
 
     # Implements https://docs.aws.amazon.com/AmazonS3/latest/API/RESTObjectDELETE.html
@@ -156,7 +156,8 @@ module ObjectStorage
     end
 
     def upload_options
-      { 'Content-Type' => 'application/octet-stream' }
+      # Any headers also have to be reflected in object.go in Workhorse as well
+      {}
     end
 
     def connection
