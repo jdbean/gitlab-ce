@@ -115,7 +115,7 @@
 .project-feature-controls {
   display: flex;
   align-items: center;
-  margin: 8px 0;
+  margin: $gl-padding-8 0;
   max-width: 432px;
 
   .toggle-wrapper {
@@ -256,8 +256,6 @@
 .project-repo-buttons,
 .group-buttons {
   .btn {
-    padding: 3px 10px;
-
     &:last-child {
       margin-left: 0;
     }
@@ -280,7 +278,7 @@
   }
 
   .project-action-button {
-    margin: 15px 5px 0;
+    margin: 15px $gl-padding-8 0 0;
     vertical-align: top;
   }
 
@@ -298,81 +296,44 @@
     display: inline-block;
     vertical-align: top;
     margin-top: 15px;
+
+    .count-badge {
+      height: $input-height;
+
+      .icon {
+        top: -1px;
+      }
+    }
+
+    .count-badge-count,
+    .count-badge-button {
+      border: 1px solid $border-color;
+      line-height: 1;
+    }
+
+    .count,
+    .count-badge-button {
+      color: $gl-text-color;
+    }
+
+    .count-badge-count {
+      padding: 0 12px;
+      border-right: 0;
+      border-radius: $border-radius-base 0 0 $border-radius-base;
+      background: $gray-light;
+    }
+
+    .count-badge-button {
+      border-radius: 0 $border-radius-base $border-radius-base 0;
+    }
   }
 
   .project-clone-holder {
     display: inline-block;
-    margin: 15px 5px 0 0;
+    margin: 15px $gl-padding-8 0 0;
 
     input {
-      height: 28px;
-    }
-  }
-
-  .count-with-arrow {
-    display: inline-block;
-    position: relative;
-    margin-left: 4px;
-
-    .arrow {
-      &::before {
-        content: '';
-        display: inline-block;
-        position: absolute;
-        width: 0;
-        height: 0;
-        border-color: transparent;
-        border-style: solid;
-        top: 50%;
-        left: 0;
-        margin-top: -6px;
-        border-width: 7px 5px 7px 0;
-        border-right-color: $count-arrow-border;
-        pointer-events: none;
-      }
-
-      &::after {
-        content: '';
-        position: absolute;
-        width: 0;
-        height: 0;
-        border-color: transparent;
-        border-style: solid;
-        top: 50%;
-        left: 1px;
-        margin-top: -9px;
-        border-width: 10px 7px 10px 0;
-        border-right-color: $white-light;
-        pointer-events: none;
-      }
-    }
-
-    .count {
-      @include btn-white;
-      display: inline-block;
-      background: $white-light;
-      border-radius: 2px;
-      border-width: 1px;
-      border-style: solid;
-      font-size: 13px;
-      font-weight: $gl-font-weight-bold;
-      line-height: 13px;
-      letter-spacing: 0.4px;
-      padding: 6px 14px;
-      text-align: center;
-      vertical-align: middle;
-      touch-action: manipulation;
-      background-image: none;
-      white-space: nowrap;
-      margin: 0 10px 0 4px;
-
-      a {
-        color: inherit;
-      }
-
-      &:hover {
-        background: $white-light;
-      }
+      height: $input-height;
     }
   }
 
@@ -636,7 +597,7 @@
     flex-wrap: wrap;
 
     .btn {
-      padding: 8px;
+      padding: $gl-padding-8;
       margin-right: 10px;
     }
 
@@ -713,7 +674,7 @@
       left: -10px;
       top: 50%;
       z-index: 10;
-      padding: 8px 0;
+      padding: $gl-padding-8 0;
       text-align: center;
       background-color: $white-light;
       color: $gl-text-color-tertiary;
@@ -727,7 +688,7 @@
         left: 50%;
         top: 0;
         transform: translateX(-50%);
-        padding: 0 8px;
+        padding: 0 $gl-padding-8;
       }
     }
 
@@ -837,7 +798,7 @@
 
 .repository-languages-bar {
   height: 6px;
-  margin-bottom: 8px;
+  margin-bottom: $gl-padding-8;
 }
 
 pre.light-well {
@@ -943,7 +904,7 @@ pre.light-well {
 }
 
 .git-clone-holder {
-  width: 380px;
+  width: 320px;
 
   .btn-clipboard {
     border: 1px solid $border-color;
