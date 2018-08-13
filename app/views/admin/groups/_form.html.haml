@@ -10,11 +10,16 @@
     .col-sm-10
       = render 'shared/choose_group_avatar_button', f: f
 
-  = render 'shared/visibility_level', f: f, visibility_level: visibility_level, can_change_visibility_level: can_change_group_visibility_level?(@group), form_model: @group
+  .form-group.row
+    .col-sm-2.col-form-label
+      Visibility level
+      = link_to icon('question-circle'), help_page_path("public_access/public_access")
+    .col-sm-10
+      = render 'shared/visibility_level', f: f, visibility_level: visibility_level, can_change_visibility_level: can_change_group_visibility_level?(@group), form_model: @group, with_label: false
 
   .form-group.row
     .offset-sm-2.col-sm-10
-      = render 'shared/allow_request_access', form: f
+      = render 'shared/allow_request_access', form: f, bold_label: true
 
   = render 'groups/group_admin_settings', f: f
   = render_if_exists 'namespaces/shared_runners_minutes_settings', group: @group, form: f
