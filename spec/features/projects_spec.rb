@@ -99,6 +99,31 @@ describe 'Project' do
     end
   end
 
+  describe 'copy clone URL to clipboard', :js do
+    let(:project) { create(:project, :repository) }
+    let(:path)    { project_path(project) }
+
+    before do
+      sign_in(create(:admin))
+      visit path
+    end
+
+    context 'desktop component' do
+      it 'shows on md and larger breakpoints' do
+        expect(find('.git-clone-holder')).to be_visible
+        expect(find('.mobile-git-clone', visible: false)).not_to be_visible
+      end
+    end
+
+    context 'mobile component' do
+      it 'shows mobile component on sm and smaller breakpoints' do
+        resize_screen_xs
+        expect(find('.mobile-git-clone')).to be_visible
+        expect(find('.git-clone-holder', visible: false)).not_to be_visible
+      end
+    end
+  end
+
   describe 'remove forked relationship', :js do
     let(:user)    { create(:user) }
     let(:project) { fork_project(create(:project, :public), user, namespace_id: user.namespace) }
