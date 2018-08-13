@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import { HIDDEN_CLASS } from '~/lib/utils/constants';
 import { objectToQueryString } from '~/lib/utils/common_utils';
-import { removeParams } from '~/lib/utils/url_utility';
+import { getParameterValues, removeParams } from '~/lib/utils/url_utility';
 import createGroupTree from '~/groups';
 import {
   ACTIVE_TAB_OVERVIEW,
@@ -109,6 +109,7 @@ export default class GroupTabs extends UserTabs {
     const { endpointsDefault, endpointsShared } = this.$parentEl.data();
     const overviewParams = {
       per_page: MAX_OVERVIEW_COUNT,
+      sort: getParameterValues('sort'),
     };
     const archivedProjectsParams = {
       archived: 'only',
