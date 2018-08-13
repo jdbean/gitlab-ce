@@ -59,6 +59,11 @@
         = render 'projects/buttons/star'
         = render 'projects/buttons/fork'
 
+      %span.d-inline-flex.d-sm-none
+        - if can?(current_user, :download_code, @project)
+          .project-clone-holder
+            = render "shared/mobile_clone_panel"
+
       %span.d-none.d-sm-inline
         - if can?(current_user, :download_code, @project)
           .project-clone-holder

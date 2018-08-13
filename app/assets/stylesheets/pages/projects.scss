@@ -144,10 +144,7 @@
 .group-home-panel {
   padding-top: 24px;
   padding-bottom: 24px;
-
-  @include media-breakpoint-up(sm) {
-    border-bottom: 1px solid $border-color;
-  }
+  border-bottom: 1px solid $border-color;
 
   .group-avatar {
     float: none;
@@ -275,6 +272,10 @@
 
     .fa-caret-down {
       margin-left: 3px;
+
+      &.dropdown-btn-icon {
+        margin-left: 0;
+      }
     }
   }
 
@@ -384,6 +385,14 @@
 
     .dropdown-menu-inner-content {
       min-width: 320px;
+    }
+  }
+
+  .mobile-git-clone {
+    vertical-align: baseline;
+
+    .dropdown-menu-inner-content {
+      @extend .monospace;
     }
   }
 }
@@ -754,10 +763,28 @@
   text-align: center;
   border-bottom: 1px solid $border-color;
 
-  .nav {
-    margin-top: $gl-padding-8;
-    margin-bottom: $gl-padding-8;
+  .scrolling-tabs-container {
+    .scrolling-tabs {
+      margin-top: $gl-padding-8;
+      margin-bottom: $gl-padding-8;
+      flex-wrap: wrap;
+      border-bottom: 0;
+    }
 
+    @include media-breakpoint-down(md) {
+      flex-direction: column;
+
+      .nav {
+        flex-wrap: nowrap;
+      }
+
+      .nav:first-child {
+        margin-right: $gl-padding-8;
+      }
+    }
+  }
+
+  .nav {
     > li {
       display: inline-block;
       margin-top: $gl-padding-4;
@@ -787,10 +814,13 @@
     }
 
     .stat-link {
+      border-bottom: 0;
+
       &:hover,
       &:focus {
         color: $gl-text-color;
         text-decoration: underline;
+        border-bottom: 0;
       }
     }
 

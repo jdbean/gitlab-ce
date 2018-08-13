@@ -42,7 +42,7 @@
     .empty_wrapper
       %h3#repo-command-line-instructions.page-title-empty
         Command line instructions
-      .git-empty
+      .git-empty.js-git-empty
         %fieldset
           %h5 Git global setup
           %pre.bg-light
@@ -54,7 +54,7 @@
           %h5 Create a new repository
           %pre.bg-light
             :preserve
-              git clone #{ content_tag(:span, default_url_to_repo, class: 'clone')}
+              git clone #{ content_tag(:span, default_url_to_repo, class: 'js-clone')}
               cd #{h @project.path}
               touch README.md
               git add README.md
@@ -69,7 +69,7 @@
             :preserve
               cd existing_folder
               git init
-              git remote add origin #{ content_tag(:span, default_url_to_repo, class: 'clone')}
+              git remote add origin #{ content_tag(:span, default_url_to_repo, class: 'js-clone')}
               git add .
               git commit -m "Initial commit"
             - if @project.can_current_user_push_to_default_branch?
@@ -82,7 +82,7 @@
             :preserve
               cd existing_repo
               git remote rename origin old-origin
-              git remote add origin #{ content_tag(:span, default_url_to_repo, class: 'clone')}
+              git remote add origin #{ content_tag(:span, default_url_to_repo, class: 'js-clone')}
             - if @project.can_current_user_push_to_default_branch?
               %span><
                 git push -u origin --all
