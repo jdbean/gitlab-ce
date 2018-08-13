@@ -16,7 +16,7 @@ function setIsDirty(input) {
   dirtySubmitInput.dataset.isDirty = input.dataset.dirtySubmitOriginalValue !== currentValue(input);
 }
 
-export default function initDirtySubmit(form) {
+function initDirtySubmitForm(form) {
   const inputs = Array.prototype.slice.call(form.querySelectorAll('input, textarea'));
   const submit = inputs.find(input => input.classList.contains('js-dirty-submit'));
 
@@ -46,6 +46,8 @@ export default function initDirtySubmit(form) {
   });
 }
 
-export function initDirtySubmitMulti(forms) {
-  forms.forEach(initDirtySubmit);
+export default function initDirtySubmit(formOrForms) {
+  const forms = Array.isArray(formOrForms) ? formOrForms : new Array(formOrForms);
+
+  forms.forEach(initDirtySubmitForm);
 }
