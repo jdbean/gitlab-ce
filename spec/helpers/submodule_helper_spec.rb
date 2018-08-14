@@ -174,52 +174,19 @@ describe SubmoduleHelper do
         expect(result).to eq([expected_path, "#{expected_path}/tree/#{submodule_item.id}"])
       end
 
-      it 'one level down' do
+      it 'handles project under same group' do
         expect_relative_link_to_resolve_to('../test.git', "/#{group.path}/test")
       end
 
-      it 'with trailing whitespace' do
+      it 'handles trailing whitespace' do
         expect_relative_link_to_resolve_to('../test.git ', "/#{group.path}/test")
       end
 
-      it 'two levels down with namespace and repo' do
+      it 'handles project under another top group' do
         expect_relative_link_to_resolve_to('../../baz/test.git ', "/baz/test")
       end
 
-      context 'subgroup' do
-        let(:sub_group) { create(:group, parent: group, name: "sub group", path: "sub-group") }
-        let(:sub_project) { create(:project, group: sub_group) }
-
-        let(:frontend_group) { create(:group, name: "fronetend group", path: "frontend") }
-        let(:css) { create(:group, parent: frontend_group, name: "css", path: "css") }
-
-        context 'project in sub group' do
-          let(:project) { sub_project }
-
-          it "handles referencing ancestor group's project" do
-            expect_relative_link_to_resolve_to('../../../top-group/test.git', "/#{group.path}/test")
-          end
-        end
-
-        it "handles referencing descendent group's project" do
-          expect_relative_link_to_resolve_to('../sub-group/test.git', "/#{sub_group.full_path}/test")
-        end
-
-        it "handles referencing another top group's project" do
-          expect_relative_link_to_resolve_to('../../frontend/css/test.git', "/#{css.full_path}/test")
-        end
-      end
-
-      context 'personal project' do
-        let(:user) { create(:user) }
-        let(:project) { create(:project, namespace: user.namespace) }
-
-        it 'one level down with personal project' do
-          expect_relative_link_to_resolve_to('../test.git', "/#{user.username}/test")
-        end
-      end
-
-      context 'repo path resolves to be located at root (no namespace)' do
+      context 'repo path resolves to be located at root (namespace absent)' do
         it 'returns nil' do
           allow(repo).to receive(:submodule_url_for).and_return('../../test.git')
 
@@ -236,6 +203,36 @@ describe SubmoduleHelper do
           result = submodule_links(submodule_item)
 
           expect(result).to eq([nil, nil])
+        end
+      end
+
+      context 'subgroup' do
+        let(:sub_group) { create(:group, parent: group, name: "sub group", path: "sub-group") }
+        let(:sub_project) { create(:project, group: sub_group) }
+
+        context 'project in sub group' do
+          let(:project) { sub_project }
+
+          it "handles referencing ancestor group's project" do
+            expect_relative_link_to_resolve_to('../../../top-group/test.git', "/#{group.path}/test")
+          end
+        end
+
+        it "handles referencing descendent group's project" do
+          expect_relative_link_to_resolve_to('../sub-group/test.git', "/top-group/sub-group/test")
+        end
+
+        it "handles referencing another top group's project" do
+          expect_relative_link_to_resolve_to('../../frontend/css/test.git', "/frontend/css/test")
+        end
+      end
+
+      context 'personal project' do
+        let(:user) { create(:user) }
+        let(:project) { create(:project, namespace: user.namespace) }
+
+        it 'handles referencing another personal project' do
+          expect_relative_link_to_resolve_to('../test.git', "/#{user.username}/test")
         end
       end
     end
