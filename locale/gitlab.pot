@@ -6490,6 +6490,9 @@ msgstr ""
 msgid "mrWidget|The source branch has been removed"
 msgstr ""
 
+msgid "mrWidget|The source branch is <a href=\"%{targetCommitsUrl}\">%{commitsBehind}</a> the target branch"
+msgstr ""
+
 msgid "mrWidget|The source branch is being removed"
 msgstr ""
 
