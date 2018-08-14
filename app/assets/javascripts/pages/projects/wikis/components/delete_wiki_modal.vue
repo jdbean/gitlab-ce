@@ -53,7 +53,7 @@ export default {
   <gl-modal-ui
     :title="title"
     :ok-title="s__('WikiPageConfirmDelete|Delete page')"
-    modal-id="test-modal-id"
+    modal-id="delete-wiki-modal"
     title-tag="h4"
     ok-variant="danger"
     class="d-inline-block"
