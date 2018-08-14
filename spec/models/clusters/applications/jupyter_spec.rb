@@ -51,8 +51,19 @@ describe Clusters::Applications::Jupyter do
       expect(subject.name).to eq('jupyter')
       expect(subject.chart).to eq('jupyter/jupyterhub')
       expect(subject.version).to eq('v0.6')
+      expect(subject.rbac_create).to be_falsey
       expect(subject.repository).to eq('https://jupyterhub.github.io/helm-chart/')
       expect(subject.files).to eq(jupyter.files)
+    end
+
+    context 'on a rbac enabled cluster' do
+      before do
+        jupyter.cluster.platform_kubernetes.authorization_type = 'rbac'
+      end
+
+      it 'should be initialized with rbac_create true' do
+        expect(subject.rbac_create).to be_truthy
+      end
     end
 
     context 'application failed to install previously' do

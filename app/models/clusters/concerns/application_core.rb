@@ -26,6 +26,10 @@ module Clusters
           self.class.application_name
         end
 
+        def rbac_cluster?
+          cluster.platform_kubernetes_rbac?
+        end
+
         def schedule_status_update
           # Override if you need extra data synchronized
           # from K8s after installation

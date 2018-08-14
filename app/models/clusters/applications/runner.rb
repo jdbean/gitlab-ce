@@ -33,6 +33,7 @@ module Clusters
         Gitlab::Kubernetes::Helm::InstallCommand.new(
           name: name,
           version: VERSION,
+          rbac_create: rbac_cluster?,
           chart: chart,
           files: files,
           repository: repository

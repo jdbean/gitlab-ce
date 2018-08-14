@@ -154,20 +154,30 @@ describe Clusters::Applications::Prometheus do
   end
 
   describe '#install_command' do
-    let(:kubeclient) { double('kubernetes client') }
     let(:prometheus) { create(:clusters_applications_prometheus) }
 
+    subject { prometheus.install_command }
+
     it 'returns an instance of Gitlab::Kubernetes::Helm::InstallCommand' do
-      expect(prometheus.install_command).to be_an_instance_of(Gitlab::Kubernetes::Helm::InstallCommand)
+      expect(subject).to be_an_instance_of(Gitlab::Kubernetes::Helm::InstallCommand)
     end
 
     it 'should be initialized with 3 arguments' do
-      command = prometheus.install_command
+      expect(subject.name).to eq('prometheus')
+      expect(subject.chart).to eq('stable/prometheus')
+      expect(subject.version).to eq('6.7.3')
+      expect(subject.rbac_create).to be_falsey
+      expect(subject.files).to eq(prometheus.files)
+    end
 
-      expect(command.name).to eq('prometheus')
-      expect(command.chart).to eq('stable/prometheus')
-      expect(command.version).to eq('6.7.3')
-      expect(command.files).to eq(prometheus.files)
+    context 'on a rbac enabled cluster' do
+      before do
+        prometheus.cluster.platform_kubernetes.authorization_type = 'rbac'
+      end
+
+      it 'should be initialized with rbac_create true' do
+        expect(subject.rbac_create).to be_truthy
+      end
     end
 
     context 'application failed to install previously' do

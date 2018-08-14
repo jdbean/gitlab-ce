@@ -46,8 +46,19 @@ describe Clusters::Applications::Runner do
       expect(subject.name).to eq('runner')
       expect(subject.chart).to eq('runner/gitlab-runner')
       expect(subject.version).to eq('0.1.31')
+      expect(subject.rbac_create).to be_falsey
       expect(subject.repository).to eq('https://charts.gitlab.io')
       expect(subject.files).to eq(gitlab_runner.files)
+    end
+
+    context 'on a rbac enabled cluster' do
+      before do
+        gitlab_runner.cluster.platform_kubernetes.authorization_type = 'rbac'
+      end
+
+      it 'should be initialized with rbac_create true' do
+        expect(subject.rbac_create).to be_truthy
+      end
     end
 
     context 'application failed to install previously' do

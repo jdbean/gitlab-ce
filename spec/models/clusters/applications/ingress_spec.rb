@@ -88,7 +88,18 @@ describe Clusters::Applications::Ingress do
       expect(subject.name).to eq('ingress')
       expect(subject.chart).to eq('stable/nginx-ingress')
       expect(subject.version).to eq('0.23.0')
+      expect(subject.rbac_create).to be_falsey
       expect(subject.files).to eq(ingress.files)
+    end
+
+    context 'on a rbac enabled cluster' do
+      before do
+        ingress.cluster.platform_kubernetes.authorization_type = 'rbac'
+      end
+
+      it 'should be initialized with rbac_create true' do
+        expect(subject.rbac_create).to be_truthy
+      end
     end
 
     context 'application failed to install previously' do
