@@ -45,7 +45,7 @@ describe('MRWidgetHeader', () => {
       });
     });
 
-    describe('commitsText', () => {
+    describe('commitsBehindText', () => {
       it('returns singular when there is one commit', () => {
         vm = mountComponent(Component, {
           mr: {
@@ -57,7 +57,7 @@ describe('MRWidgetHeader', () => {
           },
         });
 
-        expect(vm.commitsText).toEqual('1 commit behind');
+        expect(vm.commitsBehindText).toEqual('1 commit behind');
       });
 
       it('returns plural when there is more than one commit', () => {
@@ -71,7 +71,7 @@ describe('MRWidgetHeader', () => {
           },
         });
 
-        expect(vm.commitsText).toEqual('2 commits behind');
+        expect(vm.commitsBehindText).toEqual('2 commits behind');
       });
     });
   });
@@ -280,9 +280,9 @@ describe('MRWidgetHeader', () => {
       });
 
       it('renders diverged commits info', () => {
-        expect(vm.$el.querySelector('.diverged-commits-count').textContent).toMatch(
-          /(mr-widget-refactor[\s\S]+?is 12 commits behind[\s\S]+?master)/,
-        );
+        expect(vm.$el.querySelector('.diverged-commits-count').textContent).toEqual('The source branch is 12 commits behind the target branch');
+        expect(vm.$el.querySelector('.diverged-commits-count a').textContent).toEqual('12 commits behind');
+        expect(vm.$el.querySelector('.diverged-commits-count a')).toHaveAttr('href', vm.mr.targetBranchPath);
       });
     });
   });

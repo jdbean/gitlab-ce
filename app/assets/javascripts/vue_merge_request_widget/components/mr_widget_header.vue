@@ -1,5 +1,5 @@
 <script>
-import { n__ } from '~/locale';
+import { n__, s__, sprintf } from '~/locale';
 import { mergeUrlParams, webIDEUrl } from '~/lib/utils/url_utility';
 import Icon from '~/vue_shared/components/icon.vue';
 import clipboardButton from '~/vue_shared/components/clipboard_button.vue';
@@ -22,8 +22,14 @@ export default {
     shouldShowCommitsBehindText() {
       return this.mr.divergedCommitsCount > 0;
     },
-    commitsText() {
+    commitsBehindText() {
       return n__('%d commit behind', '%d commits behind', this.mr.divergedCommitsCount);
+    },
+    commitsBehindTextFull() {
+      return sprintf(s__('mrWidget|The source branch is <a href="%{targetCommitsUrl}">%{commitsBehind}</a> the target branch'), {
+        commitsBehind: this.commitsBehindText,
+        targetCommitsUrl: this.mr.targetBranchPath,
+      }, false);
     },
     branchNameClipboardData() {
       // This supports code in app/assets/javascripts/copy_to_clipboard.js that
@@ -79,10 +85,8 @@ export default {
         <div
           v-if="shouldShowCommitsBehindText"
           class="diverged-commits-count"
+          v-html="commitsBehindTextFull"
         >
-          <span class="monospace">{{ mr.sourceBranch }}</span>
-          is {{ commitsText }}
-          <span class="monospace">{{ mr.targetBranch }}</span>
         </div>
       </div>
 
