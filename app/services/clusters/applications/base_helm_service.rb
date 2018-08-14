@@ -19,8 +19,12 @@ module Clusters
         cluster.kubeclient
       end
 
+      def union_client
+        cluster.kubeclient_union
+      end
+
       def helm_api
-        @helm_api ||= Gitlab::Kubernetes::Helm::Api.new(kubeclient)
+        @helm_api ||= Gitlab::Kubernetes::Helm::Api.new(union_client)
       end
 
       def install_command

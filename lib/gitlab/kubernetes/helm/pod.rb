@@ -12,6 +12,7 @@ module Gitlab
 
           spec[:volumes] = volumes_specification
           spec[:containers][0][:volumeMounts] = volume_mounts_specification
+          spec[:serviceAccountName] = Gitlab::Kubernetes::Helm::SERVICE_ACCOUNT
 
           ::Kubeclient::Resource.new(metadata: metadata, spec: spec)
         end

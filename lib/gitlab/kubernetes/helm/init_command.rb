@@ -2,7 +2,10 @@ module Gitlab
   module Kubernetes
     module Helm
       class InitCommand
+        extend ::Gitlab::Utils::Override
+
         include BaseCommand
+        include CommandResources
 
         attr_reader :name, :files, :service_account_name
 
@@ -18,6 +21,14 @@ module Gitlab
           ].join("\n")
         end
 
+        override :create_resources
+        def create_resources(kubeclient)
+          if service_account_name
+            kubeclient.create_service_account(service_account_resource)
+            kubeclient.create_cluster_role_binding(cluster_role_binding_resource)
+          end
+        end
+
         private
 
         def init_helm_command
@@ -31,6 +42,20 @@ module Gitlab
 
         def optional_service_account_flag
           " --service-account #{service_account_name}" if service_account_name
+        end
+
+        def service_account_resource
+          Gitlab::Kubernetes::ServiceAccount.new(service_account_name, namespace).generate
+        end
+
+        def cluster_role_binding_resource
+          subjects = [{ kind: 'ServiceAccount', name: service_account_name, namespace: namespace }]
+
+          Gitlab::Kubernetes::ClusterRoleBinding.new(
+            Gitlab::Kubernetes::Helm::CLUSTER_ROLE_BINDING,
+            Gitlab::Kubernetes::Helm::CLUSTER_ROLE,
+            subjects
+          ).generate
         end
       end
     end

@@ -108,6 +108,10 @@ module Clusters
       platform_kubernetes.kubeclient if kubernetes?
     end
 
+    def kubeclient_union
+      platform_kubernetes.kubeclient_union if kubernetes?
+    end
+
     private
 
     def restrict_modification

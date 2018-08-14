@@ -84,6 +84,14 @@ describe Gitlab::Kubernetes::Helm::InstallCommand do
     end
   end
 
+  describe '#create_resources' do
+    let(:kubeclient) { double('kubeclient') } # strict double
+
+    it 'does a no-op' do
+      install_command.create_resources(kubeclient)
+    end
+  end
+
   describe '#config_map_resource' do
     let(:metadata) do
       {

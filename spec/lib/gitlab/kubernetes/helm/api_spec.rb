@@ -47,6 +47,30 @@ describe Gitlab::Kubernetes::Helm::Api do
         subject.install(command)
       end
     end
+
+    context 'helm application' do
+      context 'legacy abac cluster' do
+        let(:application) { create(:clusters_applications_helm) }
+
+        it 'does not create a service account on kubeclient' do
+          expect(client).not_to receive(:create_service_account)
+          expect(client).not_to receive(:create_cluster_role_binding)
+
+          subject.install(command)
+        end
+      end
+
+      context 'rbac-enabled cluster' do
+        let(:application) { create(:clusters_applications_helm, :rbac_enabled_cluster) }
+
+        it 'creates a service account on kubeclient' do
+          expect(client).to receive(:create_service_account).once
+          expect(client).to receive(:create_cluster_role_binding).once
+
+          subject.install(command)
+        end
+      end
+    end
   end
 
   describe '#status' do

@@ -47,5 +47,19 @@ describe Clusters::Applications::Helm do
       cert = OpenSSL::X509::Certificate.new(subject.files[:'cert.pem'])
       expect(cert.not_after).to be > 999.years.from_now
     end
+
+    describe 'service_account_name' do
+      context 'non rbac cluster' do
+        it { expect(subject.service_account_name).to be_nil }
+      end
+
+      context 'rbac cluster' do
+        before do
+          helm.cluster.platform_kubernetes.authorization_type = 'rbac'
+        end
+
+        it { expect(subject.service_account_name).to eq(Gitlab::Kubernetes::Helm::SERVICE_ACCOUNT) }
+      end
+    end
   end
 end

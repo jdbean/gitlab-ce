@@ -3,6 +3,7 @@ module Gitlab
     module Helm
       class InstallCommand
         include BaseCommand
+        include CommandResources
 
         attr_reader :name, :files, :chart, :rbac_create, :version, :repository
 

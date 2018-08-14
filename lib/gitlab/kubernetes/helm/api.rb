@@ -9,7 +9,10 @@ module Gitlab
 
         def install(command)
           namespace.ensure_exists!
+
+          create_prior_resources(command)
           create_config_map(command)
+
           kubeclient.create_pod(command.pod_resource)
         end
 
@@ -40,6 +43,10 @@ module Gitlab
           command.config_map_resource.tap do |config_map_resource|
             kubeclient.create_config_map(config_map_resource)
           end
+        end
+
+        def create_prior_resources(command)
+          command.create_resources(kubeclient)
         end
       end
     end

@@ -27,6 +27,12 @@ FactoryBot.define do
       status_reason 'something went wrong'
     end
 
+    trait :rbac_enabled_cluster do
+      after(:create) do |app, _evaluator|
+        app.cluster.platform_kubernetes.authorization_type = 'rbac'
+      end
+    end
+
     trait :timeouted do
       installing
       updated_at ClusterWaitForAppInstallationWorker::TIMEOUT.ago
