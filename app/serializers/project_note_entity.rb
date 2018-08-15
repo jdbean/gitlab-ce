@@ -9,7 +9,7 @@ class ProjectNoteEntity < NoteEntity
     toggle_award_emoji_project_note_path(note.project, note.id)
   end
 
-  expose :path do |note|
+  expose :path, if: -> (note, _) { note.id } do |note|
     project_note_path(note.project, note)
   end
 

@@ -37,13 +37,13 @@ module API
           # page can have less elements than :per_page even if
           # there's more than one page.
           raw_notes = noteable.notes.with_metadata.reorder(params[:order_by] => params[:sort])
-          notes =
-            # paginate() only works with a relation. This could lead to a
-            # mismatch between the pagination headers info and the actual notes
-            # array returned, but this is really a edge-case.
-            paginate(raw_notes)
-            .reject { |n| n.cross_reference_not_visible_for?(current_user) }
-          present notes, with: Entities::Note
+
+          raw_notes = ResourceEvents::MergeIntoNotesService.new(noteable).execute(raw_notes)
+          raw_notes = raw_notes.reject { |n| n.cross_reference_not_visible_for?(current_user) }
+
+          notes = Kaminari.paginate_array(raw_notes)
+
+          present paginate(notes), with: Entities::Note
         end
 
         desc "Get a single #{noteable_type.to_s.downcase} note" do

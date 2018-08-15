@@ -21,7 +21,7 @@ export default {
       default: '',
     },
     noteId: {
-      type: Number,
+      type: String,
       required: true,
     },
     includeToggle: {

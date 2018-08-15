@@ -19,7 +19,7 @@ describe('issue_note_form component', () => {
     props = {
       isEditing: false,
       noteBody: 'Magni suscipit eius consectetur enim et ex et commodi.',
-      noteId: 545,
+      noteId: '545',
     };
 
     vm = new Component({

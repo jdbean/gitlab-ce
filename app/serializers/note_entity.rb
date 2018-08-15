@@ -4,6 +4,12 @@ class NoteEntity < API::Entities::Note
   include RequestAwareEntity
   include NotesHelper
 
+  expose :id do |note|
+    # resource events are represented as notes too, but don't
+    # have ID, discussion ID is used for them instead
+    note.id.present? ? note.id.to_s : note.discussion_id
+  end
+
   expose :type
 
   expose :author, using: NoteUserEntity
