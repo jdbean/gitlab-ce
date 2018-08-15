@@ -233,6 +233,12 @@ in **Admin Area > Settings > Continuous Integration and Deployment**. Doing that
 all the projects that haven't explicitly set an option will have Auto DevOps
 enabled by default.
 
+NOTE: **Enabled by default:**
+Starting with GitLab 11.3, Auto DevOps pipeline will be gradually enabled by default for all
+projects that don't have a [CI/CD configuration file](../../ci/yaml/README.md).
+Unless it is explicitly enabled for the project, the pipeline will be automatically
+disabled on the first failure. 
+
 ### Deployment strategy
 
 > [Introduced](https://gitlab.com/gitlab-org/gitlab-ce/issues/38542) in GitLab 11.0.
