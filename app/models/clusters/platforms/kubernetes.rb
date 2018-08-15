@@ -47,6 +47,10 @@ module Clusters
 
       alias_method :active?, :enabled?
 
+      enum authorization_type: {
+        rbac: 1
+      }
+
       def actual_namespace
         if namespace.present?
           namespace

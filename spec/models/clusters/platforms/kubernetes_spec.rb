@@ -92,6 +92,28 @@ describe Clusters::Platforms::Kubernetes, :use_clean_rails_memory_store_caching 
     end
   end
 
+  describe '#rbac?' do
+    subject { kubernetes.rbac? }
+
+    let(:kubernetes) { build(:cluster_platform_kubernetes, :configured) }
+
+    context 'when authorization type is 1' do
+      before do
+        kubernetes.authorization_type = 1
+      end
+
+      it { is_expected.to be_truthy }
+    end
+
+    context 'when authorization type is nil' do
+      before do
+        kubernetes.authorization_type = nil
+      end
+
+      it { is_expected.to be_falsey }
+    end
+  end
+
   describe '#actual_namespace' do
     subject { kubernetes.actual_namespace }
 
