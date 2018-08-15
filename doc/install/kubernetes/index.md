@@ -14,15 +14,13 @@ should be deployed, upgraded, and configured.
 
 ## Chart Overview
 
-* **[GitLab Chart](gitlab_chart.html)**: The recommended GitLab chart, currently in beta. Supports large deployments with horizontal scaling of individual GitLab components, and does not require NFS.
+* **[GitLab Chart](gitlab_chart.html)**: Deploys GitLab on Kubernetes. Includes all the required components to get started, and can scale to large deployments.
 * **[GitLab Runner Chart](gitlab_runner_chart.md)**: For deploying just the GitLab Runner.
-* Other Charts
-  * [GitLab-Omnibus](gitlab_omnibus.md): Chart based on the Omnibus GitLab linux package, only suitable for small deployments. The chart will be deprecated by the [GitLab chart](#gitlab-chart) when it is GA.
-  * [Community Contributed Charts](#community-contributed-charts): Community contributed charts, deprecated by the official GitLab chart.
+* **Deprecated** Charts
+  * [GitLab-Omnibus](gitlab_omnibus.md): Chart based on the Omnibus GitLab linux package, only suitable for small deployments.
+  * [Community Contributed Charts](#community-contributed-charts): Community contributed charts.
 
 ## GitLab Chart
-
-> **Note**: This chart is **beta**, while we work on the [remaining items for GA](https://gitlab.com/groups/charts/-/epics/15).
 
 The best way to operate GitLab on Kubernetes. This chart contains all the required components to get started, and can scale to large deployments.
 
@@ -45,7 +43,7 @@ Learn more about [gitlab-runner chart](gitlab_runner_chart.md).
 
 ### GitLab-Omnibus Chart
 
-> **Note**: This chart is beta, and **will be deprecated** when the [`gitlab`](#gitlab-chart) chart is GA.
+> **Note**: This chart is **deprecated**. We recommend using the [`gitlab`](#gitlab-chart) chart.
 
 It deploys and configures nearly all features of GitLab, including: a [Runner](https://docs.gitlab.com/runner/), [Container Registry](../../user/project/container_registry.html#gitlab-container-registry), [Mattermost](https://docs.gitlab.com/omnibus/gitlab-mattermost/), [automatic SSL](https://github.com/kubernetes/charts/tree/master/stable/kube-lego), and a [load balancer](https://github.com/kubernetes/ingress/tree/master/controllers/nginx). It is based on our [GitLab Omnibus Docker Images](https://docs.gitlab.com/omnibus/docker/README.html).
 
