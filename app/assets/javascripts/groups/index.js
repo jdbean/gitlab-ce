@@ -11,7 +11,7 @@ import { GROUPS_LIST_HOLDER_CLASS, CONTENT_LIST_CLASS } from './constants';
 
 Vue.use(Translate);
 
-export default (containerId = 'js-groups-tree', endpoint, action = '', showPagination) => {
+export default (containerId = 'js-groups-tree', endpoint, action = '') => {
   const containerEl = document.getElementById(containerId);
   let dataEl;
 
@@ -48,32 +48,33 @@ export default (containerId = 'js-groups-tree', endpoint, action = '', showPagin
         service,
         hideProjects,
         loading: true,
-        showPagination,
         containerId,
       };
     },
     beforeMount() {
-      if (!this.action) {
-        const { dataset } = dataEl || this.$options.el;
-        let groupFilterList = null;
-        const form = document.querySelector(dataset.formSel);
-        const filter = document.querySelector(dataset.filterSel);
-        const holder = document.querySelector(dataset.holderSel);
-
-        const opts = {
-          form,
-          filter,
-          holder,
-          filterEndpoint: endpoint || dataset.endpoint,
-          pagePath: dataset.path,
-          dropdownSel: dataset.dropdownSel,
-          filterInputField: 'filter',
-          action: this.action,
-        };
-
-        groupFilterList = new GroupFilterableList(opts);
-        groupFilterList.initSearch();
+      if (this.action) {
+        return;
       }
+
+      const { dataset } = dataEl || this.$options.el;
+      let groupFilterList = null;
+      const form = document.querySelector(dataset.formSel);
+      const filter = document.querySelector(dataset.filterSel);
+      const holder = document.querySelector(dataset.holderSel);
+
+      const opts = {
+        form,
+        filter,
+        holder,
+        filterEndpoint: endpoint || dataset.endpoint,
+        pagePath: dataset.path,
+        dropdownSel: dataset.dropdownSel,
+        filterInputField: 'filter',
+        action: this.action,
+      };
+
+      groupFilterList = new GroupFilterableList(opts);
+      groupFilterList.initSearch();
     },
     render(createElement) {
       return createElement('groups-app', {
@@ -82,7 +83,6 @@ export default (containerId = 'js-groups-tree', endpoint, action = '', showPagin
           store: this.store,
           service: this.service,
           hideProjects: this.hideProjects,
-          showPagination: this.showPagination,
           containerId: this.containerId,
         },
       });

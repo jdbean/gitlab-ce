@@ -52,11 +52,7 @@ class GroupsController < Groups::ApplicationController
 
   def show
     respond_to do |format|
-      format.html do
-        @has_children = GroupDescendantsFinder.new(current_user: current_user,
-                                                   parent_group: @group,
-                                                   params: params).has_children?
-      end
+      format.html
 
       format.atom do
         load_events

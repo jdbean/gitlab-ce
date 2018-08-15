@@ -29,11 +29,6 @@ export default {
       required: false,
       default: '',
     },
-    showPagination: {
-      type: Boolean,
-      required: false,
-      default: true,
-    },
   },
   methods: {
     change(page) {
@@ -60,7 +55,7 @@ export default {
       :action="action"
     />
     <table-pagination
-      v-if="!searchEmpty && showPagination"
+      v-if="!searchEmpty"
       :change="change"
       :page-info="pageInfo"
     />

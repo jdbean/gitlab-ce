@@ -1,12 +1,7 @@
 /* eslint-disable no-new */
 
 import { getPagePath } from '~/lib/utils/common_utils';
-import {
-  ACTIVE_TAB_OVERVIEW,
-  ACTIVE_TAB_SUBGROUPS_AND_PROJECTS,
-  ACTIVE_TAB_SHARED,
-  ACTIVE_TAB_ARCHIVED,
-} from '~/groups/constants';
+import { ACTIVE_TAB_SHARED, ACTIVE_TAB_ARCHIVED } from '~/groups/constants';
 import NewGroupChild from '~/groups/new_group_child';
 import notificationsDropdown from '~/notifications_dropdown';
 import NotificationsForm from '~/notifications_form';
@@ -16,12 +11,7 @@ import GroupTabs from './group_tabs';
 
 document.addEventListener('DOMContentLoaded', () => {
   const newGroupChildWrapper = document.querySelector('.js-new-project-subgroup');
-  const loadableActions = [
-    ACTIVE_TAB_OVERVIEW,
-    ACTIVE_TAB_SUBGROUPS_AND_PROJECTS,
-    ACTIVE_TAB_SHARED,
-    ACTIVE_TAB_ARCHIVED,
-  ];
+  const loadableActions = [ACTIVE_TAB_SHARED, ACTIVE_TAB_ARCHIVED];
   const paths = window.location.pathname.split('/');
   const subpath = paths[paths.length - 1];
   const action = loadableActions.includes(subpath) ? subpath : getPagePath(1);

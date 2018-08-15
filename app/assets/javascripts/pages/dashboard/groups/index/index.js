@@ -1,3 +1,5 @@
-import createGroupTree from '~/groups';
+import initGroupsList from '~/groups';
 
-document.addEventListener('DOMContentLoaded', createGroupTree);
+document.addEventListener('DOMContentLoaded', () => {
+  initGroupsList();
+});

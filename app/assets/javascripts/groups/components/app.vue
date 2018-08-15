@@ -10,31 +10,8 @@ import { getParameterByName } from '~/lib/utils/common_utils';
 import { mergeUrlParams } from '~/lib/utils/url_utility';
 
 import eventHub from '../event_hub';
-import {
-  COMMON_STR,
-  MAX_OVERVIEW_COUNT,
-  ACTIVE_TAB_OVERVIEW_CHILDREN,
-  ACTIVE_TAB_OVERVIEW_SHARED,
-  CONTENT_LIST_CLASS,
-  CARD_CLASS,
-} from '../constants';
+import { COMMON_STR, CONTENT_LIST_CLASS } from '../constants';
 import groupsComponent from './groups.vue';
-
-const safelyRemoveElement = (selector, scope = document) => {
-  const targetEl = scope.querySelector(selector);
-
-  if (targetEl) {
-    targetEl.remove();
-  }
-};
-
-const safelyDisplayElement = (selector, scope = document) => {
-  const targetEl = scope.querySelector(selector);
-
-  if (targetEl) {
-    targetEl.classList.remove(HIDDEN_CLASS);
-  }
-};
 
 export default {
   components: {
@@ -65,16 +42,10 @@ export default {
       type: Boolean,
       required: true,
     },
-    showPagination: {
-      type: Boolean,
-      required: false,
-      default: true,
-    },
   },
   data() {
     return {
       isLoading: true,
-      isOverview: [ACTIVE_TAB_OVERVIEW_CHILDREN, ACTIVE_TAB_OVERVIEW_SHARED].includes(this.action),
       isSearchEmpty: false,
       searchEmptyMessage: '',
       showModal: false,
@@ -136,11 +107,10 @@ export default {
         });
     },
     fetchAllGroups() {
-      const { isOverview } = this;
-      const page = (!isOverview && getParameterByName('page')) || null;
-      const sortBy = (!isOverview && getParameterByName('sort')) || null;
-      const archived = (!isOverview && getParameterByName('archived')) || null;
-      const filterGroupsBy = (!isOverview && getParameterByName('filter')) || null;
+      const page = getParameterByName('page') || null;
+      const sortBy = getParameterByName('sort') || null;
+      const archived = getParameterByName('archived') || null;
+      const filterGroupsBy = getParameterByName('filter') || null;
 
       this.isLoading = true;
       // eslint-disable-next-line promise/catch-or-return
@@ -202,12 +172,6 @@ export default {
         parentGroup.isOpen = false;
       }
     },
-    showCard() {
-      safelyDisplayElement(CARD_CLASS, this.containerEl);
-    },
-    showCardFooter() {
-      safelyDisplayElement('.card-footer', this.containerEl);
-    },
     showLeaveGroupModal(group, parentGroup) {
       const { fullName } = group;
       this.targetGroup = group;
@@ -242,11 +206,16 @@ export default {
         });
     },
     showEmptyState() {
-      if (this.isOverview) {
-        safelyRemoveElement(CARD_CLASS, this.containerEl);
-      } else {
-        safelyRemoveElement(CONTENT_LIST_CLASS, this.containerEl);
-        safelyDisplayElement('.empty-state', this.containerEl);
+      const { containerEl } = this;
+      const contentListEl = containerEl.querySelector(CONTENT_LIST_CLASS);
+      const emptyStateEl = containerEl.querySelector('.empty-state');
+
+      if (contentListEl) {
+        contentListEl.remove();
+      }
+
+      if (emptyStateEl) {
+        emptyStateEl.classList.remove(HIDDEN_CLASS);
       }
     },
     updatePagination(headers) {
@@ -262,20 +231,8 @@ export default {
         this.store.setGroups(groups);
       }
 
-      if (this.action) {
-        if (this.isOverview) {
-          safelyRemoveElement('.loading-container', this.containerEl);
-
-          if (this.pageInfo.total > MAX_OVERVIEW_COUNT) {
-            this.showCardFooter();
-          }
-        }
-
-        if (!hasGroups && !fromSearch) {
-          this.showEmptyState();
-        } else {
-          this.showCard();
-        }
+      if (this.action && !hasGroups && !fromSearch) {
+        this.showEmptyState();
       }
     },
   },
@@ -297,7 +254,6 @@ export default {
       :search-empty-message="searchEmptyMessage"
       :page-info="pageInfo"
       :action="action"
-      :show-pagination="showPagination"
     />
     <deprecated-modal
       v-show="showModal"

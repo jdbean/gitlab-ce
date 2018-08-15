@@ -1,17 +1,13 @@
 import { __, s__ } from '../locale';
 
 export const MAX_CHILDREN_COUNT = 20;
-export const MAX_OVERVIEW_COUNT = 5;
 
-export const ACTIVE_TAB_OVERVIEW = 'overview';
-export const ACTIVE_TAB_OVERVIEW_CHILDREN = 'overview-children';
-export const ACTIVE_TAB_OVERVIEW_SHARED = 'overview-shared';
 export const ACTIVE_TAB_SUBGROUPS_AND_PROJECTS = 'subgroups_and_projects';
 export const ACTIVE_TAB_SHARED = 'shared';
 export const ACTIVE_TAB_ARCHIVED = 'archived';
 
 export const GROUPS_LIST_HOLDER_CLASS = '.js-groups-list-holder';
-export const CARD_CLASS = '.card';
+export const GROUPS_FILTER_FORM_CLASS = '.js-group-filter-form';
 export const CONTENT_LIST_CLASS = '.content-list';
 
 export const COMMON_STR = {

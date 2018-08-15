@@ -30,11 +30,7 @@ describe('ItemActionsComponent', () => {
       it('emits `showLeaveGroupModal` event with `group` and `parentGroup` props', () => {
         spyOn(eventHub, '$emit');
         vm.onLeaveGroup();
-        expect(eventHub.$emit).toHaveBeenCalledWith(
-          'showLeaveGroupModal',
-          vm.group,
-          vm.parentGroup,
-        );
+        expect(eventHub.$emit).toHaveBeenCalledWith('showLeaveGroupModal', vm.group, vm.parentGroup);
       });
     });
   });

@@ -4885,12 +4885,6 @@ msgstr ""
 msgid "Show latest version of the diff"
 msgstr ""
 
-msgid "Show more shared projects"
-msgstr ""
-
-msgid "Show more subgroups and projects"
-msgstr ""
-
 msgid "Show parent pages"
 msgstr ""
 
@@ -5382,9 +5376,6 @@ msgid "There are no labels yet"
 msgstr ""
 
 msgid "There are no merge requests to show"
-msgstr ""
-
-msgid "There are no projects or subgroups in this group yet"
 msgstr ""
 
 msgid "There are no projects shared with this group yet"
