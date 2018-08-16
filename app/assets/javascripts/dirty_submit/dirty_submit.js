@@ -26,20 +26,20 @@ export default class DirtySubmit {
 
     if (!input.dataset.dirtySubmitOriginalValue) return;
 
-    this.updateDirtyInputReference(input);
+    this.updateDirtyInputs(input);
     this.toggleSubmission(this.dirtyInputs.length === 0);
   }
 
-  updateDirtyInputReference(input) {
+  updateDirtyInputs(input) {
     const { name } = input;
     const isDirty = input.dataset.dirtySubmitOriginalValue !== DirtySubmit.inputCurrentValue(input);
     const indexOfInputName = this.dirtyInputs.indexOf(name);
-    const isAlreadyReferenced = indexOfInputName !== -1;
+    const isExisting = indexOfInputName !== -1;
 
-    if ((isDirty && isAlreadyReferenced) || (!isDirty && !isAlreadyReferenced)) return;
+    if ((isDirty && isExisting) || (!isDirty && !isExisting)) return;
 
-    if (isDirty && !isAlreadyReferenced) this.dirtyInputs.push(name);
-    if (!isDirty && isAlreadyReferenced) this.dirtyInputs.splice(indexOfInputName, 1);
+    if (isDirty && !isExisting) this.dirtyInputs.push(name);
+    if (!isDirty && isExisting) this.dirtyInputs.splice(indexOfInputName, 1);
   }
 
   toggleSubmission(isDisabled) {
