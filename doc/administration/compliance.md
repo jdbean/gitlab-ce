@@ -1,3 +1,5 @@
+# Compliance Features
+
 You can configure the following GitLab features to help ensure that your GitLab instance meets common compliance standards. Click any feature name for further documentation.
 
 Additionally, GitLab’s security features may also help you meet compliance standards.
