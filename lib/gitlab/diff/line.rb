@@ -78,16 +78,10 @@ module Gitlab
         }
       end
 
+      # We have to keep this here since it is still used for conflict resolution
+      # in Conflict::File#as_json that renders json diff lines in sections
       def as_json(opts = nil)
-        {
-          line_code: line_code,
-          type: type,
-          old_line: old_line,
-          new_line: new_line,
-          text: text,
-          rich_text: rich_text || text,
-          meta_data: meta_positions
-        }
+        DiffLineSerializer.new.represent(self)
       end
 
       private

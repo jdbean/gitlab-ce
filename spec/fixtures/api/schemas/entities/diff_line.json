@@ -1,0 +1,13 @@
+{
+  "type": "object",
+  "required": ["type"],
+  "properties": {
+    "line_code": { "type": ["string", "null"] },
+    "type": { "type": ["string", "null"] },
+    "old_line": { "type": ["integer", "null"] },
+    "new_line": { "type": ["integer", "null"] },
+    "text": { "type": ["string", "null"] },
+    "rich_text": { "type": ["string", "null"] },
+    "meta_positions": { "type": ["object", null] }
+  }
+}
