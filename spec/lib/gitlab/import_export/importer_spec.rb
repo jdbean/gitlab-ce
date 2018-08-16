@@ -63,6 +63,20 @@ describe Gitlab::ImportExport::Importer do
 
         importer.execute
       end
+
+      context 'visibility_level is string' do
+        before do
+          allow(project).to receive(:import_data).and_return(
+            double(data: { 'override_params' => { 'visibility_level' => Gitlab::VisibilityLevel::PRIVATE.to_s } })
+          )
+        end
+
+        it 'overrides visibility_level' do
+          importer.execute
+
+          expect(project.visibility_level).to eq(Gitlab::VisibilityLevel::PRIVATE)
+        end
+      end
     end
 
     context 'when project successfully restored' do

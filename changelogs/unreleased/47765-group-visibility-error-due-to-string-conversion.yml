@@ -1,0 +1,6 @@
+---
+title: Changes ProjectTreeRestorer#restore_project to change attributes to the correct
+  type
+merge_request: 21242
+author:
+type: fixed
