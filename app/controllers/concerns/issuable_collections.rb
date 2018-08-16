@@ -113,7 +113,9 @@ module IssuableCollections
   end
 
   def remember_sorting_key
-    [controller_name, action_name].include?('merge_requests') ? 'merge_requests_sort' : 'issues_sort'
+    strong_memoize(:remember_sorting_key) do
+      "#{collection_type.downcase}_sort"
+    end
   end
 
   def default_sort_order
@@ -148,10 +150,10 @@ module IssuableCollections
   end
 
   def collection_type
-    @collection_type ||= case finder
-                         when IssuesFinder
+    @collection_type ||= case finder_type.to_s
+                         when 'IssuesFinder'
                            'Issue'
-                         when MergeRequestsFinder
+                         when 'MergeRequestsFinder'
                            'MergeRequest'
                          end
   end

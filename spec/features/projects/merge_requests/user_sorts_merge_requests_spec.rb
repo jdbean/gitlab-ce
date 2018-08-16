@@ -20,20 +20,20 @@ describe 'User sorts merge requests' do
     find('button.dropdown-toggle').click
 
     page.within('.content ul.dropdown-menu.dropdown-menu-right li') do
-      click_link('Last updated')
+      click_link('Milestone')
     end
 
     visit(merge_requests_dashboard_path(assignee_id: user.id))
 
-    expect(find('.issues-filters a.is-active')).to have_content('Last updated')
+    expect(find('.issues-filters a.is-active')).to have_content('Milestone')
 
     visit(project_merge_requests_path(project))
 
-    expect(find('.issues-filters a.is-active')).to have_content('Last updated')
+    expect(find('.issues-filters a.is-active')).to have_content('Milestone')
 
     visit(merge_requests_group_path(group))
 
-    expect(find('.issues-filters a.is-active')).to have_content('Last updated')
+    expect(find('.issues-filters a.is-active')).to have_content('Milestone')
   end
 
   it 'separates remember sorting with issues' do
@@ -42,12 +42,12 @@ describe 'User sorts merge requests' do
     find('button.dropdown-toggle').click
 
     page.within('.content ul.dropdown-menu.dropdown-menu-right li') do
-      click_link('Last updated')
+      click_link('Milestone')
     end
 
     visit(project_issues_path(project))
 
-    expect(find('.issues-filters a.is-active')).not_to have_content('Last updated')
+    expect(find('.issues-filters a.is-active')).not_to have_content('Milestone')
   end
 
   context 'when merge requests have awards' do
