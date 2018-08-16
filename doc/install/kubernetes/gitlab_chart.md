@@ -15,8 +15,12 @@ The default deployment includes:
 
 ### Limitations
 
-Some features and functions are not currently available in the beta release.
-For details, see [known issues and limitations](https://gitlab.com/charts/gitlab/blob/master/doc/architecture/beta.md#known-issues-and-limitations) in the charts repository.
+Some features and functions are not currently available:
+
+* [GitLab Pages](https://gitlab.com/charts/gitlab/issues/37)
+* [GitLab Geo](https://gitlab.com/charts/gitlab/issues/8)
+* [No in-cluster HA database](https://gitlab.com/charts/gitlab/issues/48)
+* MySQL will not be supported, as support is [deprecated within GitLab](https://docs.gitlab.com/omnibus/settings/database.html#using-a-mysql-database-management-server-enterprise-edition-only)
 
 ## Prerequisites
 
@@ -35,27 +39,25 @@ In order to deploy GitLab on Kubernetes, a few prerequisites are required.
 
 > **Note**: For deployments to Amazon EKS, there are [additional configuration requirements](preparation/eks.md).
 
-For simple deployments, running all services within Kubernetes, only three parameters are required:
+For enterprise deployments, please use the installation instructions in the [`gitlab` chart project](https://gitlab.com/charts/gitlabhttps://gitlab.com/charts/gitlab/blob/master/doc/installation/README.md). We strongly recommend using [external Postgres and Redis]((https://gitlab.com/charts/gitlab/tree/master/doc/advanced) for production deployments.
+
+For additional configuration options, consult the [full list of settings](https://gitlab.com/charts/gitlab/blob/master/doc/installation/command-line-options.md).
+
+## Quick start
+
+For simple non-production deployments, running all services within Kubernetes, only three parameters are required:
 - `global.hosts.domain`: the [base domain](preparation/networking.md) of the wildcard host entry. For example, `mycompany.io` if the wild card entry is `*.mycompany.io`.
 - `global.hosts.externalIP`: the [external IP](preparation/networking.md) which the wildcard DNS resolves to.
 - `certmanager-issuer.email`: Email address to use when requesting new SSL certificates from Let's Encrypt.
 
-For enterprise deployments, or to utilize advanced settings, please use the instructions in the [`gitlab` chart project](https://gitlab.com/charts/gitlab) for the most up to date directions.
-- [External Postgres, Redis, and other dependencies](https://gitlab.com/charts/gitlab/tree/master/doc/advanced)
-- [Persistence settings](https://gitlab.com/charts/gitlab/blob/master/doc/installation/storage.md)
-- [Manual TLS certificates](https://gitlab.com/charts/gitlab/blob/master/doc/installation/tls.md)
-- [Manual secret creation](https://gitlab.com/charts/gitlab/blob/master/doc/installation/secrets.md)
-
-For additional configuration options, consult the [full list of settings](https://gitlab.com/charts/gitlab/blob/master/doc/installation/command-line-options.md).
-
-## Installing GitLab using the Helm Chart
+### Installing GitLab using the Helm Chart
 
 Once you have all of your configuration options collected, we can get any dependencies and
 run helm. In this example, we've named our helm release "gitlab".
 
 ```
 helm repo add gitlab https://charts.gitlab.io/
-helm update
+helm repo update
 helm upgrade --install gitlab gitlab/gitlab \
   --timeout 600 \
   --set global.hosts.domain=example.local \
@@ -84,7 +86,7 @@ if you used the command above).
 kubectl get secret <name>-gitlab-initial-root-password -ojsonpath={.data.password} | base64 --decode
 ```
 
-## Outgoing email
+### Outgoing email
 
 By default outgoing email is disabled. To enable it, provide details for your SMTP server
 using the `global.smtp` and `global.email` settings. You can find details for these settings in the
