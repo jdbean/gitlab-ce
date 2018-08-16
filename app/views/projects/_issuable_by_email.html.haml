@@ -20,8 +20,8 @@
           .input-group-append
             = clipboard_button(target: '#issuable_email', class: 'btn btn-clipboard input-group-text btn-transparent d-none d-sm-block')
             = mail_to email, class: 'btn btn-clipboard btn-transparent',
-              subject: _("Enter the #{name} title"),
-              body: _("Enter the #{name} description"),
+              subject: _("Enter the %{issuable_type} title") % { issuable_type: name },
+              body: _("Enter the %{issuable_type} description") % { issuable_type: name },
               title: _('Send email'),
               data: { toggle: 'tooltip', placement: 'bottom' } do
               = sprite_icon('mail')
