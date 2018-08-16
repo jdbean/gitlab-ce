@@ -42,9 +42,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 Executing `DirtySubmit.prototype.init` will store the value of each form input as their `data-dirty-submit-original-value` attribute value. It also disables submission and registers an `input` event listener to handle input element value updates.
 
-When an `input` event reaches the form element provided at construction, `DirtySubmit.prototype.handleDirtyInput` is invoked.
+When an `input` event reaches the form element provided at construction, `DirtySubmit.prototype.updateDirtyInput` is invoked.
 If the input element's current value is unequal to it's `data-dirty-submit-original-value` value, the input element's `name` attribute value is stored in the `DirtySubmit.prototype.dirtyInputs` array.
-Alternatively, if the values are equal, the input element's `name` will be removed from the array and `DirtySubmit.prototype.disableIfDirty` will be called, which will disable submission if the `DirtySubmit.prototype.dirtyInputs` array is empty and enable submission if it is not.
+Alternatively, if the values are equal, the input element's `name` will be removed from the array and `DirtySubmit.prototype.toggleSubmission` will be called, which will disable submission if the `DirtySubmit.prototype.dirtyInputs` array is empty and enable submission if it is not.
 
 Currently handles `input`, `textarea` and `select` elements.
 

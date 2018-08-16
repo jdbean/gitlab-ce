@@ -2,7 +2,7 @@ import groupAvatar from '~/group_avatar';
 import TransferDropdown from '~/groups/transfer_dropdown';
 import initConfirmDangerModal from '~/confirm_danger_modal';
 import initSettingsPanels from '~/settings_panels';
-import initDirtySubmit from '~/dirty_submit';
+import DirtySubmitCollection from '~/dirty_submit/dirty_submit_collection';
 
 document.addEventListener('DOMContentLoaded', () => {
   groupAvatar();
@@ -13,8 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('DOMContentLoaded', () => {
   // Initialize expandable settings panels
   initSettingsPanels();
-  initDirtySubmit([
-    document.querySelector('.js-general-settings-form'),
-    document.querySelector('.js-general-permissions-form'),
-  ]);
+  const dirtySubmit = new DirtySubmitCollection(
+    document.querySelectorAll('.js-general-settings-form, .js-general-permissions-form'),
+  );
+  dirtySubmit.init();
 });
