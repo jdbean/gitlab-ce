@@ -49,18 +49,6 @@ class ResourceLabelEvent < ActiveRecord::Base
   end
 
   def expire_etag_cache
-    return unless issuable&.discussions_rendered_on_frontend?
-    return unless issuable&.etag_caching_enabled?
-
-    Gitlab::EtagCaching::Store.new.touch(etag_key)
-  end
-
-  # FIXME: override for epic
-  def etag_key
-    Gitlab::Routing.url_helpers.project_noteable_notes_path(
-      project,
-      target_type: 'issue',
-      target_id: issuable.id
-    )
+    issuable.expire_note_etag_cache
   end
 end

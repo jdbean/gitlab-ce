@@ -18,7 +18,6 @@ module NotesActions
     notes = notes_finder.execute
       .inc_relations_for_view
 
-    # FIXME: created_after
     notes = ResourceEvents::MergeIntoNotesService.new(noteable, last_fetched_at: current_fetched_at).execute(notes)
 
     notes = prepare_notes_for_rendering(notes)
