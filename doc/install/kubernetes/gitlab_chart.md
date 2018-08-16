@@ -1,5 +1,4 @@
 # GitLab Helm Chart
-> **Note:** The chart is currently **beta**, if you encounter any problems please [open an issue](https://gitlab.com/charts/gitlab/issues/new).
 
 For more information on available GitLab Helm Charts, please see our [overview](index.md#chart-overview).
 

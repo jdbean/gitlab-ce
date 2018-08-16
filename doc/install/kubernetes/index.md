@@ -16,9 +16,9 @@ should be deployed, upgraded, and configured.
 
 * **[GitLab Chart](gitlab_chart.html)**: Deploys GitLab on Kubernetes. Includes all the required components to get started, and can scale to large deployments.
 * **[GitLab Runner Chart](gitlab_runner_chart.md)**: For deploying just the GitLab Runner.
-* **Deprecated** Charts
-  * [GitLab-Omnibus](gitlab_omnibus.md): Chart based on the Omnibus GitLab linux package, only suitable for small deployments.
-  * [Community Contributed Charts](#community-contributed-charts): Community contributed charts.
+* Other Charts
+  * [GitLab-Omnibus](gitlab_omnibus.md): Chart based on the Omnibus GitLab linux package, only suitable for small deployments. Deprecated, we strongly recommend using the [gitlab](#gitlab-chart) chart.
+  * [Community contributed charts](#community-contributed-charts): Community contributed charts.
 
 ## GitLab Chart
 
@@ -31,7 +31,7 @@ This chart offers a number of benefits:
 * Automatic SSL with Let's Encrypt
 * and plenty more.
 
-Learn more about the [GitLab chart here](gitlab_chart.md) and [here [Video]](https://youtu.be/Z6jWR8Z8dv8).
+Learn more about the [GitLab chart](gitlab_chart.md).
 
 ## GitLab Runner Chart
 
@@ -43,7 +43,7 @@ Learn more about [gitlab-runner chart](gitlab_runner_chart.md).
 
 ### GitLab-Omnibus Chart
 
-> **Note**: This chart is **deprecated**. We recommend using the [`gitlab`](#gitlab-chart) chart.
+> **Note**: This chart is **deprecated**. We recommend using the [`gitlab`](#gitlab-chart) chart. A comparison of the two charts is available [here (Video)](https://youtu.be/Z6jWR8Z8dv8).
 
 It deploys and configures nearly all features of GitLab, including: a [Runner](https://docs.gitlab.com/runner/), [Container Registry](../../user/project/container_registry.html#gitlab-container-registry), [Mattermost](https://docs.gitlab.com/omnibus/gitlab-mattermost/), [automatic SSL](https://github.com/kubernetes/charts/tree/master/stable/kube-lego), and a [load balancer](https://github.com/kubernetes/ingress/tree/master/controllers/nginx). It is based on our [GitLab Omnibus Docker Images](https://docs.gitlab.com/omnibus/docker/README.html).
 
