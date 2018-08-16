@@ -2005,6 +2005,22 @@ describe Repository do
 
       File.delete(path)
     end
+
+    context 'for multiple SHAs' do
+      it 'skips non-existent SHAs' do
+        repository.keep_around('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', sample_commit.id)
+
+        expect(repository.kept_around?(sample_commit.id)).to be_truthy
+      end
+
+      it 'skips already-kept-around SHAs' do
+        repository.keep_around(sample_commit.id)
+
+        repository.keep_around(sample_commit.id, another_sample_commit.id)
+
+        expect(repository.kept_around?(another_sample_commit.id)).to be_truthy
+      end
+    end
   end
 
   describe '#update_ref' do
