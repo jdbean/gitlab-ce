@@ -97,7 +97,6 @@ module Noteable
   end
 
   def note_etag_key
-    # FIXME - check Gitlab::Routing.url_helpers is available
     Gitlab::Routing.url_helpers.project_noteable_notes_path(
       project,
       target_type: self.class.name.underscore,

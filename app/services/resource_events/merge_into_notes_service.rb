@@ -52,33 +52,34 @@ module ResourceEvents
       events.group_by { |event| event.discussion_id }
     end
 
-    # FIXME: take from system_note, refactor
     def change_label_text(events)
-      added_labels = events.select { |e| e.action == 'add' && e.label }.map(&:label)
-      removed_labels = events.select { |e| e.action == 'remove' && e.label }.map(&:label)
-      added_unknown_labels_count = events.select { |e| e.action == 'add' && e.label.nil? }.map(&:label).count
-      removed_unknown_labels_count = events.select { |e| e.action == 'remove' && e.label.nil? }.map(&:label).count
-      labels_count = added_labels.count + removed_labels.count + added_unknown_labels_count + removed_unknown_labels_count
+      added_labels = events.select { |e| e.action == 'add' }.map(&:label)
+      removed_labels = events.select { |e| e.action == 'remove' }.map(&:label)
 
-      references     = ->(label) { label.to_reference(format: :id) }
-      added_labels   = added_labels.map(&references).join(' ')
-      removed_labels = removed_labels.map(&references).join(' ')
+      added = labels_str('added', added_labels)
+      removed = labels_str('removed', removed_labels)
 
-      text_parts = []
+      [added, removed].compact.join(' and ')
+    end
 
-      if added_labels.present?
-        text_parts << "added #{added_labels}"
-        text_parts << " + #{added_unknown_labels_count} deleted" if added_unknown_labels_count > 0
-        text_parts << 'and' if removed_labels.present?
-      end
+    # returns string containing added/removed labels including
+    # count of deleted labels:
+    #
+    # added ~1 ~2 + deleted label
+    # added 3 deleted labels
+    # added ~1 ~2 labels
+    def labels_str(prefix, labels)
+      names = labels.map { |label| label.to_reference(format: :id) if label.present? }.compact
+      deleted = labels.count - names.count
 
-      if removed_labels.present?
-        text_parts << "removed #{removed_labels}"
-        text_parts << " + #{removed_unknown_labels_count} deleted" if removed_unknown_labels_count > 0
-      end
+      return nil if names.empty? && deleted == 0
 
-      text_parts << 'label'.pluralize(labels_count)
-      text_parts.join(' ')
+      names_str = names.empty? ? nil : names.join(' ')
+      deleted_str = deleted == 0 ? nil : "#{deleted} deleted"
+      label_list_str = [names_str, deleted_str].compact.join(' + ')
+      suffix = 'label'.pluralize(deleted > 0 ? deleted : names.count)
+
+      "#{prefix} #{label_list_str} #{suffix}"
     end
 
     def since_fetch_at(events)
