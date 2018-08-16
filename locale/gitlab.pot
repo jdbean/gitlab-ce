@@ -1113,6 +1113,9 @@ msgstr ""
 msgid "Choose a branch/tag (e.g. %{master}) or enter a commit (e.g. %{sha}) to see what's changed or to create a merge request."
 msgstr ""
 
+msgid "Choose a type..."
+msgstr ""
+
 msgid "Choose any color."
 msgstr ""
 
@@ -2559,6 +2562,9 @@ msgstr ""
 msgid "Fields on this page are now uneditable, you can configure"
 msgstr ""
 
+msgid "File templates"
+msgstr ""
+
 msgid "Files"
 msgstr ""
 
@@ -2569,6 +2575,9 @@ msgid "Filter"
 msgstr ""
 
 msgid "Filter by commit message"
+msgstr ""
+
+msgid "Filter..."
 msgstr ""
 
 msgid "Find by path"
@@ -5285,6 +5294,9 @@ msgstr ""
 msgid "Template"
 msgstr ""
 
+msgid "Template applied"
+msgstr ""
+
 msgid "Terms of Service Agreement and Privacy Policy"
 msgstr ""
 
@@ -5797,6 +5809,9 @@ msgid "Twitter"
 msgstr ""
 
 msgid "Unable to load the diff. %{button_try_again}"
+msgstr ""
+
+msgid "Undo"
 msgstr ""
 
 msgid "Unlock"
