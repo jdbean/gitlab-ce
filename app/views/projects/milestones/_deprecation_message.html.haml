@@ -1,0 +1,13 @@
+.banner-callout.compact.milestone-deprecation-message.prepend-top-20
+  .banner-graphic= image_tag 'illustrations/milestone_removing-page.svg'
+  .banner-body.prepend-left-10.append-right-10
+    %h5.banner-title.prepend-top-0
+      The tabs below will be removed in a future version
+    %p.milestone-banner-text
+      Learn more about
+      = succeed ',' do
+        = link_to 'issue boards', help_page_url('user/project/issue_board')
+      to keep track of issues in multiple lists, using labels, assignees, and milestones.
+      If you’re missing something from issue boards, please create an issue on
+      = succeed '.' do
+        = link_to 'GitLab\'s issue tracker', 'https://gitlab.com/gitlab-org/gitlab-ce/issues'
