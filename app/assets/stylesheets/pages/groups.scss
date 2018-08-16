@@ -154,15 +154,9 @@
   border-bottom: 1px solid $border-color;
 }
 
-.groups-empty-state {
-  @include media-breakpoint-up(md) {
-    .icon {
-      order: 2;
-    }
-
-    .text-content {
-      order: 1;
-    }
+.groups-listing {
+  .group-list-tree .group-row:first-child {
+    border-top: 0;
   }
 }
 
