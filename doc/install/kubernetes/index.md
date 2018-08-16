@@ -45,7 +45,7 @@ Learn more about [gitlab-runner chart](gitlab_runner_chart.md).
 
 > **Note**: This chart is **deprecated**. We recommend using the [`gitlab`](#gitlab-chart) chart. A comparison of the two charts is available [here (Video)](https://youtu.be/Z6jWR8Z8dv8).
 
-It deploys and configures nearly all features of GitLab, including: a [Runner](https://docs.gitlab.com/runner/), [Container Registry](../../user/project/container_registry.html#gitlab-container-registry), [Mattermost](https://docs.gitlab.com/omnibus/gitlab-mattermost/), [automatic SSL](https://github.com/kubernetes/charts/tree/master/stable/kube-lego), and a [load balancer](https://github.com/kubernetes/ingress/tree/master/controllers/nginx). It is based on our [GitLab Omnibus Docker Images](https://docs.gitlab.com/omnibus/docker/README.html).
+It deploys and configures nearly all features of GitLab, including: a [Runner](https://docs.gitlab.com/runner/), [Container Registry](../../user/project/container_registry.html#gitlab-container-registry), [Mattermost](https://docs.gitlab.com/omnibus/gitlab-mattermost/), [automatic SSL](https://github.com/kubernetes/charts/tree/master/stable/kube-lego), and a [NGINX load balancer](https://github.com/kubernetes/ingress/tree/master/controllers/nginx). It is based on our [GitLab Omnibus Docker Images](https://docs.gitlab.com/omnibus/docker/README.html).
 
 Once the [GitLab chart](#gitlab-chart) is GA, this chart will be deprecated. Migrating to the `gitlab` chart will require exporting data out of this instance and importing it into a new deployment.
 
