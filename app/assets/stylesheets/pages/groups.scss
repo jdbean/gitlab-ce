@@ -29,21 +29,15 @@
   }
 }
 
+.group-nav-container .group-search,
 .group-nav-container .nav-controls {
   display: flex;
   align-items: flex-start;
-  padding: $gl-padding-top 0;
-
-  @include media-breakpoint-down(md) {
-    width: 100%;
-
-    .form-control {
-      width: 100%;
-    }
-  }
+  padding: $gl-padding-top 0 0;
 
   .group-filter-form {
-    flex: 1;
+    flex: 1 1 auto;
+    margin-right: $gl-padding-8;
   }
 
   .dropdown-menu-right {
@@ -52,7 +46,6 @@
 
   .new-project-subgroup {
     .dropdown-primary {
-      width: auto;
       min-width: 115px;
     }
 
@@ -154,6 +147,11 @@
       }
     }
   }
+}
+
+.group-nav-container .group-search {
+  padding: $gl-padding 0;
+  border-bottom: 1px solid $border-color;
 }
 
 .groups-empty-state {
