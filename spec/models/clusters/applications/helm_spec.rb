@@ -48,9 +48,9 @@ describe Clusters::Applications::Helm do
       expect(cert.not_after).to be > 999.years.from_now
     end
 
-    describe 'service_account_name' do
+    describe 'rbac' do
       context 'non rbac cluster' do
-        it { expect(subject.service_account_name).to be_nil }
+        it { expect(subject.rbac).to be_falsey }
       end
 
       context 'rbac cluster' do
@@ -58,7 +58,7 @@ describe Clusters::Applications::Helm do
           helm.cluster.platform_kubernetes.authorization_type = 'rbac'
         end
 
-        it { expect(subject.service_account_name).to eq(Gitlab::Kubernetes::Helm::SERVICE_ACCOUNT) }
+        it { expect(subject.rbac).to be_truthy }
       end
     end
   end

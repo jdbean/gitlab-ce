@@ -30,12 +30,10 @@ module Clusters
       end
 
       def install_command
-        service_account_name = Gitlab::Kubernetes::Helm::SERVICE_ACCOUNT if cluster&.platform_kubernetes_rbac?
-
         Gitlab::Kubernetes::Helm::InitCommand.new(
           name: name,
           files: files,
-          service_account_name: service_account_name
+          rbac: cluster&.platform_kubernetes_rbac?
         )
       end
 

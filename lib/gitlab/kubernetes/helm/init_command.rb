@@ -7,12 +7,12 @@ module Gitlab
         include BaseCommand
         include CommandResources
 
-        attr_reader :name, :files, :service_account_name
+        attr_reader :name, :files, :rbac
 
-        def initialize(name:, files:, service_account_name: nil)
+        def initialize(name:, files:, rbac:)
           @name = name
           @files = files
-          @service_account_name = service_account_name
+          @rbac = rbac
         end
 
         def generate_script
@@ -23,7 +23,7 @@ module Gitlab
 
         override :create_resources
         def create_resources(kubeclient)
-          if service_account_name
+          if rbac
             kubeclient.create_service_account(service_account_resource)
             kubeclient.create_cluster_role_binding(cluster_role_binding_resource)
           end
@@ -41,15 +41,15 @@ module Gitlab
         end
 
         def optional_service_account_flag
-          " --service-account #{service_account_name}" if service_account_name
+          " --service-account #{Gitlab::Kubernetes::Helm::SERVICE_ACCOUNT}" if rbac
         end
 
         def service_account_resource
-          Gitlab::Kubernetes::ServiceAccount.new(service_account_name, namespace).generate
+          Gitlab::Kubernetes::ServiceAccount.new(Gitlab::Kubernetes::Helm::SERVICE_ACCOUNT, namespace).generate
         end
 
         def cluster_role_binding_resource
-          subjects = [{ kind: 'ServiceAccount', name: service_account_name, namespace: namespace }]
+          subjects = [{ kind: 'ServiceAccount', name: Gitlab::Kubernetes::Helm::SERVICE_ACCOUNT, namespace: namespace }]
 
           Gitlab::Kubernetes::ClusterRoleBinding.new(
             Gitlab::Kubernetes::Helm::CLUSTER_ROLE_BINDING,
