@@ -171,6 +171,10 @@
 
   label {
     font-weight: $gl-font-weight-normal;
+
+    &.label-bold {
+      font-weight: $gl-font-weight-bold;
+    }
   }
 
   .submit-container {
