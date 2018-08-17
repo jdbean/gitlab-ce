@@ -26,7 +26,7 @@ Some features of GitLab are not currently available:
 
 Getting started with GitLab in Kubernetes is quick and easy. The `gitlab` chart includes all required dependencies, and takes just a few minutes to deploy.
 
-TIP: **Tip:** For production deployments, we strongly recommend using the [advanced installation instructions](https://gitlab.com/charts/gitlab/blob/master/doc/installation/README.md) and utilizing [external Postgres, Redis, and object storage](https://gitlab.com/charts/gitlab/tree/master/doc/advanced) services.
+TIP: **Tip:** For production deployments, we strongly recommend using the [detailed installation instructions](https://gitlab.com/charts/gitlab/blob/master/doc/installation/README.md) utilizing [external Postgres, Redis, and object storage](https://gitlab.com/charts/gitlab/tree/master/doc/advanced) services.
 
 ### Prerequisites
 
