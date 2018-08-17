@@ -104,14 +104,6 @@ module Gitlab
 
       private
 
-      def new_page(gollum_page)
-        Gitlab::Git::WikiPage.new(gollum_page, new_version(gollum_page, gollum_page.version.id))
-      end
-
-      def new_version(gollum_page, commit_id)
-        Gitlab::Git::WikiPageVersion.new(version(commit_id), gollum_page&.format)
-      end
-
       def version(commit_id)
         commit_find_proc = -> { Gitlab::Git::Commit.find(@repository, commit_id) }
 
@@ -119,12 +111,6 @@ module Gitlab
           RequestStore.fetch([:wiki_version_commit, commit_id]) { commit_find_proc.call }
         else
           commit_find_proc.call
-        end
-      end
-
-      def assert_type!(object, klass)
-        unless object.is_a?(klass)
-          raise ArgumentError, "expected a #{klass}, got #{object.inspect}"
         end
       end
 
@@ -162,20 +148,6 @@ module Gitlab
         gitaly_wiki_client.get_all_pages(limit: limit).map do |wiki_page, version|
           Gitlab::Git::WikiPage.new(wiki_page, version)
         end
-      end
-
-      def committer_with_hooks(commit_details)
-        Gitlab::Git::CommitterWithHooks.new(self, commit_details.to_h)
-      end
-
-      def with_committer_with_hooks(commit_details, &block)
-        committer = committer_with_hooks(commit_details)
-
-        yield committer
-
-        committer.commit
-
-        nil
       end
     end
   end
