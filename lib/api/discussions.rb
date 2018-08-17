@@ -31,8 +31,6 @@ module API
             .includes(:noteable)
             .fresh
 
-          notes = ResourceEvents::MergeIntoNotesService.new(noteable).execute(notes)
-
           notes = notes.reject { |n| n.cross_reference_not_visible_for?(current_user) }
           discussions = Kaminari.paginate_array(Discussion.build_collection(notes, noteable))
 
