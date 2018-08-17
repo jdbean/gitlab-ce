@@ -1378,7 +1378,7 @@ describe API::Runner, :clean_gitlab_redis_shared_state do
             let!(:metadata) { file_upload2 }
             let!(:metadata_sha256) { Digest::SHA256.file(metadata.path).hexdigest }
 
-            let(:stored_artifacts_file) { job.reload.artifacts_file.file }
+            let(:stored_artifacts_file) { job.reload.artifacts_archive_file.file }
             let(:stored_metadata_file) { job.reload.artifacts_archive_metadata.file }
             let(:stored_artifacts_size) { job.reload.artifacts_size }
             let(:stored_artifacts_sha256) { job.reload.job_artifacts_archive.file_sha256 }

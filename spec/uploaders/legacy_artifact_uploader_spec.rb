@@ -35,7 +35,7 @@ describe LegacyArtifactUploader do
   describe '#filename' do
     # we need to use uploader, as this makes to use mounter
     # which initialises uploader.file object
-    let(:uploader) { job.artifacts_file }
+    let(:uploader) { job.artifacts_archive_file }
 
     subject { uploader.filename }
 

@@ -10,7 +10,7 @@ module Ci
 
     TEST_REPORT_FILE_TYPES = %w[junit].freeze
     DEFAULT_FILE_NAMES = { junit: 'junit.xml' }.freeze
-    TYPE_AND_FORMAT_PAIRS = { archive: :zip, metadata: :gzip, trace: :raw, junit: :gzip }.freeze
+    TYPE_AND_FORMAT_PAIRS = { archive: :zip, archive_metadata: :gzip, trace: :raw, junit: :gzip }.freeze
 
     belongs_to :project
     belongs_to :job, class_name: "Ci::Build", foreign_key: :job_id

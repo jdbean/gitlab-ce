@@ -13,8 +13,8 @@ describe API::Jobs do
 
         expect(json_job['artifacts_file']).not_to be_nil
         expect(json_job['artifacts_file']).not_to be_empty
-        expect(json_job['artifacts_file']['filename']).to eq(second_job.artifacts_file.filename)
-        expect(json_job['artifacts_file']['size']).to eq(second_job.artifacts_file.size)
+        expect(json_job['artifacts_file']['filename']).to eq(second_job.artifacts_archive_file.filename)
+        expect(json_job['artifacts_file']['size']).to eq(second_job.artifacts_archive_file.size)
         expect(json_job['artifacts']).not_to be_nil
         expect(json_job['artifacts']).to be_an Array
         expect(json_job['artifacts'].size).to eq(second_job.job_artifacts.length)
@@ -389,7 +389,7 @@ describe API::Jobs do
       it 'returns specific job artifacts' do
         expect(response).to have_gitlab_http_status(200)
         expect(response.headers.to_h).to include(download_headers)
-        expect(response.body).to match_file(job.artifacts_file.file.file)
+        expect(response.body).to match_file(job.artifacts_archive_file.file.file)
       end
     end
 
@@ -535,7 +535,7 @@ describe API::Jobs do
           let(:download_headers) do
             { 'Content-Transfer-Encoding' => 'binary',
               'Content-Disposition' =>
-                "attachment; filename=#{job.artifacts_file.filename}" }
+                "attachment; filename=#{job.artifacts_archive_file.filename}" }
           end
 
           it { expect(response).to have_http_status(:ok) }
@@ -719,7 +719,7 @@ describe API::Jobs do
         expect(response).to have_gitlab_http_status(201)
         expect(job.job_artifacts.count).to eq(0)
         expect(job.trace.exist?).to be_falsy
-        expect(job.artifacts_file.exists?).to be_falsy
+        expect(job.artifacts_archive_file.exists?).to be_falsy
         expect(job.artifacts_archive_metadata.exists?).to be_falsy
         expect(job.has_test_reports?).to be_falsy
       end

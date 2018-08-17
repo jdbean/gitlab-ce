@@ -1827,7 +1827,7 @@ describe Ci::Pipeline, :mailer do
     end
   end
 
-  describe '#latest_builds_with_artifacts' do
+  describe '#latest_builds_with_artifacts_archive' do
     let!(:pipeline) { create(:ci_pipeline, :success) }
 
     let!(:build) do
@@ -1835,16 +1835,16 @@ describe Ci::Pipeline, :mailer do
     end
 
     it 'returns an Array' do
-      expect(pipeline.latest_builds_with_artifacts).to be_an_instance_of(Array)
+      expect(pipeline.latest_builds_with_artifacts_archive).to be_an_instance_of(Array)
     end
 
     it 'returns the latest builds' do
-      expect(pipeline.latest_builds_with_artifacts).to eq([build])
+      expect(pipeline.latest_builds_with_artifacts_archive).to eq([build])
     end
 
     it 'memoizes the returned relation' do
       query_count = ActiveRecord::QueryRecorder
-        .new { 2.times { pipeline.latest_builds_with_artifacts.to_a } }
+        .new { 2.times { pipeline.latest_builds_with_artifacts_archive.to_a } }
         .count
 
       expect(query_count).to eq(1)

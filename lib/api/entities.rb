@@ -1099,7 +1099,7 @@ module API
 
     class Job < JobBasic
       # artifacts_archive_file is included in job_artifacts, but kept for backward compatibility (remove in api/v5)
-      expose :artifacts_archive_file, using: JobArtifactFile, if: -> (job, opts) { job.artifacts_archive? }
+      expose :artifacts_archive_file, as: :artifacts_file, using: JobArtifactFile, if: -> (job, opts) { job.artifacts_archive? }
       expose :job_artifacts, as: :artifacts, using: JobArtifact
       expose :runner, with: Runner
       expose :artifacts_expire_at
@@ -1274,7 +1274,7 @@ module API
 
       class Dependency < Grape::Entity
         expose :id, :name, :token
-        expose :artifacts_archive_file, using: JobArtifactFile, if: ->(job, _) { job.artifacts_archive? }
+        expose :artifacts_archive_file, as: :artifacts_file, using: JobArtifactFile, if: ->(job, _) { job.artifacts_archive? }
       end
 
       class Response < Grape::Entity

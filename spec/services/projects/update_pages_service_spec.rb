@@ -78,8 +78,8 @@ describe Projects::UpdatePagesService do
   context 'for new artifacts' do
     context "for a valid job" do
       before do
-        create(:ci_job_artifact, file: file, job: build)
-        create(:ci_job_artifact, file_type: :metadata, file_format: :gzip, file: metadata, job: build)
+        create(:ci_job_artifact, file_type: :archive, file: file, job: build)
+        create(:ci_job_artifact, file_type: :archive_metadata, file_format: :gzip, file: metadata, job: build)
 
         build.reload
       end

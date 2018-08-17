@@ -24,8 +24,8 @@ FactoryBot.define do
       end
     end
 
-    trait :metadata do
-      file_type :metadata
+    trait :archive_metadata do
+      file_type :archive_metadata
       file_format :gzip
 
       after(:build) do |artifact, _|

@@ -843,7 +843,7 @@ describe Ci::Build do
   describe 'erasable build' do
     shared_examples 'erasable' do
       it 'removes artifact file' do
-        expect(build.artifacts_file.exists?).to be_falsy
+        expect(build.artifacts_archive_file.exists?).to be_falsy
       end
 
       it 'removes artifact metadata file' do
@@ -2867,7 +2867,7 @@ describe Ci::Build do
     subject { build.artifacts_archive_metadata_entry(path) }
 
     context 'when using local storage' do
-      let!(:metadata) { create(:ci_job_artifact, :metadata, job: build) }
+      let!(:metadata) { create(:ci_job_artifact, :archive_metadata, job: build) }
 
       context 'for existing file' do
         it 'does exist' do
@@ -2887,7 +2887,7 @@ describe Ci::Build do
     context 'when using remote storage' do
       include HttpIOHelpers
 
-      let!(:metadata) { create(:ci_job_artifact, :remote_store, :metadata, job: build) }
+      let!(:metadata) { create(:ci_job_artifact, :remote_store, :archive_metadata, job: build) }
       let(:file_path) { expand_fixture_path('ci_build_artifacts_metadata.gz') }
 
       before do
