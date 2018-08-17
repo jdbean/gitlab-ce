@@ -15,14 +15,20 @@ The default deployment includes:
 
 ### Limitations
 
-Some features and functions are not currently available:
+Some features of GitLab are not currently available:
 
 * [GitLab Pages](https://gitlab.com/charts/gitlab/issues/37)
 * [GitLab Geo](https://gitlab.com/charts/gitlab/issues/8)
 * [No in-cluster HA database](https://gitlab.com/charts/gitlab/issues/48)
 * MySQL will not be supported, as support is [deprecated within GitLab](https://docs.gitlab.com/omnibus/settings/database.html#using-a-mysql-database-management-server-enterprise-edition-only)
 
-## Prerequisites
+## Installing GitLab using the Helm Chart
+
+Getting started with GitLab in Kubernetes is quick and easy. The `gitlab` chart includes all required dependencies, and takes just a few minutes to deploy.
+
+TIP: **Tip:** For production deployments, we strongly recommend using the [advanced installation instructions](https://gitlab.com/charts/gitlab/blob/master/doc/installation/README.md) and utilizing [external Postgres, Redis, and object storage](https://gitlab.com/charts/gitlab/tree/master/doc/advanced) services.
+
+### Prerequisites
 
 In order to deploy GitLab on Kubernetes, a few prerequisites are required.
 
@@ -35,22 +41,16 @@ In order to deploy GitLab on Kubernetes, a few prerequisites are required.
 1. [Authenticate and connect](preparation/connect.md) to the cluster
 1. Configure and initialize [Helm Tiller](preparation/tiller.md).
 
-## Configuring and Installing GitLab
+### Configuration of GitLab
 
-> **Note**: For deployments to Amazon EKS, there are [additional configuration requirements](preparation/eks.md).
-
-For enterprise deployments, please use the installation instructions in the [`gitlab` chart project](https://gitlab.com/charts/gitlab/blob/master/doc/installation/README.md). We strongly recommend using [external Postgres, Redis, and object storage](https://gitlab.com/charts/gitlab/tree/master/doc/advanced) for production deployments.
-
-For additional configuration options, consult the [full list of settings](https://gitlab.com/charts/gitlab/blob/master/doc/installation/command-line-options.md).
-
-## Quick start
-
-For simple non-production deployments, running all services within Kubernetes, only three parameters are required:
+To deploy GitLab, only three parameters are required:
 - `global.hosts.domain`: the [base domain](preparation/networking.md) of the wildcard host entry. For example, `mycompany.io` if the wild card entry is `*.mycompany.io`.
 - `global.hosts.externalIP`: the [external IP](preparation/networking.md) which the wildcard DNS resolves to.
 - `certmanager-issuer.email`: Email address to use when requesting new SSL certificates from Let's Encrypt.
 
-### Installing GitLab using the Helm Chart
+For deployments to Amazon EKS, there are [additional configuration requirements](preparation/eks.md). A full list of configuration options is  [also available](https://gitlab.com/charts/gitlab/blob/master/doc/installation/command-line-options.md).
+
+### Deployment of GitLab to Kubernetes
 
 Once you have all of your configuration options collected, we can get any dependencies and
 run helm. In this example, we've named our helm release "gitlab".
@@ -83,7 +83,7 @@ following command (replace `<name>` by name of the release - which is `gitlab`
 if you used the command above).
 
 ```
-kubectl get secret <name>-gitlab-initial-root-password -ojsonpath={.data.password} | base64 --decode
+kubectl get secret <name>-gitlab-initial-root-password -ojsonpath={.data.password} | base64 --decode ; echo
 ```
 
 ### Outgoing email
@@ -99,7 +99,7 @@ You can disable authentication settings with `--set global.smtp.authentication="
 If your Kubernetes cluster is on GKE, be aware that smtp [ports 25, 465, and 587
 are blocked](https://cloud.google.com/compute/docs/tutorials/sending-mail/#using_standard_email_ports).
 
-## Deploying the Community Edition
+### Deploying the Community Edition
 
 To deploy the Community Edition, include these options in your `helm install` command:
 
@@ -115,7 +115,7 @@ Once your GitLab Chart is installed, configuration changes and chart updates
 should be done using `helm upgrade`:
 
 ```bash
-helm upgrade -f values.yaml gitlab gitlab/gitlab
+helm upgrade --reuse-values gitlab gitlab/gitlab
 ```
 
 ## Uninstalling GitLab using the Helm Chart
