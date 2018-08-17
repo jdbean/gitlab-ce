@@ -6,7 +6,6 @@ import { s__ } from '~/locale';
 import loadingIcon from '~/vue_shared/components/loading_icon.vue';
 import DeprecatedModal from '~/vue_shared/components/deprecated_modal.vue';
 import { getParameterByName } from '~/lib/utils/common_utils';
-import { mergeUrlParams } from '~/lib/utils/url_utility';
 
 import eventHub from '../event_hub';
 import { COMMON_STR } from '../constants';
@@ -56,7 +55,6 @@ export default {
       ? COMMON_STR.GROUP_SEARCH_EMPTY
       : COMMON_STR.GROUP_PROJECT_SEARCH_EMPTY;
 
-    eventHub.$on('fetchPage', this.fetchPage);
     eventHub.$on('toggleChildren', this.toggleChildren);
     eventHub.$on('showLeaveGroupModal', this.showLeaveGroupModal);
     eventHub.$on('updatePagination', this.updatePagination);
@@ -66,7 +64,6 @@ export default {
     this.fetchAllGroups();
   },
   beforeDestroy() {
-    eventHub.$off('fetchPage', this.fetchPage);
     eventHub.$off('toggleChildren', this.toggleChildren);
     eventHub.$off('showLeaveGroupModal', this.showLeaveGroupModal);
     eventHub.$off('updatePagination', this.updatePagination);
@@ -115,32 +112,6 @@ export default {
       }).then(res => {
         this.isLoading = false;
         this.updateGroups(res, Boolean(filterGroupsBy));
-      });
-    },
-    fetchPage(page, filterGroupsBy, sortBy, archived) {
-      this.isLoading = true;
-
-      // eslint-disable-next-line promise/catch-or-return
-      this.fetchGroups({
-        page,
-        filterGroupsBy,
-        sortBy,
-        archived,
-        updatePagination: true,
-      }).then(res => {
-        this.isLoading = false;
-        $.scrollTo(0);
-
-        const currentPath = mergeUrlParams({ page }, window.location.href);
-        window.history.replaceState(
-          {
-            page: currentPath,
-          },
-          document.title,
-          currentPath,
-        );
-
-        this.updateGroups(res);
       });
     },
     toggleChildren(group) {

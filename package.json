@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@gitlab-org/gitlab-svgs": "^1.27.0",
-    "@gitlab-org/gitlab-ui": "1.0.5",
+    "@gitlab-org/gitlab-ui": "https://gitlab.com/gitlab-org/gitlab-ui/-/jobs/90175964/artifacts/raw/gitlab-ui.27-add-bootstrap-vue-s-pagination.tgz",
     "autosize": "^4.0.0",
     "axios": "^0.17.1",
     "babel-core": "^6.26.3",

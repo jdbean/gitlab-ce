@@ -1,12 +1,9 @@
 <script>
-  import tablePagination from '~/vue_shared/components/table_pagination.vue';
-  import eventHub from '../event_hub';
-  import { getParameterByName } from '../../lib/utils/common_utils';
+  import bp from '../../breakpoints';
+  import { mergeUrlParams } from '~/lib/utils/url_utility';
+  import { s__ } from '../../locale';
 
   export default {
-    components: {
-      tablePagination,
-    },
     props: {
       groups: {
         type: Array,
@@ -25,14 +22,35 @@
         required: true,
       },
     },
+    data: () => ({
+      breakpoint: bp.getBreakpointSize()
+    }),
+    created () {
+      window.addEventListener('resize', this.setBreakpoint)
+    },
+    beforeDestroy () {
+      window.removeEventListener('resize', this.setBreakpoint)
+    },
+    computed: {
+      paginationLimit () {
+        switch (this.breakpoint) {
+          case 'xs':
+            return 1
+          case 'sm':
+            return 5
+          default:
+            return 11
+        }
+      }
+    },
     methods: {
       change(page) {
-        const filterGroupsParam = getParameterByName('filter_groups');
-        const sortParam = getParameterByName('sort');
-        const archivedParam = getParameterByName('archived');
-        eventHub.$emit('fetchPage', page, filterGroupsParam, sortParam, archivedParam);
+        return mergeUrlParams({ page }, window.location.href);
       },
-    },
+      setBreakpoint () {
+        this.breakpoint = bp.getBreakpointSize()
+      }
+    }
   };
 </script>
 
@@ -48,10 +66,17 @@
       v-if="!searchEmpty"
       :groups="groups"
     />
-    <table-pagination
+    <gl-pagination
+      class="gl-pagination d-flex justify-content-center prepend-top-default"
       v-if="!searchEmpty"
-      :change="change"
-      :page-info="pageInfo"
+      :limit="paginationLimit"
+      :link-gen="change"
+      :value="pageInfo.page"
+      :number-of-pages="200"
+      :first-text="s__('Pagination|« First')"
+      :prev-text="s__('Pagination|Prev')"
+      :next-text="s__('Pagination|Next')"
+      :last-text="s__('Pagination|Last »')"
     />
   </div>
 </template>
