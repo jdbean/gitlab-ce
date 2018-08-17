@@ -1515,6 +1515,9 @@ msgstr ""
 msgid "ClusterIntegration|Prometheus is an open-source monitoring system with %{gitlabIntegrationLink} to monitor deployed applications."
 msgstr ""
 
+msgid "ClusterIntegration|RBAC-enabled cluster"
+msgstr ""
+
 msgid "ClusterIntegration|Read our %{link_to_help_page} on Kubernetes cluster integration."
 msgstr ""
 
