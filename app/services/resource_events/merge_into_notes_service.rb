@@ -25,6 +25,7 @@ module ResourceEvents
 
     def note_from_label_events(discussion_id, events)
       text = change_label_text(events)
+      #text = "A deleted user " + text
       issuable = events.first.issuable
       attrs = {
         system: true,
@@ -51,7 +52,7 @@ module ResourceEvents
       # in the UI, for now we just ignore these events (other notes
       # are deleted with user so there is no change in behavior from
       # user point of view)
-      events = events.where.not(user_id: nil)
+      # events = events.where.not(user_id: nil)
       events = since_fetch_at(events)
 
       events.group_by { |event| event.discussion_id }

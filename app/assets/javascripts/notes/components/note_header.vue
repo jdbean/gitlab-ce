@@ -9,7 +9,8 @@ export default {
   props: {
     author: {
       type: Object,
-      required: true,
+      required: false,
+      default: () => ({}),
     },
     createdAt: {
       type: String,
@@ -72,7 +73,10 @@ export default {
         {{ __('Toggle discussion') }}
       </button>
     </div>
-    <a :href="author.path">
+    <a
+      v-if="author.name"
+      :href="author.path"
+    >
       <span class="note-header-author-name">{{ author.name }}</span>
       <span
         v-if="author.status_tooltip_html"
@@ -81,6 +85,9 @@ export default {
         @{{ author.username }}
       </span>
     </a>
+    <span v-else>
+      A deleted user
+    </span>
     <span class="note-headline-light">
       <span class="note-headline-meta">
         <template v-if="actionText">
