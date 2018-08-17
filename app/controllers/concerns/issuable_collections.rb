@@ -113,9 +113,7 @@ module IssuableCollections
   end
 
   def remember_sorting_key
-    strong_memoize(:remember_sorting_key) do
-      "#{collection_type.downcase}_sort"
-    end
+    @remember_sorting_key ||= "#{collection_type.downcase}_sort"
   end
 
   def default_sort_order
@@ -144,9 +142,7 @@ module IssuableCollections
   end
 
   def finder
-    strong_memoize(:finder) do
-      issuable_finder_for(finder_type)
-    end
+    @finder ||= issuable_finder_for(finder_type)
   end
 
   def collection_type
