@@ -3,6 +3,7 @@ module Gitlab
     class Wiki
       DuplicatePageError = Class.new(StandardError)
       OperationError = Class.new(StandardError)
+      DEFAULT_PAGINATION = Kaminari.config.default_per_page
 
       CommitDetails = Struct.new(:user_id, :username, :name, :email, :message) do
         def to_h
@@ -74,7 +75,7 @@ module Gitlab
         # Gitaly uses gollum-lib to get the versions. Gollum defaults to 20
         # per page, but also fetches 20 if `limit` or `per_page` < 20.
         # Slicing returns an array with the expected number of items.
-        slice_bound = options[:limit] || options[:per_page] || Gollum::Page.per_page
+        slice_bound = options[:limit] || options[:per_page] || DEFAULT_PAGINATION
         versions[0..slice_bound]
       end
 
