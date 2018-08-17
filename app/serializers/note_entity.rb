@@ -52,8 +52,8 @@ class NoteEntity < API::Entities::Note
   expose :emoji_awardable?, as: :emoji_awardable
   expose :award_emoji, if: -> (note, _) { note.emoji_awardable? }, using: AwardEmojiEntity
 
-  expose :report_abuse_path do |note|
-    new_abuse_report_path(user_id: note.author.id, ref_url: Gitlab::UrlBuilder.build(note))
+  expose :report_abuse_path, if: -> (note, _) { note.author_id } do |note|
+    new_abuse_report_path(user_id: note.author_id, ref_url: Gitlab::UrlBuilder.build(note))
   end
 
   expose :noteable_note_url do |note|

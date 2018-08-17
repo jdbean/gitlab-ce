@@ -10,8 +10,6 @@ class ResourceLabelEvent < ActiveRecord::Base
 
   scope :created_after, ->(time) { where('created_at > ?', time) }
 
-  validates :user, presence: true, on: :create
-  validates :label, presence: true, on: :create
   validate :exactly_one_issuable
 
   after_save :expire_etag_cache
@@ -22,8 +20,8 @@ class ResourceLabelEvent < ActiveRecord::Base
     remove: 2
   }
 
-  def self.issuable_columns
-    %i(issue_id merge_request_id).freeze
+  def self.issuable_attrs
+    %i(issue merge_request).freeze
   end
 
   def issuable
@@ -43,9 +41,17 @@ class ResourceLabelEvent < ActiveRecord::Base
   private
 
   def exactly_one_issuable
-    if self.class.issuable_columns.count { |attr| self[attr] } != 1
-      errors.add(:base, "Exactly one of #{self.class.issuable_columns.join(', ')} is required")
+    issuable_count = self.class.issuable_attrs.count { |attr| self["#{attr}_id"] }
+
+    if issuable_count == 0
+      # if none of issuable IDs is set, check explicitly if nested object is set,
+      # nested unsaved issuable is set during project import
+      return true if self.class.issuable_attrs.count { |attr| self.public_send(attr) } == 1
+    elsif issuable_count == 1
+      return true
     end
+
+    errors.add(:base, "Exactly one of #{self.class.issuable_columns.join(', ')} is required")
   end
 
   def expire_etag_cache

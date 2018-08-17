@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ProjectNoteEntity < NoteEntity
-  expose :human_access do |note|
+  expose :human_access, if: -> (note, _) { note.project.present? } do |note|
     note.project.team.human_max_access(note.author_id)
   end
 

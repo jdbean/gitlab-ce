@@ -46,7 +46,12 @@ module ResourceEvents
     def label_events_by_discussion_id
       return [] unless resource.respond_to?(:resource_label_events)
 
-      events = resource.resource_label_events.includes(:label)
+      events = resource.resource_label_events.includes(:label, :user)
+      # currently it's not possible to display notes without user
+      # in the UI, for now we just ignore these events (other notes
+      # are deleted with user so there is no change in behavior from
+      # user point of view)
+      events = events.where.not(user_id: nil)
       events = since_fetch_at(events)
 
       events.group_by { |event| event.discussion_id }

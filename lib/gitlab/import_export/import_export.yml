@@ -20,7 +20,6 @@ project_tree:
       - events:
         - :push_event_payload
     - resource_label_events:
-      - :user
       - label:
           :priorities
     - :issue_assignees
@@ -49,6 +48,9 @@ project_tree:
     - milestone:
       - events:
         - :push_event_payload
+    - resource_label_events:
+      - label:
+          :priorities
   - pipelines:
     - notes:
       - :author
