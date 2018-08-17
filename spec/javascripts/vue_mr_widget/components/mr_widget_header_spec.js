@@ -154,6 +154,15 @@ describe('MRWidgetHeader', () => {
         );
       });
 
+      it('renders web ide button as disabled if user are not allowed to push the branch', () => {
+        const button = vm.$el.querySelector('.js-web-ide');
+        vm.canPushToSourceBranch = false;
+
+        vm.$nextTick(() => {
+          expect(button.classList.contains('disabled')).toBeTruthy();
+        });
+      });
+
       it('renders web ide button with blank query string if target & source project branch', done => {
         vm.mr.targetProjectFullPath = 'root/gitlab-ce';
 

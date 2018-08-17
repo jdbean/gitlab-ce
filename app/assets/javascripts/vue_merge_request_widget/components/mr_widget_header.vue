@@ -48,6 +48,11 @@ export default {
           this.mr.targetProjectFullPath : '',
       }, webIDEUrl(`/${this.mr.sourceProjectFullPath}/merge_requests/${this.mr.iid}`));
     },
+    ideButtonTitle() {
+      return !this.mr.canPushToSourceBranch
+        ? 'You are not allowed to edit this project directly. Please fork to make changes.'
+        : '';
+    },
   },
   methods: {
     isBranchTitleLong(branchTitle) {
@@ -112,13 +117,21 @@ export default {
         v-if="mr.isOpen"
         class="branch-actions"
       >
-        <a
-          v-if="!mr.sourceBranchRemoved"
-          :href="webIdePath"
-          class="btn btn-default inline js-web-ide d-none d-md-inline-block"
+        <span
+          v-tooltip
+          :title="ideButtonTitle"
+          data-placement="bottom"
         >
-          {{ s__("mrWidget|Open in Web IDE") }}
-        </a>
+          <a
+            v-if="!mr.sourceBranchRemoved"
+            :href="webIdePath"
+            :class="{ disabled: !mr.canPushToSourceBranch }"
+            class="btn btn-default inline js-web-ide d-none d-md-inline-block"
+            role="button"
+          >
+            {{ s__("mrWidget|Open in Web IDE") }}
+          </a>
+        </span>
         <button
           :disabled="mr.sourceBranchRemoved"
           data-target="#modal_merge_info"
