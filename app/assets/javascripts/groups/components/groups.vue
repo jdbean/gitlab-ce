@@ -72,7 +72,7 @@
       :limit="paginationLimit"
       :link-gen="change"
       :value="pageInfo.page"
-      :number-of-pages="200"
+      :number-of-pages="pageInfo.totalPages"
       :first-text="s__('Pagination|« First')"
       :prev-text="s__('Pagination|Prev')"
       :next-text="s__('Pagination|Next')"
