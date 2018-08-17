@@ -20,9 +20,9 @@ export default {
       default: '',
     },
     noteId: {
-      type: Number,
+      type: String,
       required: false,
-      default: 0,
+      default: '',
     },
     markdownVersion: {
       type: Number,

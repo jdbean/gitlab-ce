@@ -74,7 +74,7 @@ export default {
       </button>
     </div>
     <a
-      v-if="author.name"
+      v-if="author"
       :href="author.path"
     >
       <span class="note-header-author-name">{{ author.name }}</span>
