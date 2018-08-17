@@ -1,0 +1,5 @@
+---
+title: Refactoring `artifacts` to `artifacts_archive` and `metadata` to `artifacts_archive_metadata`
+merge_request: 21224
+author:
+type: other
