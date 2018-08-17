@@ -59,10 +59,14 @@ export default {
     class="d-inline-block"
     @ok="onSubmit"
   >
-    <template slot="modal-trigger">
+    <template
+      slot="modalTrigger"
+      slot-scope="{ toggle }"
+    >
       <button
-        class="btn btn-danger"
         type="button"
+        class="btn btn-danger"
+        @click="toggle()"
       >
         {{ triggerButtonTitle }}
       </button>
