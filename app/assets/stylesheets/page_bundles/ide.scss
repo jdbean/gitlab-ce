@@ -28,11 +28,9 @@ $ide-tree-text-start: $ide-activity-bar-width + $ide-tree-padding;
 
 .ide-view {
   position: relative;
-  display: flex;
   margin-top: 0;
   padding-bottom: $ide-statusbar-height;
   color: $gl-text-color;
-  flex: 1;
   min-height: 0;
 
   &.is-collapsed {
@@ -810,9 +808,6 @@ $ide-tree-text-start: $ide-activity-bar-width + $ide-tree-padding;
     padding-bottom: 0;
     flex: 1;
     min-height: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
   }
 
   &.flash-shown {

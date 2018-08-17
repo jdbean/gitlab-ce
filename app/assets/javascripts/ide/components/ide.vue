@@ -84,7 +84,7 @@ export default {
       :message="errorMessage"
     />
     <div
-      class="ide-view"
+      class="ide-view flex-grow d-flex"
     >
       <find-file
         v-show="fileFindVisible"
