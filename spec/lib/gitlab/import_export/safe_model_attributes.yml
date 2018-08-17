@@ -569,7 +569,6 @@ ResourceLabelEvent:
 - id
 - action
 - issue_id
-- epic_id
 - merge_request_id
 - label_id
 - user_id

@@ -5,7 +5,7 @@ module API
 
     before { authenticate! }
 
-    EVENTABLE_TYPES = [Issue, Epic, MergeRequest].freeze
+    EVENTABLE_TYPES = [Issue, MergeRequest].freeze
 
     EVENTABLE_TYPES.each do |eventable_type|
       parent_type = eventable_type.parent_class.to_s.underscore
