@@ -27,6 +27,9 @@ Rails.application.routes.draw do
                 authorizations: 'oauth/authorizations'
   end
 
+  # This is here to "reserve" the path for the Jira integration in GitLab EE
+  match 'login/oauth/:action', via: [:get, :post], to: proc { [404, {}, ['']] }, as: :oauth_jira
+
   use_doorkeeper_openid_connect
 
   # Autocomplete
