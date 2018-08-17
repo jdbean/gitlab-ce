@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'uri'
 
 module Banzai
@@ -9,7 +11,7 @@ module Banzai
     # CommonMark does not allow spaces in the url portion of a link.
     # For example, `[example](page slug)` is not valid.  However,
     # in our wikis, we support (via RedCarpet) this type of link, allowing
-    # wiki pages to be easily linked bby their title.  This filter adds that functionality.
+    # wiki pages to be easily linked by their title.  This filter adds that functionality.
     # The intent is for this to only be used in Wikis - in general, we want
     # to adhere to CommonMark's spec.
     #
@@ -55,8 +57,13 @@ module Banzai
         if match && match[1] && match[2]
           # escape the spaces in the url so that it's a valid markdown link,
           # then run it through the markdown processor again, let it do it's magic
-          new_link = "[#{match[1]}](#{match[2].gsub(' ', '%20')})"
-          Banzai::Filter::MarkdownFilter.new(new_link, context).call
+          text      = match[1]
+          new_link  = match[2].gsub(' ', '%20')
+          title     = match[3] ? " \"#{match[3]}\"" : ''
+          html      = Banzai::Filter::MarkdownFilter.call("[#{text}](#{new_link}#{title})", context)
+
+          # link is wrapped in a <p>, so strip that off
+          html.sub('<p>', '').sub('</p>', '')
         else
           link
         end
