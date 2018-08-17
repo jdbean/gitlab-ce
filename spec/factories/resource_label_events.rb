@@ -2,9 +2,8 @@
 
 FactoryBot.define do
   factory :resource_label_event do
-    user { issue.project.creator }
     action :add
     label
-    issue
+    user { issuable&.author || create(:user) }
   end
 end

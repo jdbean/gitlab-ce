@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe ResourceLabelEvent, type: :model do
-  subject { build(:resource_label_event) }
+  subject { build(:resource_label_event, issue: issue) }
   let(:issue) { create(:issue) }
   let(:merge_request) { create(:merge_request) }
 
@@ -16,8 +16,6 @@ RSpec.describe ResourceLabelEvent, type: :model do
 
   describe 'validations' do
     it { is_expected.to be_valid }
-    it { is_expected.to validate_presence_of(:label) }
-    it { is_expected.to validate_presence_of(:user) }
 
     describe 'Issuable validation' do
       it 'is invalid if issue_id and merge_request_id are missing' do

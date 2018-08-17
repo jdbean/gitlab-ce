@@ -46,12 +46,12 @@ class ResourceLabelEvent < ActiveRecord::Base
     if issuable_count == 0
       # if none of issuable IDs is set, check explicitly if nested object is set,
       # nested unsaved issuable is set during project import
-      return true if self.class.issuable_attrs.count { |attr| self.public_send(attr) } == 1
+      return true if self.class.issuable_attrs.count { |attr| self.public_send(attr) } == 1 # rubocop:disable GitlabSecurity/PublicSend
     elsif issuable_count == 1
       return true
     end
 
-    errors.add(:base, "Exactly one of #{self.class.issuable_columns.join(', ')} is required")
+    errors.add(:base, "Exactly one of #{self.class.issuable_attrs.join(', ')} is required")
   end
 
   def expire_etag_cache
