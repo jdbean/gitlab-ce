@@ -39,7 +39,7 @@ In order to deploy GitLab on Kubernetes, a few prerequisites are required.
 
 > **Note**: For deployments to Amazon EKS, there are [additional configuration requirements](preparation/eks.md).
 
-For enterprise deployments, please use the installation instructions in the [`gitlab` chart project](https://gitlab.com/charts/gitlabhttps://gitlab.com/charts/gitlab/blob/master/doc/installation/README.md). We strongly recommend using [external Postgres and Redis]((https://gitlab.com/charts/gitlab/tree/master/doc/advanced) for production deployments.
+For enterprise deployments, please use the installation instructions in the [`gitlab` chart project](https://gitlab.com/charts/gitlab/blob/master/doc/installation/README.md). We strongly recommend using [external Postgres, Redis, and object storage](https://gitlab.com/charts/gitlab/tree/master/doc/advanced) for production deployments.
 
 For additional configuration options, consult the [full list of settings](https://gitlab.com/charts/gitlab/blob/master/doc/installation/command-line-options.md).
 
