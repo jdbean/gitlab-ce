@@ -68,7 +68,7 @@
     />
     <gl-pagination
       class="gl-pagination d-flex justify-content-center prepend-top-default"
-      v-if="!searchEmpty"
+      v-if="!searchEmpty && pageInfo.totalPages > 1"
       :limit="paginationLimit"
       :link-gen="change"
       :value="pageInfo.page"
