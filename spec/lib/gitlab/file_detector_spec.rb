@@ -29,7 +29,7 @@ describe Gitlab::FileDetector do
     end
 
     it 'returns the type of a license file' do
-      %w(LICENSE LICENCE COPYING UNLICENSE).each do |file|
+      %w(LICENSE LICENCE COPYING UNLICENSE UNLICENCE).each do |file|
         expect(described_class.type_of(file)).to eq(:license)
       end
     end
