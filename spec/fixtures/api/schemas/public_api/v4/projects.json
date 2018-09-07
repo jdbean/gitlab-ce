@@ -23,7 +23,7 @@
       "readme_url": { "type": ["string", "null"] },
       "license_url": { "type": ["string", "null"] },
       "license": {
-      "type": "object",
+      "type": ["object", "null"],
         "properties" : {
           "key": { "type": "string" },
           "name": { "type": "string" },
