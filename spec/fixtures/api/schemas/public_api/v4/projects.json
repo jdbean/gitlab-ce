@@ -21,6 +21,17 @@
       "http_url_to_repo": { "type": "string" },
       "web_url": { "type": "string" },
       "readme_url": { "type": ["string", "null"] },
+      "license_url": { "type": ["string", "null"] },
+      "license": {
+      "type": "object",
+        "properties" : {
+          "key": { "type": "string" },
+          "name": { "type": "string" },
+          "nickname": { "type": ["string", "null"] },
+          "html_url": { "type": "string" },
+          "source_url": { "type": "string" }
+        }
+      },
       "avatar_url": { "type": ["string", "null"] },
       "star_count": { "type": "integer" },
       "forks_count": { "type": "integer" },
@@ -40,8 +51,9 @@
     "required": [
       "id", "name", "name_with_namespace", "description", "path",
       "path_with_namespace", "created_at", "default_branch", "tag_list",
-      "ssh_url_to_repo", "http_url_to_repo", "web_url", "avatar_url",
-      "star_count", "last_activity_at", "namespace"
+      "ssh_url_to_repo", "http_url_to_repo", "web_url", "license_url",
+      "license", "avatar_url", "star_count", "last_activity_at",
+      "namespace"
     ],
     "additionalProperties": false
   }

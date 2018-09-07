@@ -1171,6 +1171,7 @@ class Project < ActiveRecord::Base
 
   def license_template
     return unless license_key
+    
     templates = LicenseTemplateFinder.new.execute
     templates.find { |template| template.key == repository.license_key }
   end

@@ -235,6 +235,7 @@ describe API::Projects do
             star_count forks_count
             created_at last_activity_at
             avatar_url namespace
+            license_url license
           )
 
           get api('/projects?simple=true', user)
