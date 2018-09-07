@@ -160,7 +160,8 @@ module API
         # (fixed in https://github.com/rails/rails/pull/25976).
         project.tags.map(&:name).sort
       end
-      expose :ssh_url_to_repo, :http_url_to_repo, :web_url, :readme_url
+      expose :ssh_url_to_repo, :http_url_to_repo, :web_url, :readme_url, :license_url
+      expose :license_template, with: 'API::Entities::LicenseBasic', as: 'license'
       expose :avatar_url do |project, options|
         project.avatar_url(only_path: false)
       end
@@ -1208,11 +1209,14 @@ module API
       expose :deployable,  using: Entities::Job
     end
 
-    class License < Grape::Entity
+    class LicenseBasic < Grape::Entity
       expose :key, :name, :nickname
-      expose :popular?, as: :popular
       expose :url, as: :html_url
       expose(:source_url) { |license| license.meta['source'] }
+    end
+
+    class License < LicenseBasic
+      expose :popular?, as: :popular
       expose(:description) { |license| license.meta['description'] }
       expose(:conditions) { |license| license.meta['conditions'] }
       expose(:permissions) { |license| license.meta['permissions'] }
