@@ -161,7 +161,7 @@ module API
         project.tags.map(&:name).sort
       end
       expose :ssh_url_to_repo, :http_url_to_repo, :web_url, :readme_url, :license_url
-      expose :license_template, with: 'API::Entities::LicenseBasic', as: 'license'
+      expose :license, with: 'API::Entities::LicenseBasic'
       expose :avatar_url do |project, options|
         project.avatar_url(only_path: false)
       end

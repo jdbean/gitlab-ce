@@ -1165,15 +1165,8 @@ class Project < ActiveRecord::Base
     repository.license_blob
   end
 
-  def license_key
-    repository.license_key
-  end
-
-  def license_template
-    return unless license_key
-
-    templates = LicenseTemplateFinder.new.execute
-    templates.find { |template| template.key == repository.license_key }
+  def license
+    return repository.license
   end
 
   def license_url
