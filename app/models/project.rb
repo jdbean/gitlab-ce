@@ -1166,7 +1166,7 @@ class Project < ActiveRecord::Base
   end
 
   def license
-    return repository.license
+    repository.license
   end
 
   def license_url
