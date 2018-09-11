@@ -10,7 +10,7 @@ describe 'New user snippet breadcrumbs' do
 
   it 'display a link to user snippets and new user snippet pages' do
     page.within '.breadcrumbs' do
-      expect(find_link('Snippets')[:href]).to end_with(snippets_path)
+      expect(find_link('Snippets')[:href]).to end_with(dashboard_snippets_path)
       expect(find_link('New')[:href]).to end_with(new_snippet_path)
     end
   end
