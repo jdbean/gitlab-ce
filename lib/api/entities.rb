@@ -160,14 +160,27 @@ module API
         # (fixed in https://github.com/rails/rails/pull/25976).
         project.tags.map(&:name).sort
       end
-      expose :ssh_url_to_repo, :http_url_to_repo, :web_url, :readme_url, :license_url
-      expose :license, with: 'API::Entities::LicenseBasic'
+
+      expose :ssh_url_to_repo, :http_url_to_repo, :web_url, :readme_url
+      
+      expose :license_url do |project|
+        license = project.repository.license_blob
+        
+        if license
+          Gitlab::Routing.url_helpers.project_blob_url(project, File.join(project.default_branch, license.path))
+        end
+      end
+
+      expose :license, with: 'API::Entities::LicenseBasic' do |project|
+        project.repository.license
+      end
+      
       expose :avatar_url do |project, options|
         project.avatar_url(only_path: false)
       end
+      
       expose :star_count, :forks_count
       expose :last_activity_at
-
       expose :namespace, using: 'API::Entities::NamespaceBasic'
       expose :custom_attributes, using: 'API::Entities::CustomAttribute', if: :with_custom_attributes
 

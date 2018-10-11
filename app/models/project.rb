@@ -1161,21 +1161,6 @@ class Project < ActiveRecord::Base
     Gitlab::Routing.url_helpers.project_avatar_url(self) if avatar_in_git
   end
 
-  def license_in_git
-    repository.license_blob
-  end
-
-  def license
-    repository.license
-  end
-
-  def license_url
-    license = license_in_git
-    if license
-      Gitlab::Routing.url_helpers.project_blob_url(self, File.join(default_branch, license.path))
-    end
-  end
-
   # For compatibility with old code
   def code
     path
