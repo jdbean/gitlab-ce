@@ -923,6 +923,8 @@ describe API::Projects do
         expect(json_response['import_status']).to be_present
         expect(json_response).to include("import_error")
         expect(json_response['avatar_url']).to be_nil
+        expect(json_response['license_url']).to be_present
+        expect(json_response['license']).to be_present
         expect(json_response['star_count']).to be_present
         expect(json_response['forks_count']).to be_present
         expect(json_response['public_jobs']).to be_present
@@ -992,6 +994,19 @@ describe API::Projects do
           'kind' => user.namespace.kind,
           'full_path' => user.namespace.full_path,
           'parent_id' => nil
+        })
+      end
+
+      it 'exposes license fields' do
+        get api("/projects/#{project.id}", user)
+
+        expect(response).to have_gitlab_http_status(200)
+        expect(json_response['license']).to eq({
+          'key' => project.repository.license.key,
+          'name' => project.repository.license.name,
+          'nickname' => project.repository.license.nickname,
+          'html_url' => project.repository.license.url,
+          'source_url' => project.repository.license.meta['source'],
         })
       end
 
