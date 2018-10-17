@@ -67,7 +67,7 @@ module API
 
       params :license_params do
         optional :license, type: Boolean, default: false,
-                                desc: 'Include project license data'
+                           desc: 'Include project license data'
       end
 
       params :collection_params do
@@ -240,7 +240,7 @@ module API
         use :with_custom_attributes
 
         optional :license, type: Boolean, default: true,
-                                desc: 'Include project license data'
+                           desc: 'Include project license data'
       end
       get ":id" do
         options = {
