@@ -197,22 +197,6 @@ module API
       # rubocop: enable CodeReuse/ActiveRecord
     end
 
-    # class ExtraProjectDetails < BasicProjectDetails
-    #   include ::API::Helpers::RelatedResourcesHelpers
-
-    #   expose :license_url do |project|
-    #     license = project.repository.license_blob
-
-    #     if license
-    #       Gitlab::Routing.url_helpers.project_blob_url(project, File.join(project.default_branch, license.path))
-    #     end
-    #   end
-
-    #   expose :license, with: 'API::Entities::LicenseBasic' do |project|
-    #     project.repository.license
-    #   end
-    # end
-
     class Project < BasicProjectDetails
       include ::API::Helpers::RelatedResourcesHelpers
 

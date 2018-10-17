@@ -238,7 +238,7 @@ module API
       params do
         use :statistics_params
         use :with_custom_attributes
-        
+
         optional :license, type: Boolean, default: true,
                                 desc: 'Include project license data'
       end
