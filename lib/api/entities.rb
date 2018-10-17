@@ -163,7 +163,7 @@ module API
 
       expose :ssh_url_to_repo, :http_url_to_repo, :web_url, :readme_url
 
-      expose :license_url do |project|
+      expose :license_url, if: :license do |project|
         license = project.repository.license_blob
 
         if license
@@ -171,7 +171,7 @@ module API
         end
       end
 
-      expose :license, with: 'API::Entities::LicenseBasic' do |project|
+      expose :license, with: 'API::Entities::LicenseBasic', if: :license do |project|
         project.repository.license
       end
 
@@ -196,6 +196,22 @@ module API
       end
       # rubocop: enable CodeReuse/ActiveRecord
     end
+
+    # class ExtraProjectDetails < BasicProjectDetails
+    #   include ::API::Helpers::RelatedResourcesHelpers
+
+    #   expose :license_url do |project|
+    #     license = project.repository.license_blob
+
+    #     if license
+    #       Gitlab::Routing.url_helpers.project_blob_url(project, File.join(project.default_branch, license.path))
+    #     end
+    #   end
+
+    #   expose :license, with: 'API::Entities::LicenseBasic' do |project|
+    #     project.repository.license
+    #   end
+    # end
 
     class Project < BasicProjectDetails
       include ::API::Helpers::RelatedResourcesHelpers

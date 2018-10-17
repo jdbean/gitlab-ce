@@ -65,6 +65,11 @@ module API
         optional :statistics, type: Boolean, default: false, desc: 'Include project statistics'
       end
 
+      params :license_params do
+        optional :license, type: Boolean, default: false,
+                                desc: 'Include project license data'
+      end
+
       params :collection_params do
         use :sort_params
         use :filter_params
@@ -114,7 +119,8 @@ module API
         options = options.reverse_merge(
           with: current_user ? Entities::ProjectWithAccess : Entities::BasicProjectDetails,
           statistics: params[:statistics],
-          current_user: current_user
+          current_user: current_user,
+          license: params[:license]
         )
         options[:with] = Entities::BasicProjectDetails if params[:simple]
 
@@ -136,6 +142,7 @@ module API
         use :collection_params
         use :statistics_params
         use :with_custom_attributes
+        use :license_params
       end
       get ":user_id/projects" do
         user = find_user(params[:user_id])
@@ -157,6 +164,7 @@ module API
         use :collection_params
         use :statistics_params
         use :with_custom_attributes
+        use :license_params
       end
       get do
         present_projects load_projects
@@ -230,13 +238,17 @@ module API
       params do
         use :statistics_params
         use :with_custom_attributes
+        
+        optional :license, type: Boolean, default: true,
+                                desc: 'Include project license data'
       end
       get ":id" do
         options = {
           with: current_user ? Entities::ProjectWithAccess : Entities::BasicProjectDetails,
           current_user: current_user,
           user_can_admin_project: can?(current_user, :admin_project, user_project),
-          statistics: params[:statistics]
+          statistics: params[:statistics],
+          license: params[:license]
         }
 
         project, options = with_custom_attributes(user_project, options)

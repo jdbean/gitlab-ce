@@ -52,6 +52,7 @@ GET /projects
 | `membership` | boolean | no | Limit by projects that the current user is a member of |
 | `starred` | boolean | no | Limit by projects starred by the current user |
 | `statistics` | boolean | no | Include project statistics |
+| `license` | boolean | no | Include project license data |
 | `with_custom_attributes` | boolean | no | Include [custom attributes](custom_attributes.md) in response (admins only) |
 | `with_issues_enabled` | boolean | no | Limit by enabled issues feature |
 | `with_merge_requests_enabled` | boolean | no | Limit by enabled merge requests feature |
@@ -83,14 +84,6 @@ When `simple=true` or the user is unauthenticated this returns something like:
     "last_activity_at": "2013-09-30T13:46:02Z",
     "forks_count": 0,
     "avatar_url": "http://example.com/uploads/project/avatar/4/uploads/avatar.png",
-    "license_url": "http://example.com/diaspora/diaspora-client/blob/master/LICENSE",
-    "license": {
-			"key": "lgpl-3.0",
-			"name": "GNU Lesser General Public License v3.0",
-			"nickname": "GNU LGPLv3",
-			"html_url": "http://choosealicense.com/licenses/lgpl-3.0/",
-			"source_url": "http://www.gnu.org/licenses/lgpl-3.0.txt"
-		},
     "star_count": 0,
   },
   {
@@ -147,14 +140,6 @@ When the user is authenticated and `simple` is not set this returns something li
     "import_status": "none",
     "archived": false,
     "avatar_url": "http://example.com/uploads/project/avatar/4/uploads/avatar.png",
-    "license_url": "http://example.com/diaspora/diaspora-client/blob/master/LICENSE",
-    "license": {
-			"key": "lgpl-3.0",
-			"name": "GNU Lesser General Public License v3.0",
-			"nickname": "GNU LGPLv3",
-			"html_url": "http://choosealicense.com/licenses/lgpl-3.0/",
-			"source_url": "http://www.gnu.org/licenses/lgpl-3.0.txt"
-		},
     "shared_runners_enabled": true,
     "forks_count": 0,
     "star_count": 0,
@@ -236,14 +221,6 @@ When the user is authenticated and `simple` is not set this returns something li
     },
     "archived": false,
     "avatar_url": null,
-    "license_url": "http://example.com/brightbox/puppet/blob/master/UNLICENSE", 
-    "license": {
-			"key": "unlicense",
-			"name": "The Unlicense",
-			"nickname": null,
-			"html_url": "http://choosealicense.com/licenses/unlicense/",
-			"source_url": "http://unlicense.org/UNLICENSE"
-		},
     "shared_runners_enabled": true,
     "forks_count": 0,
     "star_count": 0,
@@ -301,6 +278,7 @@ GET /users/:user_id/projects
 | `membership` | boolean | no | Limit by projects that the current user is a member of |
 | `starred` | boolean | no | Limit by projects starred by the current user |
 | `statistics` | boolean | no | Include project statistics |
+| `license` | boolean | no | Include project license data |
 | `with_custom_attributes` | boolean | no | Include [custom attributes](custom_attributes.md) in response (admins only) |
 | `with_issues_enabled` | boolean | no | Limit by enabled issues feature |
 | `with_merge_requests_enabled` | boolean | no | Limit by enabled merge requests feature |
@@ -351,14 +329,6 @@ GET /users/:user_id/projects
     "import_status": "none",
     "archived": false,
     "avatar_url": "http://example.com/uploads/project/avatar/4/uploads/avatar.png",
-    "license_url": "http://example.com/diaspora/diaspora-client/blob/master/LICENSE",
-    "license": {
-			"key": "lgpl-3.0",
-			"name": "GNU Lesser General Public License v3.0",
-			"nickname": "GNU LGPLv3",
-			"html_url": "http://choosealicense.com/licenses/lgpl-3.0/",
-			"source_url": "http://www.gnu.org/licenses/lgpl-3.0.txt"
-		},
     "shared_runners_enabled": true,
     "forks_count": 0,
     "star_count": 0,
@@ -439,14 +409,6 @@ GET /users/:user_id/projects
       }
     },
     "archived": false,
-    "license_url": "http://example.com/brightbox/puppet/blob/master/UNLICENSE", 
-    "license": {
-			"key": "unlicense",
-			"name": "The Unlicense",
-			"nickname": null,
-			"html_url": "http://choosealicense.com/licenses/unlicense/",
-			"source_url": "http://unlicense.org/UNLICENSE"
-		},
     "avatar_url": null,
     "shared_runners_enabled": true,
     "forks_count": 0,
@@ -491,6 +453,7 @@ GET /projects/:id
 | --------- | ---- | -------- | ----------- |
 | `id` | integer/string | yes | The ID or [URL-encoded path of the project](README.md#namespaced-path-encoding) |
 | `statistics` | boolean | no | Include project statistics |
+| `license` | boolean | no | Include project license data |
 | `with_custom_attributes` | boolean | no | Include [custom attributes](custom_attributes.md) in response (admins only) |
 
 ```json
@@ -831,6 +794,7 @@ GET /projects/:id/forks
 | `membership` | boolean | no | Limit by projects that the current user is a member of |
 | `starred` | boolean | no | Limit by projects starred by the current user |
 | `statistics` | boolean | no | Include project statistics |
+| `license` | boolean | no | Include project license data |
 | `with_custom_attributes` | boolean | no | Include [custom attributes](custom_attributes.md) in response (admins only) |
 | `with_issues_enabled` | boolean | no | Limit by enabled issues feature |
 | `with_merge_requests_enabled` | boolean | no | Limit by enabled merge requests feature |
@@ -882,14 +846,6 @@ Example responses:
     "import_status": "none",
     "archived": true,
     "avatar_url": "http://example.com/uploads/project/avatar/3/uploads/avatar.png",
-    "license_url": "http://example.com/diaspora/diaspora-client/blob/master/LICENSE",
-    "license": {
-			"key": "lgpl-3.0",
-			"name": "GNU Lesser General Public License v3.0",
-			"nickname": "GNU LGPLv3",
-			"html_url": "http://choosealicense.com/licenses/lgpl-3.0/",
-			"source_url": "http://www.gnu.org/licenses/lgpl-3.0.txt"
-		},
     "shared_runners_enabled": true,
     "forks_count": 0,
     "star_count": 1,
