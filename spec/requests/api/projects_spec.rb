@@ -209,13 +209,13 @@ describe API::Projects do
         expect(json_response.first).not_to include('license', 'license_url')
       end
 
-      it "includes license if requested" do
+      it "does not include license if requested" do
         get api('/projects', user), license: true
 
         expect(response).to have_gitlab_http_status(200)
         expect(response).to include_pagination_headers
         expect(json_response).to be_an Array
-        expect(json_response.first).to include('license', 'license_url')
+        expect(json_response.first).not_to include('license', 'license_url')
       end
 
       context 'when external issue tracker is enabled' do
@@ -940,8 +940,6 @@ describe API::Projects do
         expect(json_response['import_status']).to be_present
         expect(json_response).to include("import_error")
         expect(json_response['avatar_url']).to be_nil
-        expect(json_response['license_url']).to be_present
-        expect(json_response['license']).to be_present
         expect(json_response['star_count']).to be_present
         expect(json_response['forks_count']).to be_present
         expect(json_response['public_jobs']).to be_present
@@ -1014,8 +1012,15 @@ describe API::Projects do
         })
       end
 
-      it 'includes license fields by default' do
+      it "does not include license fields by default" do
         get api("/projects/#{project.id}", user)
+
+        expect(response).to have_gitlab_http_status(200)
+        expect(json_response).not_to include('license', 'license_url')
+      end
+
+      it 'includes license fields when requested' do
+        get api("/projects/#{project.id}", user), license: true
 
         expect(response).to have_gitlab_http_status(200)
         expect(json_response['license']).to eq({
@@ -1025,13 +1030,6 @@ describe API::Projects do
           'html_url' => project.repository.license.url,
           'source_url' => project.repository.license.meta['source']
         })
-      end
-
-      it "does not include license fields when requested" do
-        get api("/projects/#{project.id}", user), license: false
-
-        expect(response).to have_gitlab_http_status(200)
-        expect(json_response).not_to include('license', 'license_url')
       end
 
       it "does not include statistics by default" do

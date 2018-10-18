@@ -65,18 +65,10 @@ module API
         optional :statistics, type: Boolean, default: false, desc: 'Include project statistics'
       end
 
-      params :license_params do
-        optional :license, type: Boolean, default: false,
-                           desc: 'Include project license data'
-      end
-
       params :collection_params do
         use :sort_params
         use :filter_params
         use :pagination
-
-        optional :simple, type: Boolean, default: false,
-                          desc: 'Return only the ID, URL, name, and path of each project'
       end
 
       params :sort_params do
@@ -120,7 +112,7 @@ module API
           with: current_user ? Entities::ProjectWithAccess : Entities::BasicProjectDetails,
           statistics: params[:statistics],
           current_user: current_user,
-          license: params[:license]
+          license: false
         )
         options[:with] = Entities::BasicProjectDetails if params[:simple]
 
@@ -142,7 +134,6 @@ module API
         use :collection_params
         use :statistics_params
         use :with_custom_attributes
-        use :license_params
       end
       get ":user_id/projects" do
         user = find_user(params[:user_id])
@@ -164,7 +155,6 @@ module API
         use :collection_params
         use :statistics_params
         use :with_custom_attributes
-        use :license_params
       end
       get do
         present_projects load_projects
@@ -239,7 +229,7 @@ module API
         use :statistics_params
         use :with_custom_attributes
 
-        optional :license, type: Boolean, default: true,
+        optional :license, type: Boolean, default: false,
                            desc: 'Include project license data'
       end
       get ":id" do
