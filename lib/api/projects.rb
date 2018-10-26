@@ -69,6 +69,9 @@ module API
         use :sort_params
         use :filter_params
         use :pagination
+
+        optional :simple, type: Boolean, default: false,
+                          desc: 'Return only the ID, URL, name, and path of each project'
       end
 
       params :sort_params do
